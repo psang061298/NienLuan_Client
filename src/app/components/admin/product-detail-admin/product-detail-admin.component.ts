@@ -46,6 +46,7 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
   ) { }
 
   ngOnInit() {
+    this.product = new Product();
     this.activatedRoute.params.subscribe(data => {
       this.id = data['id'],
       console.log(this.id);
@@ -74,7 +75,6 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
     this.adminService.getBrand().subscribe(data => {
       this.brands = data;
       console.log(data);
-      
       this.product.brand = data[0].id
     })
   }

@@ -9,6 +9,7 @@ import { Brand } from 'src/app/models/brand.class';
 import { Product } from 'src/app/models/product.class';
 // import * as $ from '@types/jquery';
 
+
 declare var $: any
 
 @Component({
@@ -46,6 +47,7 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
   ) { }
 
   ngOnInit() {
+    this.brands = new Array();
     this.product = new Product();
     this.activatedRoute.params.subscribe(data => {
       this.id = data['id'],
@@ -55,12 +57,12 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
     });
     this.loadCate();
     this.loadBrand();
+    this.create();
   }
 
   loadCate(){
     this.adminService.getcategory().subscribe(data => {
       this.category = data;
-      console.log(data);
       this.selectedCate = this.category[0].id;
       this.product.category = this.category[0].id;
     })
@@ -74,7 +76,6 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
   loadBrand(){
     this.adminService.getBrand().subscribe(data => {
       this.brands = data;
-      console.log(data);
       this.product.brand = data[0].id
     })
   }
@@ -84,8 +85,8 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
     this.formdemo = this.form.group({
       name: ['', [Validators.required , Validators.minLength(2)]],
       des : [''],
-      price: ['', [Validators.required, Validators.pattern('^[1-9]{1}[0-9]*')]],
-      quantity: ['', [Validators.required]]
+      price: [0, [Validators.required, Validators.pattern('^[1-9]{1}[0-9]*')]],
+      quantity: [0, [Validators.required , , Validators.pattern('^[1-9]{1}[0-9]*')]]
     });
   }
 
@@ -129,9 +130,8 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
   // }
 
   
-  change(e){
-    console.log(e);
-    
+  changeBrand(event){
+    this.product.brand = event.id;
   }
 
   public onReady(editor) {
@@ -143,9 +143,9 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
     );
   }
 
-  submit(proForm){
-    console.log(proForm);
-    console.log(proForm.form.controls.detail.value);
+  submit(){
+    console.log(this.formdemo);
+    console.log(this.product);
     
   }
 
@@ -158,7 +158,7 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
 
   Preview(event) {
     this.selectFile = event.target.files;
-    const url = "http://127.0.0.1:8000/api/upload_image/";
+    const url = "http://127.0.0.1:8000/upload_image/";
     const myData = new FormData();
     myData.append('source', this.selectFile[0]);
 
@@ -171,8 +171,10 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
       processData: false,
       contentType: false,
       type: 'POST',
-      success: data => {
-        console.log(data);
+      success: res => {
+        // console.log(res.data.secure_url);
+        this.imgServer['images'].push(res.data.secure_url);
+        console.log(this.imgServer);
         
       },
       error: error => {
@@ -184,6 +186,5 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
   changeCate(value){
     this.product['category'] = value;
     console.log(this.product['category']);
-    
   }
 }

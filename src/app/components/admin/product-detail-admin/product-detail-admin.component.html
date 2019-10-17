@@ -44,7 +44,7 @@
                 </li>
             </ul>
         
-        <form  role="form" #proForm="ngForm" (ngSubmit)="submit(proForm)" enctype="multipart/form-data">
+        <form [formGroup]="formdemo" (ngSubmit)="submit()" enctype="multipart/form-data">
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="max-width: 53vw;">
                 <div class="tab-content">
                         <div id="info" class="mb-3 card fade in tab-pane active">
@@ -63,8 +63,8 @@
                                                         <div class="form-group row">
                                                             <label for="name" class="col-sm-3 col-form-label">Tên sản phẩm</label>
                                                             <div class="col-sm-9">
-                                                                <input type="text" class="form-control left" placeholder="Name"
-                                                                #namePro="ngModel" name="name" [(ngModel)]="product.name"
+                                                                <input type="text" class="form-control left"
+                                                                formControlName="name" [(ngModel)]="product.name"
                                                                 >
                                                             </div>
                                                         </div>
@@ -74,9 +74,14 @@
                                                                 <label for="name" class="col-sm-3 col-form-label">Danh mục
                                                                 </label>
                                                                 <div class="col-sm-6">
-                                                                    <input type="text" class="form-control" placeholder="Name"
+                                                                    <!-- <input type="text" class="form-control" placeholder="Name"
                                                                     #Category="ngModel" [(ngModel)]="product.category" required [ngModelOptions]="{standalone: true}"
-                                                                    >
+                                                                    > -->
+                                                                    <div>
+                                                                        <ng-select [multiple]="false" [(ngModel)]="product.category" [ngModelOptions]="{standalone: true}">
+                                                                            <ng-option *ngFor="let item of category" [value]="item.id" >{{item.title}}</ng-option>
+                                                                        </ng-select>
+                                                                        </div>
                                                                 </div>
                                                             </div>
                                                 </div>
@@ -86,11 +91,11 @@
                                                                 <div class="col-sm-6">
                                                                         <div>
                                                                             <ng-select [items]="brands"
-                                                                            bindLabel="name"
-                                                                            bindValue="id"
                                                                             placeholder="Chọn thương hiệu"
-                                                                            [(ngModel)]="product.brand"
-                                                                            (click)="changeBrand(item.id)"
+                                                                            [(ngModel)]="brands[0]"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            (change)="changeBrand($event)"
+                                                                            *ngIf="brands"
                                                                             >
                                                                             <ng-template ng-label-tmp let-item="item" >
                                                                                     <span style="line-height: 20px">{{item.name}}</span>
@@ -122,7 +127,7 @@
                                                                     
                                                                 <div class="input-group">
                                                                     <input type="number" class="form-control" min="1" value="1"
-                                                                    #Price="ngModel" [(ngModel)]="product.price" required [ngModelOptions]="{standalone: true}"
+                                                                    formControlName="price" [(ngModel)]="product.price"
                                                                     >
                                                                     <span class="input-group-btn"><span class="btn new">đ</span></span>
                                                                 </div>
@@ -139,7 +144,7 @@
                                                             </label>
                                                             <div class="col-sm-2">
                                                                 <input type="number" class="form-control" min="1" value="1"
-                                                                #quantity="ngModel" [(ngModel)]="product.quantity" required [ngModelOptions]="{standalone: true}"
+                                                                formControlName="quantity" [(ngModel)]="product.quantity"
                                                                 >
                                                             </div>
                                                         </div>
@@ -164,7 +169,7 @@
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <!-- <div id="txtEditor" #description="ngModel" [(ngModel)]="product.des" required [ngModelOptions]="{standalone: true}" ></div> -->
                                             <!-- <app-ngx-editor></app-ngx-editor> -->
-                                            <ckeditor [editor]="Editor" [config]="config" #detail="ngModel" name="detail" [(ngModel)]="product.des"></ckeditor>
+                                            <ckeditor [editor]="Editor" [config]="config" formControlName="des" [(ngModel)]="product.description"></ckeditor>
                                             <!-- <editor></editor> -->
                                         </div>
                                     </div>
@@ -245,7 +250,23 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
+                                        <ng-container *ngIf="imgServer['images']">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Image</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <img [src]="item" alt="" 
+                                                            *ngFor="let item of imgServer['images']">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ng-container>
                                 </div>
                                 </div>
                             </div>

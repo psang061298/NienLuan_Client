@@ -1,0 +1,262 @@
+<div class="container-12">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <!-- <i class="pe-7s-car icon-gradient bg-mean-fruit">
+                        </i> -->
+                        <i class="fas fa-th icon-gradient bg-mean-fruit"></i>
+                    </div>
+                    <div>
+                        
+                        <ng-container *ngIf="id == 0; else elseTemplate">
+                            Add New Product
+                        </ng-container>
+                        <ng-template #elseTemplate>
+                            Detail Product
+                        </ng-template>
+                        
+                        <div class="page-title-subheading">This is an example dashboard created using build-in elements and components.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-12">
+    
+            <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+                <li class="nav-item active">
+                    <a data-toggle="tab" role="tab" class="nav-link active" href="#info">
+                        <span>Product Info</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a data-toggle="tab" role="tab" class="nav-link" href="#des">
+                        <span>Description</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a data-toggle="tab" role="tab" class="nav-link" href="#spec">
+                        <span>Specification</span>
+                    </a>
+                </li>
+            </ul>
+        
+        <form  role="form" #proForm="ngForm" (ngSubmit)="submit(proForm)" enctype="multipart/form-data">
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="max-width: 53vw;">
+                <div class="tab-content">
+                        <div id="info" class="mb-3 card fade in tab-pane active">
+                                <div class="card-header-tab card-header">
+                                        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                            <i class="fas fa-info header-icon icon-gradient bg-warm-flame"></i>
+                                                Thông tin cơ bản về sản phẩm
+                                        </div>
+                                    </div>
+                            <div class="no-gutters row">
+                                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 center">
+                                    <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                                        <div class="container">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="empty-space col-xs-b10 col-sm-b15"></div>
+                                                        <div class="form-group row">
+                                                            <label for="name" class="col-sm-3 col-form-label">Tên sản phẩm</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="text" class="form-control left" placeholder="Name"
+                                                                #namePro="ngModel" name="name" [(ngModel)]="product.name"
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="form-group row">
+                                                                <label for="name" class="col-sm-3 col-form-label">Danh mục
+                                                                </label>
+                                                                <div class="col-sm-6">
+                                                                    <input type="text" class="form-control" placeholder="Name"
+                                                                    #Category="ngModel" [(ngModel)]="product.category" required [ngModelOptions]="{standalone: true}"
+                                                                    >
+                                                                </div>
+                                                            </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="form-group row">
+                                                                <label for="name" class="col-sm-3 col-form-label">Thương hiệu</label>
+                                                                <div class="col-sm-6">
+                                                                        <div>
+                                                                            <ng-select [items]="brands"
+                                                                            bindLabel="name"
+                                                                            bindValue="id"
+                                                                            placeholder="Chọn thương hiệu"
+                                                                            [(ngModel)]="product.brand"
+                                                                            (click)="changeBrand(item.id)"
+                                                                            >
+                                                                            <ng-template ng-label-tmp let-item="item" >
+                                                                                    <span style="line-height: 20px">{{item.name}}</span>
+                                                                                <img height="20" width="50" [src]="item.logo"/>
+                                                                                
+                                                                            </ng-template>
+                                                                            <ng-template ng-option-tmp let-item="item" let-index="index">
+                                                                                    <span>{{item.name}}</span>
+                                                                                <img height="20" width="50" [src]="item.logo"/>
+                                                                                
+                                                                            </ng-template>
+                                                                </ng-select>
+    
+    
+    
+                                                                            </div>
+                                                                    </div>
+                                                            </div>
+                                                </div>
+                                                
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-lg-b10">
+                                                </div>
+                                                
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label">Giá sản phẩm
+                                                            </label>
+                                                            <div class="col-sm-3">
+                                                                    
+                                                                <div class="input-group">
+                                                                    <input type="number" class="form-control" min="1" value="1"
+                                                                    #Price="ngModel" [(ngModel)]="product.price" required [ngModelOptions]="{standalone: true}"
+                                                                    >
+                                                                    <span class="input-group-btn"><span class="btn new">đ</span></span>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            
+                                                            
+                                                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                                
+                                                            </div>
+                                                            
+                                                            
+                                                            <label for="name" class="col-sm-2 col-form-label">Số lượng
+                                                            </label>
+                                                            <div class="col-sm-2">
+                                                                <input type="number" class="form-control" min="1" value="1"
+                                                                #quantity="ngModel" [(ngModel)]="product.quantity" required [ngModelOptions]="{standalone: true}"
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="des" class="mb-3 card fade in tab-pane">
+                            <div class="card-header-tab card-header">
+                                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                    <i class="fas fa-file-alt header-icon icon-gradient bg-happy-itmeo"></i>
+                                        Mô tả chi tiết về sản phẩm
+                                </div>
+                            </div>
+                            <div class="no-gutters row ">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <!-- <div id="txtEditor" #description="ngModel" [(ngModel)]="product.des" required [ngModelOptions]="{standalone: true}" ></div> -->
+                                            <!-- <app-ngx-editor></app-ngx-editor> -->
+                                            <ckeditor [editor]="Editor" [config]="config" #detail="ngModel" name="detail" [(ngModel)]="product.des"></ckeditor>
+                                            <!-- <editor></editor> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+    
+                        <div id="spec" class="mb-3 card fade in tab-pane">
+                                <div class="card-header-tab card-header">
+                                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                        <i class="fas fa-pencil-ruler header-icon icon-gradient bg-love-kiss"></i>
+                                            Thông số kỹ thuật
+                                    </div>
+                                </div>
+                                <div class="no-gutters row ">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <td>Thuộc tính</td>
+                                                <td>thông số</td>
+                                                <td></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of specArray ; let i = index">
+                                                <td>
+                                                    <input type="text" class="form-control" [value]="item.key" (change)="changekey(i,$event.target.value)">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" [value]="item.value" (change)="changevalue(i,$event.target.value)">
+                                                </td>
+                                                <td><a class="deleteRow"></a>
+                                                    <!-- <input type="button" class="ibtnDel btn btn-md btn-danger "   value="Delete"> -->
+                                                    
+                                                    <button type="button" class="btn btn-danger" (click)="delSpec(i)"><i class="fas fa-trash"></i></button>
+                                                    
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="2">
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" (click)="AddSpec()"><i class="fas fa-plus"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+    
+                </div>
+            </div>
+    
+    
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="mb-3 card fade in tab-pane">
+                        <div class="card-header-tab card-header">
+                            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                <i class="fas fa-images header-icon icon-gradient bg-grow-early"></i>
+                                <p class="file">
+                                    <input #file type="file"  (change)="Preview($event)">
+                                    <!-- <input type="file" ng2FileSelect [uploader]="uploader" multiple (change)="New()" /> -->
+                                    <label for="file">Upload your image</label>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="no-gutters row ">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <button type="submit" class="mb-2 mr-2 btn_custom-transition btn_custom btn_custom-outline-primary">New</button>
+    
+        </form>
+            
+        </div>
+    
+    
+    

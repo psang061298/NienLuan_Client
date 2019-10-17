@@ -1,0 +1,61 @@
+.icon-gradient{
+    color: red;
+}
+
+.img_category{
+    width: 100%;
+    border-radius: 8px;
+    height: 100%;
+}
+
+#switch[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+.toggle {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 70px;
+	height: 30px;
+	background: grey;
+	display: block;
+	border-radius: 100px;
+	position: relative;
+}
+
+.toggle:after {
+	content: '';
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 30px;
+	height: 20px;
+	background: #fff;
+	border-radius: 90px;
+	transition: 0.3s;
+}
+
+#switch:checked + .toggle {
+	background: #bada55;
+}
+
+#switch:checked + .toggle:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+.sticky{
+	position: sticky;
+	top: 100px;
+}
+
+// .scroll{
+// 	display: block;
+// 	height: 50vh;
+// 	width: 100%;
+// 	overflow-y: scroll;
+// }
+.scroll-area-lg{
+	height: 59vh;
+}

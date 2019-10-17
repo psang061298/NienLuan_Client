@@ -1,0 +1,131 @@
+    <div class="container-12">
+        <div class="app-page-title">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div class="page-title-icon">
+                        <!-- <i class="pe-7s-car icon-gradient bg-mean-fruit">
+                        </i> -->
+                        <i class="fas fa-th icon-gradient bg-mean-fruit"></i>
+                    </div>
+                    <div>Category Management
+                        <div class="page-title-subheading">This is an example dashboard created using build-in elements and components.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ">
+                <div class="mb-3 card sticky">
+                    <div class="card-header-tab card-header">
+                        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                            <i class="fas fa-plus header-icon icon-gradient bg-malibu-beach"></i>
+                                new category
+                        </div>
+                    </div>
+                    <div class="no-gutters row ">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            
+                                
+                                <form action="" method="POST" role="form">
+                                    <div class="form-group">
+                                        <label for="">Name</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                
+                                    
+                                
+                                    <button type="submit" class="mb-2 mr-2 btn_custom-transition btn_custom btn_custom-outline-primary">New</button>
+                                        
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                <div class="mb-3 card sticky">
+                    <div class="card-header-tab card-header">
+                        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                <i class="fas fa-th-list header-icon icon-gradient bg-sunny-morning"></i>
+                                List category
+                        </div>
+                    </div>
+                    <div class="no-gutters row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 scroll-area-lg">
+                                    <table class="table table-bordered table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>NAME</th>
+                                                <th>image</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="entry open-popup" data-rel="2" *ngFor="let item of categories; let i=index">
+                                                <td>{{i + 1}}</td>
+                                                <td (click)="open(i)">{{item.name}}</td>
+                                                <td><img [src]="item.image" alt=""></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<ng-container *ngIf="category_now; else elseTemplate">
+    <div class="popup-wrapper">
+            <div class="bg-layer"></div>
+            <div class="popup-content" data-rel="2">
+                <div class="layer-close" (click)="close()"></div>
+                <div class="popup-container size-1">
+                    <div class="popup-align">
+                        <h3 class="h3 text-center">Category</h3>
+                        <div class="empty-space col-xs-b30"></div>
+                        <img class="img_category" [src]="category_now.image" alt="">
+                        <div class="popup-or">
+                                <span>Detail</span>
+                            </div>
+                            <form role="form" #infoform="ngForm" (ngSubmit)="addCategory(infoform)">
+                        <input class="simple-input" type="text" [(ngModel)]="category_now.name" #catename="ngModel" name="catename" minlength="2"/>
+                        <span class="label label-danger" *ngIf="catename.dirty && catename.errors?.required || (submited && catename.errors?.required)">Enter your first name</span>
+                        <span class="label label-danger" *ngIf="catename.errors?.minlength">minlength : 2</span>
+                        <div class="empty-space col-xs-b10 col-sm-b20"></div>
+                        <div class="row">
+                            <div class="col-sm-7 col-xs-b10 col-sm-b0">
+                                <label style="display: flex">
+                                    <div>
+                                        <div class="empty-space col-xs-b10 col-sm-b5"></div>
+                                        <input type="checkbox" id="switch" class="button size-2" /><label class="toggle" for="switch">Active</label>
+                                    </div>
+                                        <div>
+                                            <div class="empty-space col-xs-b10 col-sm-b15"></div>
+                                            <label for="switch" style="font-size: 14px"><span> &nbsp;&nbsp;&nbsp; Active</span></label>
+                                        </div>
+                                </label>
+                            </div>
+                            <div class="col-sm-5 text-right">
+                                <button type="submit" class="button noshadow size-2 style-3"><span class="button-wrapper">
+                                        <span class="icon"><img src="../../../../assets/customer/img/icon-4.png" alt="" /></span>
+                                        <span class="text">submit</span>
+                                    </span></button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                    <div (click)="close()" class="button-close"></div>
+                </div>
+            </div>
+        </div>
+</ng-container>

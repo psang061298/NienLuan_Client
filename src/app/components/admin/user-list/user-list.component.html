@@ -1,0 +1,75 @@
+<div class="container-12">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <!-- <i class="pe-7s-car icon-gradient bg-mean-fruit">
+                    </i> -->
+                    <!-- <i class="fas fa-th icon-gradient bg-mean-fruit"></i> -->
+                    <i class="fas fa-box-open icon-gradient bg-mean-fruit"></i>
+                </div>
+                <div>User Management
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="mb3 card">
+                <div class="card-header-tab card-header">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                            <i class="fas fa-th-list header-icon icon-gradient bg-sunny-morning"></i>
+                            List User
+                    </div>
+                </div>
+                <div class="no-gutters row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>NAME</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- <tr *ngFor="let item of items | paginate: { 
+                                                                                    itemsPerPage: 10,
+                                                                                    currentPage: this.p,
+                                                                                    totalItems: 100 }"
+                                            [routerLink]="[ '/admin/product', 123 ]"
+                                                                                    >
+                                            <td>{{item.id}}</td>
+                                            <td>{{item.name}}</td>
+                                            <td>{{item.status}}</td>
+                                        </tr> -->
+                                    </tbody>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="container">
+                            <pagination-controls
+                                        (pageChange)="p = $event"
+                                        maxSize="9"
+                                        directionLinks="true"
+                                        autoHide="true"
+                                        responsive="true"
+                                        previousLabel="Previous"
+                                        nextLabel="Next"
+                                        screenReaderPaginationLabel="Pagination"
+                                        screenReaderPageLabel="page"
+                                        screenReaderCurrentLabel="You're on page">
+                    </pagination-controls>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

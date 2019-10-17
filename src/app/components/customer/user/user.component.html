@@ -1,0 +1,307 @@
+
+       
+
+<div class="header-empty-space"></div>
+
+<div class="grey-background">
+    <div class="empty-space col-xs-b40 col-sm-b80"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-md-push-3 tab-content">
+                <div id="info" class="container arrows-align-top fade in tab-pane active">
+                        <div class="h4 title">Thông tin tài khoản</div>
+                        <div class="empty-space col-xs-b20"></div>
+                    <div class="wrapper">
+                        <div  class="product-shortcode style-3">
+                            <form>
+                                    <div class="simple-article size-5 grey col-xs-b20">
+                                            <img src="../../../../assets/customer/img/thumbnail-35.jpg" alt="avatar" class="avatar">
+                                        </div>
+
+                                <div style="border: 1px #eee solid; padding: 15px;">
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-3 col-form-label">
+                                                    <div class="empty-space col-xs-b10"></div>
+                                                Họ tên
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control simple-input" type="text" value="" placeholder="Full name">
+                                            </div>
+                                        </div>
+                                        <!-- <span class="label label-danger">Email không hợp lệ</span> -->
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-3 col-form-label">
+                                                    <div class="empty-space col-xs-b10"></div>
+                                                E-mail
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control simple-input " type="text" placeholder="Email">
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-3 col-form-label">
+                                                    <div class="empty-space col-xs-b5"></div>
+                                                Giới tính
+                                            </label>
+                                            <div class="col-sm-8">
+                                                    <div class="empty-space col-xs-b10"></div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 row">
+                                                    <div class="col-sm-3">
+                                                        <label class="checkbox-entry radio">
+                                                            <input type="radio" name="gioitinh" checked /><span>Nam</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <label class="checkbox-entry radio">
+                                                            <input type="radio" name="gioitinh" /><span>Nữ</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                                <label for="name" class="col-sm-3 col-form-label">
+                                                        <div class="empty-space col-xs-b10"></div>
+                                                    Số điện thoại
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control simple-input" type="text" value="" placeholder="Phone">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="name" class="col-sm-3 col-form-label">
+                                                        <div class="empty-space col-xs-b10"></div>
+                                                    Địa chỉ giao hàng <br>mặc định
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control simple-input " #agmSearch name="address" (change)="address()" >
+                                                </div>
+                                            </div>
+                                            <agm-map [latitude]="lat" [longitude]="lng" *ngIf="lat != 0 && lng != 0">
+                                                    <agm-marker [latitude]="lat" [longitude]="lng" ></agm-marker>
+                                            </agm-map>
+                                        <div class="empty-space col-xs-b20"></div>
+
+                                        <button type="submit" style="border : none" class="button size-2 style-3" href="#">
+                                                <span class="button-wrapper">
+                                                    <span class="icon"><img src="../../../../assets/customer/img/icon-4.png" alt=""></span>
+                                                    <span class="text">Cập nhật</span>
+                                                </span>
+                                            </button>
+                                    </div>
+                                
+                                    
+                            </form>
+                            
+
+                            <!-- <div class="empty-space col-xs-b20"></div> -->
+                            <!-- <div class="empty-space col-xs-b10"></div> -->
+                            <!-- <div class="empty-space col-xs-b20"></div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="order" class="container arrows-align-top fade in tab-pane">
+                    <div class="h4 title">Đơn hàng của bạn</div>
+                        <div class="empty-space col-xs-b20"></div>
+                    <div class="wrapper">
+                        <div class="style-3">
+                            <div class="product-shortcode style-3">
+                                <div class="order-header">
+                                        <div class="h6 title text-left">Mã đơn hàng</div>
+                                        <div class="h6 title text-right">Tổng tiền</div>
+                                </div>
+                                <hr>
+                                <table class="cart-table">
+                                    <tbody>
+                                        <tr>
+                                            <td data-title=" ">
+                                                <a class="cart-entry-thumbnail" href="#"><img src="../../../../assets/customer/img/product-2.png" alt=""></a>
+                                            </td>
+                                            <td data-title=" "><h6 class="h6"><a href="#">sport beat atx</a></h6></td>
+                                            <td data-title="Price: ">$155.00</td>
+                                            <td data-title="Quantity: ">2</td>
+                                            <td data-title="Color: "><div class="cart-color" style="background: #eee;"></div></td>
+                                            <td data-title="Total:">$310.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-title=" ">
+                                                <a class="cart-entry-thumbnail" href="#"><img src="../../../../assets/customer/img/product-2.png" alt=""></a>
+                                            </td>
+                                            <td data-title=" "><h6 class="h6"><a href="#">sport beat atx</a></h6></td>
+                                            <td data-title="Price: ">$155.00</td>
+                                            <td data-title="Quantity: ">2</td>
+                                            <td data-title="Color: "><div class="cart-color" style="background: #eee;"></div></td>
+                                            <td data-title="Total:">$310.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td data-title=" ">
+                                                <a class="cart-entry-thumbnail" href="#"><img src="../../../../assets/customer/img/product-2.png" alt=""></a>
+                                            </td>
+                                            <td data-title=" "><h6 class="h6"><a href="#">sport beat atx</a></h6></td>
+                                            <td data-title="Price: ">$155.00</td>
+                                            <td data-title="Quantity: ">2</td>
+                                            <td data-title="Color: "><div class="cart-color" style="background: #eee;"></div></td>
+                                            <td data-title="Total:">$310.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="h4 title">Thành công</div>
+                            </div>
+                            <div class="empty-space col-xs-b10"></div>
+                            <div class="product-shortcode style-3">
+                                    <div class="order-header">
+                                            <div class="h6 title text-left">Mã đơn hàng</div>
+                                            <div class="h6 title text-right">Tổng tiền</div>
+                                    </div>
+                                    <hr>
+                                    <table class="cart-table">
+                                        <tbody>
+                                            <tr>
+                                                <td data-title=" ">
+                                                    <a class="cart-entry-thumbnail" href="#"><img src="../../../../assets/customer/img/product-2.png" alt=""></a>
+                                                </td>
+                                                <td data-title=" "><h6 class="h6"><a href="#">sport beat atx</a></h6></td>
+                                                <td data-title="Price: ">$155.00</td>
+                                                <td data-title="Quantity: ">2</td>
+                                                <td data-title="Color: "><div class="cart-color" style="background: #eee;"></div></td>
+                                                <td data-title="Total:">$310.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-title=" ">
+                                                    <a class="cart-entry-thumbnail" href="#"><img src="../../../../assets/customer/img/product-2.png" alt=""></a>
+                                                </td>
+                                                <td data-title=" "><h6 class="h6"><a href="#">sport beat atx</a></h6></td>
+                                                <td data-title="Price: ">$155.00</td>
+                                                <td data-title="Quantity: ">2</td>
+                                                <td data-title="Color: "><div class="cart-color" style="background: #eee;"></div></td>
+                                                <td data-title="Total:">$310.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td data-title=" ">
+                                                    <a class="cart-entry-thumbnail" href="#"><img src="../../../../assets/customer/img/product-2.png" alt=""></a>
+                                                </td>
+                                                <td data-title=" "><h6 class="h6"><a href="#">sport beat atx</a></h6></td>
+                                                <td data-title="Price: ">$155.00</td>
+                                                <td data-title="Quantity: ">2</td>
+                                                <td data-title="Color: "><div class="cart-color" style="background: #eee;"></div></td>
+                                                <td data-title="Total:">$310.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="h4 title">Thành công</div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="address" class="container arrows-align-top fade in tab-pane">
+                        <div class="h4 title">Địa chỉ của bạn</div>
+                            <div class="empty-space col-xs-b20"></div>
+                        <div class="wrapper">
+                            <div class="style-3">
+                                <div class="product-shortcode style-3">
+                                    <div class="container">
+                                            <table class="cart-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tên</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td data-title=" ">
+                                                            <a class="cart-entry-thumbnail" href="#"><img src="img/product-1.png" alt=""></a>
+                                                        </td>
+                                                        <td data-title=" "><h6 class="h6"><a href="#">modern beat ht</a></h6></td>
+                                                        <td data-title="Price: ">$155.00</td>
+                                                        <td data-title="Quantity: ">
+                                                            <div class="quantity-select">
+                                                                <span class="minus"></span>
+                                                                <span class="number">2</span>
+                                                                <span class="plus"></span>
+                                                            </div>
+                                                        </td>
+                                                        <td data-title="Color: "><div class="cart-color" style="background: #eee;"></div></td>
+                                                        <td data-title="Total:">$310.00</td>
+                                                        <td data-title="">
+                                                            <div class="button-close"></div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="empty-space col-xs-b35 col-md-b70"></div>
+                                            <div class="empty-space col-xs-b35 col-md-b70"></div>
+                                        </div>
+                                </div>
+                                <div class="empty-space col-xs-b10"></div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="col-md-3 col-md-pull-9">
+                <div class="h4 col-xs-b25">Quản lý tài khoản</div>
+                <ul class="categories-menu nav">
+                    <li class="nav-item active" >
+                        <a data-toggle="tab" role="tab" class="nav-link active" href="#info" >thông tin tài khoản</a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="tab" role="tab" class="nav-link" href="#order">Quản lý đơn hàng</a>
+                        <!-- <div class="toggle"></div>
+                        <ul>
+                            <li>
+                                <a href="#">laptops &amp; computers</a>
+                                <div class="toggle"></div>
+                                <ul>
+                                    <li>
+                                        <a href="#">laptops &amp; computers</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">video &amp; photo cameras</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">smartphones</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">video &amp; photo cameras</a>
+                                <div class="toggle"></div>
+                                <ul>
+                                    <li>
+                                        <a href="#">laptops &amp; computers</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">smartphones</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">smartphones</a>
+                            </li>
+                            <li>
+                                <a href="#">tv &amp; audio</a>
+                            </li>
+                            <li>
+                                <a href="#">gadgets</a>
+                            </li>
+                        </ul> -->
+                    </li>
+                    <li class="nav-item" >
+                        <a data-toggle="tab" role="tab" class="nav-link" href="#address" >Sổ địa chỉ</a>
+                    </li>
+                </ul>
+
+                <div class="empty-space col-xs-b25 col-sm-b50"></div>
+            </div>
+        </div>
+    </div>
+    <div class="empty-space col-xs-b50"></div>
+</div>
+
+

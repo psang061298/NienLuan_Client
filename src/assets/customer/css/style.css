@@ -171,8 +171,6 @@ body.mobile .fixed-background{background-attachment: scroll;}
 .simple-article.size-3{font-size: 14px; line-height: 22px;}
 .simple-article.size-4{font-size: 16px; line-height: 24px;}
 .simple-article.size-5{font-size: 18px; line-height: 24px;}
-.simple-article.size-6{font-size: 20px; line-height: 26px;}
-
 
 .simple-article p, .simple-article ul, .simple-article ol, .simple-article img, .simple-article *[class*="col"], .simple-article h1, .simple-article h2, .simple-article h3, .simple-article h4, .simple-article h5, .simple-article h6, .simple-article .embed-responsive, .simple-article .swiper-container{margin-bottom: 22px;}
 .simple-article *:last-child{margin-bottom: 0;}
@@ -845,7 +843,7 @@ span.pagination{border: none;}
 .product-shortcode.style-1 .price{height: 36px; overflow: hidden; position: relative;}
 .product-shortcode.style-1 .price .simple-article{line-height: 18px;}
 .product-shortcode.style-1 .preview{position: relative; margin-bottom: 30px;}
-.product-shortcode.style-1 .preview img{max-width: 100%; height: auto; display: block; margin: 0 auto;}
+.product-shortcode.style-1 .preview img{max-width: 100%; max-height : 257.01px; height: auto; display: block; margin: 0 auto;}
 /* .product-shortcode.style-1 .preview-buttons, .product-shortcode.style-7 .preview-buttons{position: absolute; left: 50%; margin-left: -100px; top: 0; width: 200px; height: 100%; text-align: center; transition: all .3s; -webkit-transition: all .3s; background: rgba(255,255,255,.9); opacity: 0;} */
 .product-shortcode.style-1 .preview-buttons, .product-shortcode.style-7 .preview-buttons{position: absolute; top: 0; width: 100%; height: 100%; text-align: center; transition: all .3s; -webkit-transition: all .3s; background: rgba(255,255,255,.9); opacity: 0;}
 
@@ -867,7 +865,7 @@ span.pagination{border: none;}
 .product-shortcode.style-1.big .title{margin-bottom: 0;}
 /**/
 @media (min-width: 768px) {
-	.products-wrapper .product-shortcode.style-1{border-bottom: none; border-top: none; margin-bottom: 50px; padding-top: 0; padding-bottom: 0;}
+	.products-wrapper .product-shortcode.style-1{border-bottom: none; border-top: none; margin-bottom: 60px; padding-top: 0; padding-bottom: 0;}
 	.products-content{overflow: hidden; margin-bottom: 10px;}
 	.products-wrapper{margin: 0 -3px;}
 	.products-content.view-inline{margin-bottom: 70px;}

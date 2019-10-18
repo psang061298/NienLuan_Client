@@ -5,6 +5,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Category } from '../models/category.class';
 import { Product } from '../models/product.class';
 import { Brand } from '../models/brand.class'
+import { User } from '../models/user.class';
 
 
 const httpOptions = {
@@ -53,7 +54,10 @@ export class CustomerService {
 
   getOneProduct(id) : Observable<Product>{
     return this.http.get<Product>(`${this.api}/products/${id}`);
+  }
 
+  register(user) : Observable<User>{
+    return this.http.post<User>(`${this.api}/users/`, user,httpOptions);
   }
 
 

@@ -14,6 +14,7 @@ import Swal from 'sweetalert2'
 export class ProductDetailComponent implements OnInit {
 
   id : number;
+  public specArray : any[] = [];
   product : Product;
   amount : number = 1;
   constructor(
@@ -29,10 +30,17 @@ export class ProductDetailComponent implements OnInit {
       this.customerService.getOneProduct(this.id).subscribe(data => {
         this.product = data;
         console.log(this.product);
-        
+        this.loadSpec(this.product.specifications);
       })
     });
   }
+
+
+  loadSpec(any) {
+    this.specArray = Object.keys(any).map(it => ({ key: it, value: any[it] }));
+    console.log(this.specArray);
+  }
+
   checkQty(value) {
     console.log(this.amount);
     

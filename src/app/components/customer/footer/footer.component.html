@@ -118,27 +118,34 @@
         <div class="popup-container size-1">
             <div class="popup-align">
                 <h3 class="h3 text-center">Log in</h3>
-                <div class="empty-space col-xs-b30"></div>
-                <input class="simple-input" type="text" value="" placeholder="Your email" />
-                <div class="empty-space col-xs-b10 col-sm-b20"></div>
-                <input class="simple-input" type="password" value="" placeholder="Enter password" />
-                <div class="empty-space col-xs-b10 col-sm-b20"></div>
-                <div class="row">
-                    <div class="col-sm-6 col-xs-b10 col-sm-b0">
-                        <!-- <div class="empty-space col-sm-b5"></div>
-                        <a class="simple-link">Forgot password?</a> -->
-                        <div class="empty-space col-xs-b5"></div>
-                        <a class="simple-link">register now</a>
-                    </div>
-                    <div class="col-sm-6 text-right">
-                        <a class="button size-2 style-3" href="#">
-                            <span class="button-wrapper">
-                                <span class="icon"><img src="../../../../assets/customer/img/icon-4.png" alt="" /></span>
-                                <span class="text">submit</span>
-                            </span>
-                        </a>  
-                    </div>
-                </div>
+                
+                <form  role="form" #formLogin="ngForm">
+                        <div class="empty-space col-xs-b30"></div>
+                        <input type="text" class="simple-input" #email ngModel name="email" placeholder="Email" required>
+                        <div class="empty-space col-xs-b10 col-sm-b20"></div>
+                        <input type="password" class="simple-input" #password ngModel name="password" placeholder="Enter password" required>
+
+                        <div class="empty-space col-xs-b10 col-sm-b20"></div>
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-b10 col-sm-b0">
+                                <!-- <div class="empty-space col-sm-b5"></div>
+                                <a class="simple-link">Forgot password?</a> -->
+                                <div class="empty-space col-xs-b5"></div>
+                                <a class="simple-link">register now</a>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <a class="button size-2 style-3" (click)="onSubmit(formLogin)">
+                                    <span class="button-wrapper">
+                                        <span class="icon"><img src="../../../../assets/customer/img/icon-4.png" alt="" /></span>
+                                        <span class="text">submit</span>
+                                    </span>
+                                </a>  
+                            </div>
+                        </div>
+                    <!-- <button type="submit">Submit</button> -->
+                </form>
+                
+                
                 <!-- <div class="popup-or">
                     <span>or</span>
                 </div>
@@ -178,31 +185,33 @@
         <div class="popup-container size-1">
             <div class="popup-align">
                 <h3 class="h3 text-center">register</h3>
-                <div class="empty-space col-xs-b30"></div>
-                <input class="simple-input" type="text" value="" placeholder="Your name" />
-                <div class="empty-space col-xs-b10 col-sm-b20"></div>
-                <input class="simple-input" type="text" value="" placeholder="Your email" />
-                <div class="empty-space col-xs-b10 col-sm-b20"></div>
-                <input class="simple-input" type="password" value="" placeholder="Enter password" />
-                <div class="empty-space col-xs-b10 col-sm-b20"></div>
-                <input class="simple-input" type="password" value="" placeholder="Repeat password" />
-                <div class="empty-space col-xs-b10 col-sm-b20"></div>
-                <div class="row">
-                    <div class="col-sm-7 col-xs-b10 col-sm-b0">
-                        <div class="empty-space col-sm-b15"></div>
-                        <label class="checkbox-entry">
-                            <input type="checkbox" /><span><a href="#">Privacy policy agreement</a></span>
-                        </label>
-                    </div>
-                    <div class="col-sm-5 text-right">
-                        <a class="button size-2 style-3" href="#">
-                            <span class="button-wrapper">
-                                <span class="icon"><img src="../../../../assets/customer/img/icon-4.png" alt="" /></span>
-                                <span class="text">submit</span>
-                            </span>
-                        </a>  
-                    </div>
+                <form role="form" #formSignUp="ngForm">
+                    <div class="empty-space col-xs-b10 col-sm-b20"></div>
+                    <input type="text" class="simple-input" #email ngModel name="email" placeholder="Email" required>
+                    <div class="empty-space col-xs-b10 col-sm-b20"></div>
+                    <input type="password" class="simple-input" #password ngModel name="password" placeholder="Enter password" required>
+                    <div class="empty-space col-xs-b10 col-sm-b20"></div>
+                    <input type="password" class="simple-input" #password2 ngModel name="password2" placeholder="Enter password" required>                    
+                    <div class="empty-space col-xs-b10 col-sm-b20"></div>
+
+                    <div class="row">
+                            <div class="col-sm-7 col-xs-b10 col-sm-b0">
+                                <div class="empty-space col-sm-b15"></div>
+                                <label class="checkbox-entry">
+                                    <input type="checkbox" name="agree" [ngModel]="agree"  /><span><a href="#">Privacy policy agreement</a></span>
+                                </label>
+                            </div>
+                            <div class="col-sm-5 text-right">
+                                <a class="button size-2 style-3" (click)="onRegister(formSignUp)" >
+                                    <span class="button-wrapper">
+                                        <span class="icon"><img src="../../../../assets/customer/img/icon-4.png" alt="" /></span>
+                                        <span class="text">submit</span>
+                                    </span>
+                                </a>  
+                            </div>
                 </div>
+            </form>
+
             </div>
             <div class="button-close"></div>
         </div>

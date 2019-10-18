@@ -52,7 +52,6 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
     this.activatedRoute.params.subscribe(data => {
       this.id = data['id'],
       console.log(this.id);
-      
       this.loadSpec(this.product['spec']);
     });
     this.loadCate();

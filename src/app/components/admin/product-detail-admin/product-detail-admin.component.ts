@@ -86,7 +86,8 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
       name: ['', [Validators.required , Validators.minLength(2)]],
       des : [''],
       price: [0, [Validators.required, Validators.pattern('^[1-9]{1}[0-9]*')]],
-      quantity: [0, [Validators.required , , Validators.pattern('^[1-9]{1}[0-9]*')]]
+      quantity: [0, [Validators.required , , Validators.pattern('^[1-9]{1}[0-9]*')]],
+      is_active : [false],
     });
   }
 
@@ -99,17 +100,6 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
       value : ''
     }
     this.specArray.push(newSpec);
-    // if (this.newSpec['key'] != '' && this.newSpec['value'] != '') {
-    //   this.spec.push(this.newSpec);
-    //   this.newSpec = {};
-    // } else {
-    //   Swal.fire({
-    //     type: 'error',
-    //     title: 'Oops...',
-    //     text: 'Something went wrong!' + ' specification is requied'
-    //   });
-    // }
-    
   }
 
   delSpec(index) {
@@ -121,13 +111,21 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
     console.log(this.specArray);
   }
 
-  // changekey(i, value) {
-  //   this.spec[i].key = value;
-  // }
+  delImage(index){
+    if (this.imgServer['images'].length == 1) {
+      this.imgServer['images'].pop();
+    } else {
+      this.imgServer['images'].splice(index, 1);
+    }
+  }
 
-  // changevalue(i, value) {
-  //   this.spec[i].value = value;
-  // }
+  changekey(i, value) {
+    this.specArray[i].key = value;
+  }
+
+  changevalue(i, value) {
+    this.specArray[i].value = value;
+  }
 
   
   changeBrand(event){
@@ -135,8 +133,6 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
   }
 
   public onReady(editor) {
-    //console.log(editor);
-
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
       editor.ui.getEditableElement()
@@ -144,9 +140,26 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
   }
 
   submit(){
-    console.log(this.formdemo);
-    console.log(this.product);
-    
+    // let imgJSON = JSON.stringify(this.imgServer['images']);
+    // console.log(imgJSON);
+    this.product.is_active = this.formdemo.get('is_active').value;
+
+    if (this.specArray.length > 0) {
+      const object = this.specArray.reduce(
+        (acc, it) => ((acc[it.key] = it.value), acc),
+        {}
+      );
+      this.product.specifications = object;
+    }
+
+    if(this.imgServer['images'].length > 0){
+      this.product.images = this.imgServer['images'];
+    }
+
+    let productJSON = JSON.stringify(this.product);
+    this.adminService.postProduct(productJSON).subscribe(data => {
+      console.log(data);
+    })
   }
 
 
@@ -174,8 +187,6 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
       success: res => {
         // console.log(res.data.secure_url);
         this.imgServer['images'].push(res.data.secure_url);
-        console.log(this.imgServer);
-        
       },
       error: error => {
         console.log(error);

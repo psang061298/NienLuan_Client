@@ -60,7 +60,7 @@ import { FormatTitlePipe } from './pipe/format-title.pipe';
     ProductAddAdminComponent,
     UserListComponent,
     UserComponent,
-    FormatTitlePipe,    
+    FormatTitlePipe,
     // HeaderAdminComponent
   ],
   imports: [

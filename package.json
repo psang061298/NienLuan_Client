@@ -28,9 +28,12 @@
     "@sedlan/angular-edit": "^0.14.9",
     "@types/googlemaps": "^3.37.7",
     "@types/scriptjs": "0.0.2",
+    "ckeditor": "^4.12.1",
+    "ckeditor4": "^4.13.0",
     "ngx-pagination": "^4.1.0",
     "rxjs": "~6.4.0",
     "scriptjs": "^2.5.9",
+    "sweetalert2": "^8.18.4",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },

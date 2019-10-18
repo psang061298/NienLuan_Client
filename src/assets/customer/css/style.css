@@ -171,6 +171,8 @@ body.mobile .fixed-background{background-attachment: scroll;}
 .simple-article.size-3{font-size: 14px; line-height: 22px;}
 .simple-article.size-4{font-size: 16px; line-height: 24px;}
 .simple-article.size-5{font-size: 18px; line-height: 24px;}
+.simple-article.size-6{font-size: 20px; line-height: 26px;}
+
 
 .simple-article p, .simple-article ul, .simple-article ol, .simple-article img, .simple-article *[class*="col"], .simple-article h1, .simple-article h2, .simple-article h3, .simple-article h4, .simple-article h5, .simple-article h6, .simple-article .embed-responsive, .simple-article .swiper-container{margin-bottom: 22px;}
 .simple-article *:last-child{margin-bottom: 0;}
@@ -754,7 +756,7 @@ span.pagination{border: none;}
 .quantity-select .minus:active, .quantity-select .plus:active{background: #e0e0e0;}
 .quantity-select .minus:before, .quantity-select .plus:before{width: 14px; height: 1px; background: #555; position: absolute; left: 50%; top: 50%; margin-left: -7px; content: "";}
 .quantity-select .plus:after{width: 1px; height: 14px; background: #555; position: absolute; left: 50%; top: 50%; margin-top: -6.5px; margin-left: -.5px; content: "";}
-.quantity-select .number{display: block; text-align: center; margin: 0 50px; font-size: 12px; color: #888;}
+.quantity-select .number{display: block; text-align: center; font-size: 12px; color: #888;}
 .quantity-select .plus{left: auto; right: 0; border: none; border-left: 1px #eee solid; border-radius: 0 21px 21px 0; -webkit-border-radius: 0 21px 21px 0;}
 .detail-data-title.size-1{padding-top: 12px;}
 .detail-data-title.size-2{padding-top: 8px;}
@@ -865,7 +867,7 @@ span.pagination{border: none;}
 .product-shortcode.style-1.big .title{margin-bottom: 0;}
 /**/
 @media (min-width: 768px) {
-	.products-wrapper .product-shortcode.style-1{border-bottom: none; border-top: none; margin-bottom: 60px; padding-top: 0; padding-bottom: 0;}
+	.products-wrapper .product-shortcode.style-1{border-bottom: none; border-top: none; margin-bottom: 50px; padding-top: 0; padding-bottom: 0;}
 	.products-content{overflow: hidden; margin-bottom: 10px;}
 	.products-wrapper{margin: 0 -3px;}
 	.products-content.view-inline{margin-bottom: 70px;}

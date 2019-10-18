@@ -51,5 +51,10 @@ export class CustomerService {
     return this.http.get<Brand[]>(`${this.api}/brands/`);
   }
 
+  getOneProduct(id) : Observable<Product>{
+    return this.http.get<Product>(`${this.api}/products/${id}`);
+
+  }
+
 
 }

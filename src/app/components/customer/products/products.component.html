@@ -21,7 +21,7 @@
                                             <img [src]="item.images[0]" alt="" height="400px" width="460px">
                                             <div class="preview-buttons valign-middle">
                                                 <div class="valign-middle-content">
-                                                    <a class="button size-2 style-2" href="/index/product/1">
+                                                    <a class="button size-2 style-2"  [routerLink]="[ '/index/product', item.id ]">
                                                         <span class="button-wrapper">
                                                             <span class="icon"><img src="../../../../assets/customer/img/icon-1.png" alt=""></span>
                                                             <span class="text">Learn More</span>
@@ -37,7 +37,7 @@
                                             </div>
                                         </div>
                                         <div class="price">
-                                            <div class="simple-article size-4 dark">{{item.price}}</div>
+                                            <div class="simple-article size-4" style="color: red;"><strong>{{item.price | number : '1.0-3'}} vnđ</strong></div>
                                         </div>
                                     </div>
                                 </div>
@@ -51,22 +51,6 @@
                     <div class="align-inline spacing-1">
                         <div class="h4">Sport gadgets</div>
                     </div>
-                    <div class="align-inline spacing-1">
-                        <div class="simple-article size-1">SHOWING <b class="grey">15</b> OF <b class="grey">2 358</b> RESULTS</div>
-                    </div>
-                    <div class="align-inline spacing-1 hidden-xs">
-                        <a class="pagination toggle-products-view active"><img src="../../../../assets/customer/img/icon-14.png" alt="" /><img src="../../../../assets/customer/img/icon-15.png" alt="" /></a>
-                        <a class="pagination toggle-products-view"><img src="../../../../assets/customer/img/icon-16.png" alt="" /><img src="../../../../assets/customer/img/icon-17.png" alt="" /></a>
-                    </div>
-                    <div class="align-inline spacing-1 filtration-cell-width-1">
-                        <select class="SlectBox small">
-                            <option disabled="disabled" selected="selected">Most popular products</option>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="mercedes">Mercedes</option>
-                            <option value="audi">Audi</option>
-                        </select>
-                    </div>
                     <div class="align-inline spacing-1 filtration-cell-width-2">
                         <select class="SlectBox small">
                             <option disabled="disabled" selected="selected">Show 30</option>
@@ -76,8 +60,6 @@
                             <option value="audi">200</option>
                         </select>
                     </div>
-
-
                     <div class="empty-space col-xs-b25 col-sm-b60"></div>
 
                     <div class="products-content">
@@ -93,11 +75,11 @@
                                             <div class="h6 animate-to-green"><a href="#">{{item.name}}</a></div>
                                         </div>
                                         <div class="empty-space col-xs-b20 col-sm-b35 col-md-b15"></div>
-                                        <div class="preview product-list">
+                                        <div class="preview product-list item_product">
                                             <img [src]="item.images[0]" alt="">
-                                            <div class="preview-buttons valign-middle">
+                                            <div class="preview-buttons valign-middle ">
                                                 <div class="valign-middle-content">
-                                                    <a class="button size-2 style-2" href="#">
+                                                    <a class="button size-2 style-2"  [routerLink]="[ '/index/product', item.id ]">
                                                         <span class="button-wrapper">
                                                             <span class="icon"><img src="../../../../assets/customer/img/icon-1.png" alt=""></span>
                                                             <span class="text">Learn More</span>
@@ -115,18 +97,20 @@
                                         <div class="price">
                                             <!-- <div class="simple-article size-4"><span class="color">$630.00</span>&nbsp;&nbsp;&nbsp;<span class="line-through">$350.00</span></div> -->
                                             <div class="simple-article size-4">
-                                                <span class="color">{{item.price | number:'1.0-3'}}đ</span>
+                                                <span style="color: red;"><b>{{item.price | number:'1.0-3'}} vnđ</b> </span>
                                             </div>
 
                                         </div>
-                                        <div class="description">
-                                            <div class="simple-article text size-2">{{item.description | formatTitle:50}}</div>
+                                        <!-- <div class="description">
+                                            <div class="simple-article text size-2">
+                                                {{item.description | formatTitle:50}}
+                                            </div>
                                             <div class="icons">
                                                 <a class="entry"><i class="fa fa-check" aria-hidden="true"></i></a>
                                                 <a class="entry open-popup" data-rel="3"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                                 <a class="entry"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>  
                                 </div>
                                 <!-- <div class="col-sm-4">

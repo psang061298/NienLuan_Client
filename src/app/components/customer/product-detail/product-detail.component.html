@@ -1,16 +1,10 @@
         <div class="header-empty-space"></div>
 
         <div class="container">
-            <div class="empty-space col-xs-b15 col-sm-b30"></div>
-            <div class="breadcrumbs">
-                <a href="#">home</a>
-                <a href="#">accessories</a>
-                <a href="#">gadgets</a>
-                <a href="#">sport gadgets</a>
-            </div>
             <div class="empty-space col-xs-b15 col-sm-b50 col-md-b100"></div>
             <div class="row">
-                <div class="col-md-9 col-md-push-3">
+                <div class="col-md-12 ">
+                        <!-- col-md-push-1 -->
                     <div class="row">
                         <div class="col-sm-6 col-xs-b30 col-sm-b0">
                             
@@ -98,33 +92,26 @@
 
                         </div>
                         <div class="col-sm-6">
-                            <div class="simple-article size-3 grey col-xs-b5">SMART WATCHES</div>
-                            <div class="h3 col-xs-b25">watch 42mm smartwatch</div>
+                            <div class="simple-article size-4 grey col-xs-b5">{{product.category.title}}</div>
+                            <div class="h3 col-xs-b25">{{product.name}}</div>
                             <div class="row col-xs-b25">
                                 <div class="col-sm-6">
-                                    <div class="simple-article size-5 grey">PRICE: <span class="color">$225.00</span></div>        
-                                </div>
-                                <div class="col-sm-6 col-sm-text-right">
-                                    <div class="rate-wrapper align-inline">
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star-o" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="simple-article size-2 align-inline">128 Reviews</div>
+                                    <div class="simple-article size-6 grey">PRICE: <span class="color" style="color: red;"><strong>{{product.price | number :'1.0-3'}} vnđ</strong></span></div>        
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="simple-article size-3 col-xs-b5">ITEM NO.: <span class="grey">127-#5238</span></div>
-                                </div>
-                                <div class="col-sm-6 col-sm-text-right">
-                                    <div class="simple-article size-3 col-xs-b20">AVAILABLE.: <span class="grey">YES</span></div>
+                                <div class="col-sm-6 col-sm-text-left">
+                                    <div class="simple-article size-3 col-xs-b20">AVAILABLE.: 
+                                        <ng-container *ngIf="product.quantity > 0; else elseTemplate">
+                                            <span class="grey">YES</span>
+                                        </ng-container>
+                                        <ng-template #elseTemplate>
+                                            <span class="grey">NO</span>
+                                        </ng-template>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="simple-article size-3 col-xs-b30">Vivamus in tempor eros. Phasellus rhoncus in nunc sit amet mattis. Integer in ipsum vestibulum, molestie arcu ac, efficitur tellus. Phasellus id vulputate erat.</div>
-                            <div class="row col-xs-b40">
+                            <!-- <div class="row col-xs-b40">
                                 <div class="col-sm-3">
                                     <div class="h6 detail-data-title size-1">size:</div>
                                 </div>
@@ -154,16 +141,23 @@
                                         <div class="entry" style="color: #bf584b;"></div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row col-xs-b40">
                                 <div class="col-sm-3">
                                     <div class="h6 detail-data-title size-1">quantity:</div>
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="quantity-select">
-                                        <span class="minus"></span>
-                                        <span class="number">1</span>
-                                        <span class="plus"></span>
+                                        <!-- <span class="minus"></span>
+                                        <input type="number" class="number"> -->
+                                        
+                                        <!-- <span class="number">1</span> -->
+                                        <!-- <span class="plus"></span> -->
+                                        <span class="minus_btn" (click)="changeQty(-1)"></span>
+                                        <input class="number"  type="number"  value="1" min="1" max="product.quantity" [(ngModel)]="amount"
+						                (change)="checkQty($event.target.value)"
+                                        onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))" />                               
+                                        <span class="plus_btn" (click)="changeQty(1)"></span>
                                     </div>
                                 </div>
                             </div>
@@ -602,7 +596,7 @@
                     <div class="empty-space col-md-b70"></div>
 
                 </div>
-                <div class="col-md-3 col-md-pull-9">
+                <!-- <div class="col-md-3 col-md-pull-9">
                     <div class="h4 col-xs-b10">popular categories</div>
                     <ul class="categories-menu transparent">
                         <li>
@@ -958,7 +952,7 @@
                     <div class="empty-space col-xs-b25 col-sm-b60"></div>
 
 
-                </div>
+                </div> -->
             </div>
 
             <div class="swiper-container arrows-align-top" data-breakpoints="1" data-xs-slides="1" data-sm-slides="3" data-md-slides="4" data-lt-slides="4" data-slides-per-view="5">

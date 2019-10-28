@@ -14,9 +14,10 @@ import { BaseAdminComponent } from './components/admin/base-admin/base-admin.com
 import { ProductListAdminComponent } from './components/admin/product-list-admin/product-list-admin.component';
 import { CategoryListAdminComponent } from './components/admin/category-list-admin/category-list-admin.component';
 import { ProductDetailAdminComponent } from './components/admin/product-detail-admin/product-detail-admin.component';
-import { ProductAddAdminComponent } from './components/admin/product-add-admin/product-add-admin.component';
 import { UserListComponent } from './components/admin/user-list/user-list.component';
 import { UserComponent } from './components/customer/user/user.component';
+import { BrandAdminComponent } from './components/admin/brand-admin/brand-admin.component';
+
 
 
 import { Component } from '@angular/core';
@@ -88,6 +89,9 @@ export const appRoutes : Routes = [
             },{
                 path : 'user',
                 component : UserListComponent,
+            },{
+                path : 'brand',
+                component : BrandAdminComponent,
             }
         ]
     }

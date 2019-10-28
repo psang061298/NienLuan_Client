@@ -41,6 +41,7 @@ export class ProductsComponent implements OnInit {
   loadCate(){
     this.customerService.getCategory().subscribe(data =>{
       this.categories = data;
+      this.changeCate(this.categories[0].id)
     })
   }
 
@@ -91,5 +92,15 @@ export class ProductsComponent implements OnInit {
   changeBrand(value){
     this.brandfilter = value;
     this.loadProductFilter();
+  }
+
+  async sleep() {
+    await new Promise(resolve => setTimeout(()=>resolve(), 10)).then(()=>console.log("fired"));
+}
+
+  public reload(){
+    this.sleep().then(data => {
+      window.location.reload();
+    });
   }
   }

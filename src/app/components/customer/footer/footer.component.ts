@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import Swal from 'sweetalert2';
 import { User } from 'src/app/models/user.class';
-import { CustomerService } from '../../../services/customer.service'
+import { CustomerService } from '../../../services/customer.service';
+import jwtDecode from 'jwt-decode'
+
 
 
 @Component({
@@ -26,10 +28,17 @@ export class FooterComponent implements OnInit {
 
   onSubmit(form){
     console.log(form);
-    
     this.auth.login(form.value).subscribe(
       data => {
-        this.router.navigateByUrl('/admin');
+        let decode = jwtDecode(data.access);
+            this.customerService.user_id = decode['user_id'];
+            if(decode['user_id'] == 1){
+              this.router.navigateByUrl('/admin');
+            }
+            else{
+              this.router.navigateByUrl('/index/home');
+              this.delay();
+            }
       },
       error => {
         // console.log(error.error.detail);
@@ -47,6 +56,16 @@ export class FooterComponent implements OnInit {
     this.customerService.register(userJSON).subscribe(data => {
       console.log(data);
     })
+  }
+
+  async sleep() {
+    await new Promise(resolve => setTimeout(()=>resolve(), 10)).then(()=>console.log("fired"));
+  }
+
+  public delay(){
+    this.sleep().then(data => {
+      window.location.reload();
+    });
   }
 
 }

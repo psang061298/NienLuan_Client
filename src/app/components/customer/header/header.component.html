@@ -7,7 +7,23 @@
                     <div class="entry"><b>email:</b> <a href="mailto:office@exzo.com">bacongau@gmail.com</a></div>
                 </div>
                 <div class="col-md-7 col-md-text-right">
-                    <div class="entry"><a class="open-popup" data-rel="1"><b>login</b></a>&nbsp; or &nbsp;<a class="open-popup" data-rel="2"><b>register</b></a></div>
+                    <ng-container *ngIf="token; else elseTemplate">
+                        <div id="account" class="entry">
+                            <a (click)="delay()" [routerLink]="[ '/index/user' ]">
+                                <ng-container *ngIf="user.avatar; else elseTemplate">
+                                        <img [src]="user.avatar" alt="">
+                                    </ng-container>
+                                    <ng-template #elseTemplate>
+                                        <img src="https://res.cloudinary.com/dyjkyzllt/image/upload/v1571902550/qpng7veaeyhwcpt8e1to.png" alt=""  width="20px">
+                                    </ng-template>
+                                <span>{{user.email}}</span>
+                            </a>
+                        </div>
+                    </ng-container>
+                    <ng-template #elseTemplate>
+                        <div class="entry"><a class="open-popup" data-rel="1"><b>login</b></a>&nbsp; or &nbsp;<a class="open-popup" data-rel="2"><b>register</b></a></div>
+                    </ng-template>
+                    
                     <div class="entry hidden-xs hidden-sm cart">
                         <a (click)="delay()" [routerLink]="[ '/index/cart' ]">
                             <b class="hidden-xs">Your bag</b>

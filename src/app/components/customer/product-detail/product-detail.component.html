@@ -1,7 +1,7 @@
         <div class="header-empty-space"></div>
 
         <div class="container">
-            <div class="empty-space col-xs-b15 col-sm-b50 col-md-b100"></div>
+            <div class="empty-space col-xs-b15 col-sm-b50"></div>
             <div class="row">
                 <div class="col-md-12 ">
                         <!-- col-md-push-1 -->
@@ -114,12 +114,12 @@
                                 </div>
                                 
                                 <div class="col-sm-6 col-xs-b10 col-sm-b0">
-                                    <a class="button size-2 style-2 block" href="#">
-                                        <span class="button-wrapper">
+                                    <span class="button size-2 style-2 block" (click)="addCart()" >
+                                        <span class="button-wrapper" >
                                             <span class="icon"><img src="../../../../assets/customer/img/icon-2.png" alt=""></span>
-                                            <span class="text">add to cart</span>
+                                            <span class="text">add to cart</span>                                            
                                         </span>
-                                    </a>
+                                    </span>
                                 </div>
 
                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -209,7 +209,7 @@
                             <div class="empty-space col-xs-b15"></div>
                             <div class="row">
                                 <div class="col-sm-6" *ngFor="let item of specArray">
-                                    <div class="product-description-entry row nopadding">
+                                    <div class="product-description-entry row">
                                         <div class="col-xs-6">
                                             <div class="h6">{{item.key}}:</div>
                                         </div>

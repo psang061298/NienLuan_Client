@@ -13,29 +13,46 @@
                         <div class="empty-space col-xs-b20"></div>
                     <div class="wrapper">
                         <div  class="product-shortcode style-3">
-                            <form>
-                                    <div class="simple-article size-5 grey col-xs-b20">
-                                            <img src="../../../../assets/customer/img/thumbnail-35.jpg" alt="avatar" class="avatar">
-                                        </div>
+                            <form [formGroup]="formdemo" (ngSubmit)="onSubmit()">
+                                <div class="simple-article size-5 grey col-xs-b20">
+                                        <div class="image-upload">
+                                                <label for="file-input">
+                                                  <ng-container *ngIf="user.avatar; else notfound">
+                                                    <img
+                                                      class="img_category"
+                                                      [src]="user.avatar"
+                                                      alt="not found"
+                                                    />
+                                                  </ng-container>
+                                                  <ng-template #notfound>
+                                                    <img
+                                                      src="https://res.cloudinary.com/dyjkyzllt/image/upload/v1571907729/rdi9lrbatly42bsmtnmw.png"
+                                                      class="img_category"
+                                                    />
+                                                  </ng-template>
+                                                </label>
+                                                <input id="file-input" type="file" (change)="editImage($event)" />
+                                              </div>
+                                </div>
 
                                 <div style="border: 1px #eee solid; padding: 15px;">
-                                        <div class="form-group row">
-                                            <label for="name" class="col-sm-3 col-form-label">
-                                                    <div class="empty-space col-xs-b10"></div>
-                                                Họ tên
-                                            </label>
-                                            <div class="col-sm-8">
-                                                <input class="form-control simple-input" type="text" value="" placeholder="Full name">
-                                            </div>
-                                        </div>
                                         <!-- <span class="label label-danger">Email không hợp lệ</span> -->
+                                        <div class="form-group row">
+                                                <label for="name" class="col-sm-3 col-form-label">
+                                                        <div class="empty-space col-xs-b10"></div>
+                                                    Name
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control simple-input " type="text" placeholder="Name" formControlName="name">
+                                                </div>
+                                            </div>
                                         <div class="form-group row">
                                             <label for="name" class="col-sm-3 col-form-label">
                                                     <div class="empty-space col-xs-b10"></div>
                                                 E-mail
                                             </label>
                                             <div class="col-sm-8">
-                                                <input class="form-control simple-input " type="text" placeholder="Email">
+                                                <input class="form-control simple-input " type="text" placeholder="Email" formControlName="email" disabled>
                                             </div>
                                         </div>
                                         
@@ -50,12 +67,12 @@
                                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 row">
                                                     <div class="col-sm-3">
                                                         <label class="checkbox-entry radio">
-                                                            <input type="radio" name="gioitinh" checked /><span>Nam</span>
+                                                            <input type="radio" formControlName="gioitinh" value="Male"/><span>Nam</span>
                                                         </label>
                                                     </div>
                                                     <div class="col-sm-3">
                                                         <label class="checkbox-entry radio">
-                                                            <input type="radio" name="gioitinh" /><span>Nữ</span>
+                                                            <input type="radio" formControlName="gioitinh" value="Female"/><span>Nữ</span>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -67,11 +84,11 @@
                                                     Số điện thoại
                                                 </label>
                                                 <div class="col-sm-8">
-                                                    <input class="form-control simple-input" type="text" value="" placeholder="Phone">
+                                                    <input class="form-control simple-input" type="text" value="" placeholder="Phone" formControlName="phone">
                                                 </div>
                                             </div>
 
-                                            <div class="form-group row">
+                                            <!-- <div class="form-group row">
                                                 <label for="name" class="col-sm-3 col-form-label">
                                                         <div class="empty-space col-xs-b10"></div>
                                                     Địa chỉ giao hàng <br>mặc định
@@ -79,10 +96,10 @@
                                                 <div class="col-sm-8">
                                                     <input class="form-control simple-input " #agmSearch name="address" (change)="address()" >
                                                 </div>
-                                            </div>
-                                            <agm-map [latitude]="lat" [longitude]="lng" *ngIf="lat != 0 && lng != 0">
+                                            </div> -->
+                                            <!-- <agm-map [latitude]="lat" [longitude]="lng" *ngIf="lat != 0 && lng != 0">
                                                     <agm-marker [latitude]="lat" [longitude]="lng" ></agm-marker>
-                                            </agm-map>
+                                            </agm-map> -->
                                         <div class="empty-space col-xs-b20"></div>
 
                                         <button type="submit" style="border : none" class="button size-2 style-3" href="#">
@@ -199,42 +216,75 @@
                 </div>
 
                 <div id="address" class="container arrows-align-top fade in tab-pane">
-                        <div class="h4 title">Địa chỉ của bạn</div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div class="title h4">
+                                    Địa chỉ của bạn
+                            </div> 
+                            <button class="btn_custom-transition btn_custom btn_custom-outline-danger right" (click)="createNewAddForm()">New Address</button>
+
+                        </div>
                             <div class="empty-space col-xs-b20"></div>
-                        <div class="wrapper">
+                        <div class="wrapper" >
+                                <div class="product-shortcode style-3 slide-in-elliptic-top-fwd" [ngStyle]="{'display':showFormAddress ? 'block' : 'none' }">
+                                        <div class="container">
+                                            
+                                            <form [formGroup]="form_add" (ngSubmit)="createNewAdress()">
+                                                <table class="cart-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>
+                                                                
+                                                                <input type="text" class="reciver_name" placeholder="Name" formControlName="name">
+                                                                
+                                                            </th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="tdAddress"><h6 class="h5"><input type="text" class="reciver_phone" placeholder="Phone" formControlName="phone"></h6></td>
+                                                            <td class="tdAddress" colspan="2">
+                                                                <h6 class="h5">
+                                                                    <input type="text" class="reciver_phone" placeholder="address" formControlName="address" #agmSearch name="address" (change)="address()">
+                                                                </h6>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                                <div class="empty-space col-xs-b15"></div>
+
+                                                <button type="submit" class="btn_custom-transition btn_custom btn_custom-outline-primary">Submit</button>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="empty-space col-xs-b20" *ngIf="showFormAddress"></div>
+
                             <div class="style-3">
                                 <div class="product-shortcode style-3">
                                     <div class="container">
-                                            <table class="cart-table">
+                                            <table class="cart-table" *ngFor="let item of user.shipping_addresses">
                                                 <thead>
                                                     <tr>
-                                                        <th>Tên</th>
-                                                        <th></th>
+                                                        <th colspan="2">{{ item.fullname }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td data-title=" ">
-                                                            <a class="cart-entry-thumbnail" href="#"><img src="img/product-1.png" alt=""></a>
-                                                        </td>
-                                                        <td data-title=" "><h6 class="h6"><a href="#">modern beat ht</a></h6></td>
-                                                        <td data-title="Price: ">$155.00</td>
-                                                        <td data-title="Quantity: ">
-                                                            <div class="quantity-select">
-                                                                <span class="minus"></span>
-                                                                <span class="number">2</span>
-                                                                <span class="plus"></span>
-                                                            </div>
-                                                        </td>
-                                                        <td data-title="Color: "><div class="cart-color" style="background: #eee;"></div></td>
+                                                        <td data-title=" "><h6 class="h6">{{item.phone}}</h6></td>
+                                                        <td data-title="Price: ">{{item.address}}</td>
+                                                        <!-- <td data-title="Color: "><div class="cart-color" style="background: #eee;"></div></td>
                                                         <td data-title="Total:">$310.00</td>
                                                         <td data-title="">
                                                             <div class="button-close"></div>
-                                                        </td>
+                                                        </td> -->
                                                     </tr>
                                                 </tbody>
+                                            <div class="empty-space col-xs-b35 col-md-b20"></div>
+
                                             </table>
-                                            <div class="empty-space col-xs-b35 col-md-b70"></div>
                                             <div class="empty-space col-xs-b35 col-md-b70"></div>
                                         </div>
                                 </div>

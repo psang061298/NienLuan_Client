@@ -79,7 +79,7 @@
                                             <img [src]="item.images[0]" alt="">
                                             <div class="preview-buttons valign-middle ">
                                                 <div class="valign-middle-content">
-                                                    <a class="button size-2 style-2"  [routerLink]="[ '/index/product', item.id ]">
+                                                    <a class="button size-2 style-2"  [routerLink]="[ '/index/product', item.id ]" (click)="reload()">
                                                         <span class="button-wrapper">
                                                             <span class="icon"><img src="../../../../assets/customer/img/icon-1.png" alt=""></span>
                                                             <span class="text">Learn More</span>

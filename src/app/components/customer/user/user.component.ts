@@ -2,6 +2,13 @@ import { Component, OnInit, ElementRef, ViewChild, NgZone, OnChanges } from '@an
 import { } from 'googlemaps';
 import { MapsAPILoader, GoogleMapsAPIWrapper } from '@agm/core';
 import { Marker } from '@agm/core/services/google-maps-types';
+import { User } from 'src/app/models/user.class';
+import { CustomerService } from '../../../services/customer.service'
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Address } from 'src/app/models/address.class';
+
+declare var $ : any;
 
 
 
@@ -10,19 +17,43 @@ import { Marker } from '@agm/core/services/google-maps-types';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnInit , OnChanges {
+export class UserComponent implements OnInit{
 
   @ViewChild('agmSearch' , {static : true}) public addr : ElementRef;
 
+
+  user : User;
+  token : string;
   public place1 : google.maps.places.PlaceResult;
-  lat = 0;
-  lng = 0;
+  private formdemo: FormGroup;
+  private form_add : FormGroup;
+  new_address : Address = new Address();
+  showFormAddress = false;
   constructor(
-    private ngZone : NgZone
+    private ngZone : NgZone,
+    private customerService : CustomerService,
+    public router : Router,
+    private form: FormBuilder,
+
   ) { }
 
   ngOnInit() {
-    this.address();
+    this.loadUser();
+  }
+
+  loadUser(){
+    this.customerService.getUser().subscribe(data => {
+      if(data){
+        this.user = data;
+        this.create();
+        this.newAdressForm();
+        this.address();
+
+      }
+      else{
+        this.router.navigateByUrl('');
+      }
+    })
   }
 
   address(){
@@ -30,20 +61,84 @@ export class UserComponent implements OnInit , OnChanges {
     autoaddress.addListener("place_changed",()=>{
       this.ngZone.run(()=>{
         this.place1 = autoaddress.getPlace();
-        try{
-          this.lat = this.place1.geometry.location.lat();
-          this.lng = this.place1.geometry.location.lng();
-        }
-        catch(Ex){
-          this.lat = 0;
-          this.lng = 0;
-        }
+        // console.log(this.place1);
+        this.form_add.get('address').setValue(this.place1.formatted_address)
       })
     });
-}
+  }
 
-ngOnChanges(): void {
-  // this.address();
-}
+  create() {
+    this.formdemo = this.form.group({
+      name : [this.user.email, [Validators.required]],
+      email: [this.user.email],
+      phone: [
+        "",
+        [Validators.required, Validators.pattern("^\\+?[0-9]{3}-?[0-9]{6,12}$")]
+      ],
+      gioitinh : ['Male']
+    });
+  }
 
+  newAdressForm() {
+    this.form_add = this.form.group({
+      name : ['', [Validators.required]],
+      address: ['',Validators.required],
+      phone: [
+        "",
+        [Validators.required, Validators.pattern("^\\+?[0-9]{3}-?[0-9]{6,12}$")]
+      ],
+    });
+
+  }
+
+  createNewAddForm(){
+    this.showFormAddress = true;
+  }
+
+  createNewAdress(){
+    console.log(this.form_add);
+    this.new_address.fullname = this.form_add.get('name').value;
+    this.new_address.phone= this.form_add.get('phone').value;
+    this.new_address.address= this.form_add.get('address').value;
+    this.new_address.member = this.customerService.user_id;
+    console.log(this.new_address);
+    let addressJSON = JSON.stringify(this.new_address);
+    this.customerService.postAddress(addressJSON).subscribe(data => {
+      console.log(data);
+      this.showFormAddress = false;
+
+      window.location.reload();
+    })
+  }
+
+
+  editImage(event) {
+    let selectFile = event.target.files;
+    const url = "http://127.0.0.1:8000/upload_image/";
+    const myData = new FormData();
+    myData.append('source', selectFile[0]);
+    $.ajax({
+      url,
+      data: myData,
+      headers: {
+        // Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`
+      },
+      processData: false,
+      contentType: false,
+      type: 'POST',
+      success: res => {
+        console.log(res.data.secure_url);
+        this.user.avatar = (res.data.secure_url);
+        console.log(this.user);
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
+  }
+
+  onSubmit(){
+    console.log(this.formdemo);
+    
+  }
 }

@@ -64,7 +64,19 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
+  addCart(){
+    let Cart : Object = {
+      quantity : this.amount,
+      product : Number.parseInt(this.id.toString()),
+      cart : this.customerService.user_id
+    }
+    let cartJSON = JSON.stringify(Cart);
 
+    this.customerService.postCart(cartJSON).subscribe(data => {
+      console.log(data);
+      
+    })
+  }
   
 
 }

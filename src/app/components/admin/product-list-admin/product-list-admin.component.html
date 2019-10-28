@@ -35,19 +35,31 @@
                                             <tr>
                                                 <th>STT</th>
                                                 <th>NAME</th>
+                                                <th>Category</th>
+                                                <th>BRAND</th>
+                                                <th>PRICE</th>
+                                                <th>QUANTITY</th>
+                                                <th>IMAGE</th>
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let item of items | paginate: { 
+                                            <tr *ngFor="let item of products | paginate: { 
                                                                                         itemsPerPage: 10,
                                                                                         currentPage: this.p,
-                                                                                        totalItems: 100 }"
-                                                [routerLink]="[ '/admin/product', 123 ]"
-                                                                                        >
-                                                <td>{{item.id}}</td>
+                                                                                        totalItems: 100 } ; let i = index"
+                                                [routerLink]="[ '/admin/product', item.id ]"
+                                                >
+                                                <td>{{(p-1)*10 + i + 1}}</td>
                                                 <td>{{item.name}}</td>
-                                                <td>{{item.status}}</td>
+                                                <td>{{item.category.title}}</td>
+                                                <td>{{item.brand.name}}</td>
+                                                <td>{{item.price | number : '1.0-3'}} đ</td>
+                                                <td>{{item.quantity}}</td>
+                                                <td>
+                                                <img [src]="item.images[0]" class="image" alt="Image">
+                                                </td>
+                                                <td>{{item.is_active}}</td>
                                             </tr>
                                         </tbody>
                                         

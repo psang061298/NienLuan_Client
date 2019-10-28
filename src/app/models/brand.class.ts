@@ -4,4 +4,11 @@ export class Brand{
     country : string;
     logo : string;
     is_active : boolean;
+
+    constructor(){
+        this.name = '';
+        this.country = '';
+        this.logo = '';
+        this.is_active = false;
+    }
 }

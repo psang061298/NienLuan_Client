@@ -1,7 +1,8 @@
 export class User {
   email: string;
   password: string;
+  gender? : string;
   access?: string;
-  expiresIn?: string;
-  stripeTok?: string;
+  avatar? : string;
+  shipping_addresses? : string[];
 }

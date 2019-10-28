@@ -12,7 +12,7 @@ export class Product{
         value: string;
       };
     
-    Product(){
+    constructor(){
         this.name = '';
         this.brand = -1;
         this.description = '';
@@ -25,7 +25,17 @@ export class Product{
             key: '',
             value: ''
           };
-
+    }
+    Product(name , brand , des , images , price,quantity,category,is_active,specifications){
+      this.name = name;
+      this.brand = brand;
+      this.description = des;
+      this.images = images;
+      this.price = price;
+      this.quantity = quantity;
+      this.category = category;
+      this.is_active = is_active;
+      this.specifications = specifications;
     }
 
 }

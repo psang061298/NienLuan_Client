@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from 'src/app/models/product.class';
+import { AdminService } from '../../../services/admin/admin.service'
+
 
 
 @Component({
@@ -9,32 +12,29 @@ import { Component, OnInit } from '@angular/core';
 export class ProductListAdminComponent implements OnInit {
 
   p = 1;
-  constructor() {
-    for (let i = 1; i <= 100; i++) {
-      var item = {
-        id : 0,
-        name : '',
-        status : true,
-      }
-      item.id = i;
-      item.name = `item ${i}`;
-      item.status = true;
-      this.items.push(item);
-    }
+  products : Product[] = [];
+  constructor(
+    private adminService : AdminService,
+  ) {
   }
 
-  public items : any[] = [
-  ]
+  // public items : any[] = [
+  // ]
   ngOnInit() {
+    this.products = new Array();
+    this.adminService.getProduct().subscribe(data => {
+      this.products = data['results'];
+      console.log(this.products);
+    })
     
   }
-  async sleep() {
-    await new Promise(resolve => setTimeout(()=>resolve(), 10)).then(()=>console.log("fired"));
-  }
+  // async sleep() {
+  //   await new Promise(resolve => setTimeout(()=>resolve(), 10)).then(()=>console.log("fired"));
+  // }
 
-  public reload(){
-    this.sleep().then(data => {
-      window.location.reload();
-    });
-  }
+  // public reload(){
+  //   this.sleep().then(data => {
+  //     window.location.reload();
+  //   });
+  // }
 }

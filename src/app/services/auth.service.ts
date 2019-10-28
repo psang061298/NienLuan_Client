@@ -6,6 +6,9 @@ import { map } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Router } from '@angular/router';
+// var jwtDecode = require('jwt-decode');
+
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -13,6 +16,7 @@ const httpOptions = {
     // Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`
   })
 };
+
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +35,10 @@ export class AuthService {
       .post<User>(`${this.AUTH_SERVER}/login/`, userJSON,httpOptions)
       .pipe(
         map(user => {
+          let decode = '';
           if (user && user.access) {
-            this.saveToken(user.access, user.expiresIn, user.stripeTok);
+              
+            this.saveToken(user.access);
           }
           return user;
         })
@@ -42,19 +48,13 @@ export class AuthService {
   logout() {
     this.token = '';
     localStorage.removeItem('ACCESS_TOKEN');
-    localStorage.removeItem('EXPIRES_IN');
-    localStorage.removeItem('stripe_tok');
     this.router.navigateByUrl('');
   }
 
   private saveToken(
     token: string,
-    expiresIn: string,
-    stripeTok: string
   ): void {
     localStorage.setItem('ACCESS_TOKEN', token);
-    localStorage.setItem('EXPIRES_IN', expiresIn);
-    localStorage.setItem('stripe_tok', stripeTok);
     this.token = token;
   }
 }

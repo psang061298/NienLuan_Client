@@ -7,6 +7,7 @@ import { AdminService } from '../../../services/admin/admin.service'
 import { Category } from 'src/app/models/category.class';
 import { Brand } from 'src/app/models/brand.class';
 import { Product } from 'src/app/models/product.class';
+import Swal from 'sweetalert2';
 // import * as $ from '@types/jquery';
 
 
@@ -39,6 +40,7 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
     images: []
   });
 
+
   constructor(
     private form: FormBuilder,
     public router: Router,
@@ -48,22 +50,58 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
 
   ngOnInit() {
     this.brands = new Array();
+    this.category = new Array();
     this.product = new Product();
     this.activatedRoute.params.subscribe(data => {
-      this.id = data['id'],
-      console.log(this.id);
-      this.loadSpec(this.product['spec']);
+      this.id = data['id'];
+        this.create();
+        this.loadCate();
+        this.loadBrand();
+      if(this.id != 0){
+        this.adminService.getProductDetail(this.id).subscribe(data => {
+          console.log(data);
+          this.product = data;
+          this.loadData();
+        })
+      }
+      else{
+        this.rawData()
+      }
+      // this.loadSpec(this.product['spec']);
     });
-    this.loadCate();
-    this.loadBrand();
-    this.create();
+
   }
+
+  loadData(){
+    this.formdemo.get('name').setValue(this.product.name);
+    this.formdemo.get('category').setValue(this.product.category['title']);
+    this.formdemo.get('brand').setValue(this.product.brand);
+    this.formdemo.get('is_active').setValue(this.product.is_active);
+    this.formdemo.get('price').setValue(this.product.price);
+    this.formdemo.get('quantity').setValue(this.product.quantity);
+    this.formdemo.get('des').setValue(this.product.description);
+    this.loadSpec(this.product.specifications);
+    this.product.images.forEach(data => {
+      this.imgServer['images'].push(data);
+    })
+    this.product.brand = this.product.brand['id'];
+    this.product.category = this.product.category['id'];
+  }
+
+  rawData(){
+    // this.product.category = this.category[0].id;
+    // this.formdemo.get('category').setValue(this.category[0].title);
+  }
+
 
   loadCate(){
     this.adminService.getcategory().subscribe(data => {
       this.category = data;
-      this.selectedCate = this.category[0].id;
-      this.product.category = this.category[0].id;
+      // this.selectedCate = this.category[0].id;
+      if(this.id == 0){
+      this.product.category = this.category[0].id; // luu trong csdl      
+      this.formdemo.get('category').setValue(this.category[0].title); //de cho nguoi ta coi thoi
+      }
     })
   }
   
@@ -75,7 +113,10 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
   loadBrand(){
     this.adminService.getBrand().subscribe(data => {
       this.brands = data;
-      this.product.brand = data[0].id
+      if(this.id == 0){
+      this.product.brand = this.brands[0].id; // luu trong csdl
+        this.formdemo.get('brand').setValue(this.brands[0]);
+      }
     })
   }
 
@@ -87,6 +128,8 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
       price: [0, [Validators.required, Validators.pattern('^[1-9]{1}[0-9]*')]],
       quantity: [0, [Validators.required , , Validators.pattern('^[1-9]{1}[0-9]*')]],
       is_active : [false],
+      category : [''],
+      brand : [''],
     });
   }
 
@@ -128,7 +171,14 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
 
   
   changeBrand(event){
+    
     this.product.brand = event.id;
+  }
+
+  changeCate(event){
+    console.log(event);
+    
+    this.product.category = event
   }
 
   public onReady(editor) {
@@ -139,10 +189,13 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
   }
 
   submit(){
-    // let imgJSON = JSON.stringify(this.imgServer['images']);
-    // console.log(imgJSON);
-    this.product.is_active = this.formdemo.get('is_active').value;
 
+    this.product.is_active = this.formdemo.get('is_active').value;
+    this.product.name = this.formdemo.get('name').value;
+    this.product.description = this.formdemo.get('des').value;
+    this.product.price = this.formdemo.get('price').value;
+    this.product.quantity = this.formdemo.get('quantity').value;
+    
     if (this.specArray.length > 0) {
       const object = this.specArray.reduce(
         (acc, it) => ((acc[it.key] = it.value), acc),
@@ -153,18 +206,35 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
 
     if(this.imgServer['images'].length > 0){
       this.product.images = this.imgServer['images'];
+
+      console.log(this.product);
+    
+      let productJSON = JSON.stringify(this.product);
+      console.log(productJSON);
+      
+      if(this.id == 0){
+        this.adminService.postProduct(productJSON).subscribe(data => {
+          console.log(data);
+        })
+      }
+      else{
+        this.adminService.putProduct(this.id,productJSON).subscribe(data => {
+          console.log(data);
+        })
+      }
+      
+    }
+    else{
+      Swal.fire('Image is requied');
     }
 
-    let productJSON = JSON.stringify(this.product);
-    this.adminService.postProduct(productJSON).subscribe(data => {
-      console.log(data);
-    })
+    
   }
 
 
   ngOnDestroy(): void {
     this.Editor = '';
-    this.config = { extraPlugins: [] };
+    this.config = { extraPlugins: []};
   }
 
 
@@ -193,8 +263,8 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
     });
   }
 
-  changeCate(value){
-    this.product['category'] = value;
-    console.log(this.product['category']);
+  delProduct(id){
+
   }
+
 }

@@ -3,7 +3,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import jwtDecode from 'jwt-decode'
 import { CustomerService } from '../../../services/customer.service'
 import { User } from 'src/app/models/user.class';
-import { Cart } from 'src/app/models/cart.class';
+import { Cart } from 'src/app/models/cart_post.class';
+import { Cart_Item } from 'src/app/models/cart_item.class';
 
 
 @Component({
@@ -13,7 +14,9 @@ import { Cart } from 'src/app/models/cart.class';
 })
 export class HeaderComponent implements OnInit , OnChanges {
 
-  cart : Cart;
+  cart_items : Cart_Item[] = [];
+  count : number = 0;
+  totalPrice : number = 0;
   token : any;
   user : User;
   constructor(
@@ -29,6 +32,7 @@ export class HeaderComponent implements OnInit , OnChanges {
       let decode = jwtDecode(this.token);
       this.loadProfile(decode['user_id']);
     }
+    this.loadCart();
   }
 
   loadProfile(id){
@@ -46,6 +50,23 @@ export class HeaderComponent implements OnInit , OnChanges {
       let decode = jwtDecode(this.token);
       this.loadProfile(decode['user_id']);
     }
+    this.loadCart();
+  }
+
+  loadCart(){
+    this.customerService.getCart().subscribe(data => {
+      this.cart_items = data[0]['cart_items'];
+      console.log(this.cart_items);
+      for (let i = 0; i < this.cart_items.length; i++) {
+        let img : string;
+        img = this.cart_items[i].product.images.toString().replace(/'/g,'"');
+        this.cart_items[i].product.images = JSON.parse(img);
+        this.count += this.cart_items[i].quantity;
+        this.totalPrice += this.cart_items[i].product.price*this.cart_items[i].quantity;
+      }
+    }, err => {
+      console.log(err);
+    })
   }
 
 
@@ -59,4 +80,10 @@ export class HeaderComponent implements OnInit , OnChanges {
     });
   }
 
+  delCart_Item(id){
+    this.customerService.delCart_Item(id).subscribe(data =>{
+      console.log(data);
+      window.location.reload();
+    })
+  }
 }

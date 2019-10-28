@@ -5,6 +5,7 @@ import { Product } from 'src/app/models/product.class';
 import { Brand } from 'src/app/models/brand.class';
 import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2'
+import { Cart_Item } from 'src/app/models/cart_item.class';
 
 @Component({
   selector: 'app-product-detail',
@@ -12,6 +13,8 @@ import Swal from 'sweetalert2'
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit {
+
+  cart_items : Cart_Item[] = [];
 
   id : number;
   public specArray : any[] = [];
@@ -33,8 +36,18 @@ export class ProductDetailComponent implements OnInit {
         this.loadSpec(this.product.specifications);
       })
     });
+    //neu co cart thi load
+    this.loadCart();
   }
 
+  loadCart(){
+    this.customerService.getCart().subscribe(data => {
+      this.cart_items = data[0]['cart_items'];
+      console.log(this.cart_items);
+    }, err => {
+      console.log(err);
+    })
+  }
 
   loadSpec(any) {
     this.specArray = Object.keys(any).map(it => ({ key: it, value: any[it] }));
@@ -65,18 +78,40 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addCart(){
-    let Cart : Object = {
-      quantity : this.amount,
-      product : Number.parseInt(this.id.toString()),
-      cart : this.customerService.user_id
-    }
-    let cartJSON = JSON.stringify(Cart);
-
-    this.customerService.postCart(cartJSON).subscribe(data => {
-      console.log(data);
+    let already = false;
+    this.cart_items.forEach(item => {
+      // console.log(item.product.id);
       
-    })
-  }
-  
+      if(this.id == item.product.id){
+        console.log(item.product.id);
+        
+        let Cart : Object = {
+          quantity : this.amount + item.quantity,
+          product : Number.parseInt(this.id.toString()),
+          cart : this.customerService.user_id
+        }
+        let cartJSON = JSON.stringify(Cart);
+        console.log(cartJSON);
+        
+        this.customerService.putCart(item['id'],cartJSON).subscribe(data => {
+          console.log(data);
+        })
+        already = true;
+      }
+    });
 
+    if(!already){
+      let Cart : Object = {
+        quantity : this.amount,
+        product : Number.parseInt(this.id.toString()),
+        cart : this.customerService.user_id
+      }
+      let cartJSON = JSON.stringify(Cart);
+      this.customerService.postCart(cartJSON).subscribe(data => {
+        console.log(data);
+      })
+      console.log(cartJSON);
+    }
+    window.location.reload();
+  }
 }

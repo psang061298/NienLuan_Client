@@ -29,36 +29,33 @@
                             <b class="hidden-xs">Your bag</b>
                             <span class="cart-icon">
                                 <i class="fas fa-shopping-cart" aria-hidden="true"></i>
-                                <span class="cart-label">5</span>
+                                <span class="cart-label">{{ count }}</span>
                             </span>
-                            <span class="cart-title hidden-xs">$1195.00</span>
+                            <span class="cart-title hidden-xs">{{ totalPrice | number : '1.0-3' }} đ</span>
                         </a>
                         <div class="cart-toggle hidden-xs hidden-sm">
                             <div class="cart-overflow">
-                                <div class="cart-entry clearfix">
-                                    <a class="cart-entry-thumbnail" href="#"><img src="../../../../assets/customer/img/product-1.png" alt="" /></a>
+                                <div class="cart-entry clearfix" *ngFor="let item of cart_items">
+                                    <a class="cart-entry-thumbnail" href="#"><img [src]="item.product.images[0]" alt="" /></a>
                                     <div class="cart-entry-description">
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <div class="h6"><a href="#">modern beat ht</a></div>
-                                                    <div class="simple-article size-1">QUANTITY: 2</div>
+                                                    <div class="h6"><a href="#">{{item.product.name | formatTitle : 30}}</a></div>
+                                                    <div class="simple-article size-1">QUANTITY: {{item.quantity}}</div>
                                                 </td>
                                                 <td>
-                                                    <div class="simple-article size-3 grey">$155.00</div>
-                                                    <div class="simple-article size-1">TOTAL: $310.00</div>
+                                                    <div class="simple-article size-3 grey">{{item.product.price | number : '1.0-3'}} đ</div>
+                                                    <div class="simple-article size-1">TOTAL: {{ item.product.price * item.quantity | number : '1.0-3'}} đ</div>
                                                 </td>
                                                 <td>
-                                                    <div class="cart-color" style="background: #eee;"></div>
-                                                </td>
-                                                <td>
-                                                    <div class="button-close"></div>
+                                                    <div class="button-close" (click)="delCart_Item(item.id)"></div>
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
-                                <div class="cart-entry clearfix">
+                                <!-- <div class="cart-entry clearfix">
                                     <a class="cart-entry-thumbnail" href="#"><img src="../../../../assets/customer/img/product-2.png" alt="" /></a>
                                     <div class="cart-entry-description">
                                         <table>
@@ -172,13 +169,13 @@
                                             </tr>
                                         </table>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="empty-space col-xs-b40"></div>
                             <div class="row">
                                 <div class="col-xs-6">
                                     <div class="cell-view empty-space col-xs-b50">
-                                        <div class="simple-article size-5 grey">TOTAL <span class="color">$1195.00</span></div>
+                                        <div class="simple-article size-5 grey">TOTAL <span class="color">{{ totalPrice | number : '1.0-3' }} đ</span></div>
                                     </div>
                                 </div>
                                 <div class="col-xs-6 text-right">

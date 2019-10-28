@@ -7,9 +7,9 @@ import { Product } from '../models/product.class';
 import { Brand } from '../models/brand.class'
 import { User } from '../models/user.class';
 import { Subject } from 'rxjs';
-import { Cart } from '../models/cart.class';
+import { Cart } from '../models/cart_post.class';
 import { Address } from '../models/address.class';
- 
+import { Cart_Item } from '../models/cart_item.class';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,6 +17,7 @@ const httpOptions = {
     'Authorization' : 'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
   })
 };
+
 
 
 @Injectable({
@@ -80,8 +81,19 @@ export class CustomerService {
     return this.http.post<Cart>(`${this.api}/carts/items/`, cart,httpOptions);
   }
 
+  putCart(id,cart) : Observable<Cart>{
+    return this.http.put<Cart>(`${this.api}/carts/items/${id}/`,cart,httpOptions);
+  }
+
   postAddress(address) : Observable<Address>{
     return this.http.post<Address>(`${this.api}/addresses/`, address,httpOptions);
   }
 
+  getCart() : Observable<any>{
+    return this.http.get<any>(`${this.api}/carts/`,httpOptions);
+  }
+
+  delCart_Item(id) : Observable<Cart>{
+    return this.http.delete<Cart>(`${this.api}/carts/items/${id}/`,httpOptions);
+  }
 }

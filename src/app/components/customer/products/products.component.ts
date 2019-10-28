@@ -95,11 +95,12 @@ export class ProductsComponent implements OnInit {
   }
 
   async sleep() {
-    await new Promise(resolve => setTimeout(()=>resolve(), 10)).then(()=>console.log("fired"));
+    await new Promise(resolve => setTimeout(()=>resolve(), 20)).then(()=>console.log("fired"));
 }
 
   public reload(){
     this.sleep().then(data => {
+      window.scroll(0,0);
       window.location.reload();
     });
   }

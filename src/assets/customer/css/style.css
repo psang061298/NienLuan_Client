@@ -455,7 +455,7 @@ header{position: fixed; left: 0; top: 0; width: 100%; z-index: 10; -webkit-backf
 .cart-entry{background: #f4f4f4; border-radius: 5px; -webkit-border-radius: 5px; padding: 30px; margin-bottom: 1px;}
 .cart-color{width: 12px; height: 12px; display: inline-block;}
 .cart-entry-thumbnail{float: left; transition: all .15s; -webkit-transition: all .15s;}
-.cart-entry-thumbnail img{display: block;}
+.cart-entry-thumbnail img{display: block; width: 90px;}
 .cart-entry-thumbnail:hover{opacity: .8;}
 .cart-entry-description{margin-left: 105px; padding-top: 22px;}
 .cart-entry table{width: 100%;}

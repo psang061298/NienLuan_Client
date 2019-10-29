@@ -1,6 +1,10 @@
-.bg_custom{
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 80vw 60vh;
-    height : 60vh
+.img{
+    width: 80vw;
+    height: 25vw;
+    margin: auto;
+    .bg_custom{
+        height : 25vw;
+        width: 80vw;
+    }
 }
+

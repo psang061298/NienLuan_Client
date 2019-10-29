@@ -498,8 +498,8 @@
                 <div class="col-md-3 col-md-pull-9">
                     <div class="h4 col-xs-b10">popular categories</div>
                     <ul class="categories-menu transparent nav">
-                        <li class="nav-item" *ngFor="let item of categories">
-                            <a data-toggle="tab" class="nav-link" (click)="changeCate(item.id)">
+                        <li class="nav-item" *ngFor="let item of categories ; let i=index" data-toggle="tab" [ngClass]="{'active': i==0}">
+                            <a  class="nav-link" (click)="changeCate(item.id)">
                                 <span><b>{{item.title}}</b></span>
                             </a>
                         </li>

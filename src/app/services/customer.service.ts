@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 import { Cart } from '../models/cart_post.class';
 import { Address } from '../models/address.class';
 import { Cart_Item } from '../models/cart_item.class';
+import { Promotion } from '../models/promotion.class';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -95,5 +96,14 @@ export class CustomerService {
 
   delCart_Item(id) : Observable<Cart>{
     return this.http.delete<Cart>(`${this.api}/carts/items/${id}/`,httpOptions);
+  }
+
+  putCart_Item(id , cart) : Observable<Cart_Item>{
+    return this.http.patch<Cart_Item>(`${this.api}/carts/items/${id}/`,cart,httpOptions);
+  }
+
+  getPromotion() : Observable<Promotion[]>{
+    return this.http.get<Promotion[]>(`${this.api}/promotions/`);
+
   }
 }

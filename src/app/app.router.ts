@@ -17,6 +17,8 @@ import { ProductDetailAdminComponent } from './components/admin/product-detail-a
 import { UserListComponent } from './components/admin/user-list/user-list.component';
 import { UserComponent } from './components/customer/user/user.component';
 import { BrandAdminComponent } from './components/admin/brand-admin/brand-admin.component';
+import { AuthGuard } from './services/guard/auth-login.guard';
+
 
 
 
@@ -59,15 +61,18 @@ export const appRoutes : Routes = [
                 component : UserComponent,
             }
         ],
+
     },
     {
         path : "admin",
         redirectTo : "/admin/dashboard",
-        pathMatch : "full"
+        pathMatch : "full",
+        canActivate : [AuthGuard],
     },
     {
         path : 'admin',
         component : BaseAdminComponent,
+        canActivate : [AuthGuard],
         children : [
             {
                 path : 'dashboard',

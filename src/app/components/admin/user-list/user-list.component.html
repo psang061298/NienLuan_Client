@@ -30,21 +30,19 @@
                                     <thead>
                                         <tr>
                                             <th>STT</th>
-                                            <th>NAME</th>
-                                            <th>Status</th>
+                                            <th>Email</th>
+                                            <th>Gender</th>
+                                            <th>Active</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- <tr *ngFor="let item of items | paginate: { 
-                                                                                    itemsPerPage: 10,
-                                                                                    currentPage: this.p,
-                                                                                    totalItems: 100 }"
-                                            [routerLink]="[ '/admin/product', 123 ]"
-                                                                                    >
-                                            <td>{{item.id}}</td>
-                                            <td>{{item.name}}</td>
-                                            <td>{{item.status}}</td>
-                                        </tr> -->
+                                        <tr *ngFor="let item of users | paginate : {itemsPerPage:10, currentPage: p}; let i = index">
+                                            
+                                            <td>{{ (p-1)*10 + i + 1 }}</td>
+                                            <td>{{item.email}}</td>
+                                            <td>{{item.gender}}</td>
+                                            <td>{{item.active}}</td>
+                                        </tr>
                                     </tbody>
                                     
                                 </table>
@@ -53,18 +51,12 @@
                         
                     </div>
                     <div class="container">
-                            <pagination-controls
-                                        (pageChange)="p = $event"
-                                        maxSize="9"
-                                        directionLinks="true"
-                                        autoHide="true"
-                                        responsive="true"
-                                        previousLabel="Previous"
-                                        nextLabel="Next"
-                                        screenReaderPaginationLabel="Pagination"
-                                        screenReaderPageLabel="page"
-                                        screenReaderCurrentLabel="You're on page">
-                    </pagination-controls>
+                        <pagination-controls 
+                            (pageChange)="p = $event"  
+                            maxSize="10"
+                            previousLabel="Previous"
+                            nextLabel="Next">
+                        </pagination-controls>
                     </div>
                     
                     

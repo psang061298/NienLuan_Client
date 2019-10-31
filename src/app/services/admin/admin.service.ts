@@ -4,11 +4,12 @@ import { Observable, ObservedValueOf } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Brand } from 'src/app/models/brand.class';
 import { Product } from 'src/app/models/product.class';
+import { User } from 'src/app/models/user.class';
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    // Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`
+    Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`
   })
 };
 
@@ -64,8 +65,8 @@ export class AdminService {
     return this.http.post<Product>(`${this.api}/products/`,pro,httpOptions);
   }
 
-  public getProduct() : Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.api}/products/`);
+  public getProduct(page) : Observable<Product[]>{
+    return this.http.get<Product[]>(`${this.api}/products/?page=${page}`);
   }
 
   public getProductDetail(id) : Observable<Product>{
@@ -74,6 +75,10 @@ export class AdminService {
 
   public putProduct(id,product) : Observable<Product>{
     return this.http.put<Product>(`${this.api}/products/${id}/update/`,product,httpOptions);
+  }
+
+  public getUser() : Observable<User[]>{
+    return this.http.get<User[]>(`${this.api}/users/`, httpOptions);
   }
 
 }

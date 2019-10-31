@@ -24,7 +24,7 @@
                         <div class="entry"><a class="open-popup" data-rel="1"><b>login</b></a>&nbsp; or &nbsp;<a class="open-popup" data-rel="2"><b>register</b></a></div>
                     </ng-template>
                     
-                    <div class="entry hidden-xs hidden-sm cart">
+                    <div *ngIf="token" class="entry hidden-xs hidden-sm cart">
                         <a (click)="delay()" [routerLink]="[ '/index/cart' ]">
                             <b class="hidden-xs">Your bag</b>
                             <span class="cart-icon">
@@ -189,6 +189,7 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngIf="token" class="entry"><a (click)="logout()"><b><i class="fas fa-sign-out-alt"></i></b></a></div>
                     <div class="hamburger-icon">
                         <span></span>
                         <span></span>

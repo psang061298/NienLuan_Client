@@ -28,6 +28,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { UserListComponent } from './components/admin/user-list/user-list.component';
 import { UserComponent } from './components/customer/user/user.component';
+import { AuthGuard } from './services/guard/auth-login.guard';
 
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 import { FormatTitlePipe } from './pipe/format-title.pipe';
@@ -85,6 +86,7 @@ import { NgxStripeModule } from 'ngx-stripe';
   ],
   providers: [
     GoogleMapsAPIWrapper,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

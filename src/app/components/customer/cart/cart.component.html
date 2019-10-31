@@ -1,12 +1,7 @@
 <div class="header-empty-space"></div>
 
 <div class="container">
-    <div class="empty-space col-xs-b15 col-sm-b30"></div>
-    <div class="breadcrumbs">
-        <a href="#">home</a>
-        <a href="#">shopping cart</a>
-    </div>
-    <div class="empty-space col-xs-b15 col-sm-b50 col-md-b100"></div>
+    <div class="empty-space col-xs-b15 col-sm-b50 col-md-b70"></div>
     <div class="text-center">
         <div class="simple-article size-3 grey uppercase col-xs-b5">shopping cart</div>
         <div class="h2">check your products</div>
@@ -48,7 +43,7 @@
                 <!-- <td data-title="Color: "><div class="cart-color" style="background: #eee;"></div></td> -->
                 <td data-title="Total:">{{ item.product.price * item.quantity | number : '1.0-3' }} đ</td>
                 <td data-title="">
-                    <div class="button-close"></div>
+                    <div class="button-close" ></div>
                 </td>
             </tr>
         </tbody>
@@ -78,9 +73,8 @@
             </div>
         </div>
     </div>
-    <div class="empty-space col-xs-b35 col-md-b70"></div>
     <div class="row">
-        <div class="col-md-6 col-xs-b50 col-md-b0">
+        <!-- <div class="col-md-6 col-xs-b50 col-md-b0">
             <h4 class="h4 col-xs-b25">calculate shipping</h4>
             <select class="SlectBox">
                 <option disabled="disabled" selected="selected">Choose country for shipping</option>
@@ -107,7 +101,7 @@
                 </span>
                 <input type="submit"/>
             </div>
-        </div>
+        </div> -->
         <div class="col-md-6">
             <h4 class="h4">cart totals</h4>
             <div class="order-details-entry simple-article size-3 grey uppercase">
@@ -116,7 +110,7 @@
                         cart subtotal
                     </div>
                     <div class="col-xs-6 col-xs-text-right">
-                        <div class="color">$1195.00</div>
+                        <div class="color"><strong>{{ totalPrice | number : '1.0-3' }} đ</strong></div>
                     </div>
                 </div>
             </div>
@@ -126,7 +120,7 @@
                         shipping and handling
                     </div>
                     <div class="col-xs-6 col-xs-text-right">
-                        <div class="color">free shipping</div>
+                        <div class="color"><strong>free shipping</strong></div>
                     </div>
                 </div>
             </div>
@@ -136,7 +130,7 @@
                         order total
                     </div>
                     <div class="col-xs-6 col-xs-text-right">
-                        <div class="color">$1195.00</div>
+                        <div class="color"><strong>{{ totalPrice | number : '1.0-3' }} đ</strong></div>
                     </div>
                 </div>
             </div>

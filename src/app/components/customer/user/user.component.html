@@ -60,25 +60,25 @@
                                         <div class="form-group row">
                                             <label for="name" class="col-sm-3 col-form-label">
                                                     <div class="empty-space col-xs-b5"></div>
-                                                Giới tính
+                                                Gender
                                             </label>
                                             <div class="col-sm-8">
                                                     <div class="empty-space col-xs-b10"></div>
                                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 row">
                                                     <div class="col-sm-3">
                                                         <label class="checkbox-entry radio">
-                                                            <input type="radio" formControlName="gioitinh" value="Male"/><span>Nam</span>
+                                                            <input type="radio" formControlName="gender" value="male"/><span>Male</span>
                                                         </label>
                                                     </div>
                                                     <div class="col-sm-3">
                                                         <label class="checkbox-entry radio">
-                                                            <input type="radio" formControlName="gioitinh" value="Female"/><span>Nữ</span>
+                                                            <input type="radio" formControlName="gender" value="female"/><span>Female</span>
                                                         </label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <!-- <div class="form-group row">
                                                 <label for="name" class="col-sm-3 col-form-label">
                                                         <div class="empty-space col-xs-b10"></div>
                                                     Số điện thoại
@@ -86,7 +86,7 @@
                                                 <div class="col-sm-8">
                                                     <input class="form-control simple-input" type="text" value="" placeholder="Phone" formControlName="phone">
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <!-- <div class="form-group row">
                                                 <label for="name" class="col-sm-3 col-form-label">
@@ -268,13 +268,13 @@
                                             <table class="cart-table" *ngFor="let item of user.shipping_addresses">
                                                 <thead>
                                                     <tr>
-                                                        <th colspan="2">{{ item.fullname }}</th>
+                                                        <th class="reciver_name" colspan="2">{{ item.fullname }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td data-title=" "><h6 class="h6">{{item.phone}}</h6></td>
-                                                        <td data-title="Price: ">{{item.address}}</td>
+                                                        <td class="tdAddress"><h6 class="h5">{{item.phone}}</h6></td>
+                                                        <td class="tdAddress"><h6 class="h6">{{item.address}}</h6></td>
                                                         <!-- <td data-title="Color: "><div class="cart-color" style="background: #eee;"></div></td>
                                                         <td data-title="Total:">$310.00</td>
                                                         <td data-title="">
@@ -285,7 +285,6 @@
                                             <div class="empty-space col-xs-b35 col-md-b20"></div>
 
                                             </table>
-                                            <div class="empty-space col-xs-b35 col-md-b70"></div>
                                         </div>
                                 </div>
                                 <div class="empty-space col-xs-b10"></div>

@@ -45,6 +45,8 @@ export class UserComponent implements OnInit{
     this.customerService.getUser().subscribe(data => {
       if(data){
         this.user = data;
+        console.log(this.user);
+        
         this.create();
         this.newAdressForm();
         this.address();
@@ -69,13 +71,9 @@ export class UserComponent implements OnInit{
 
   create() {
     this.formdemo = this.form.group({
-      name : [this.user.email, [Validators.required]],
+      name : [this.user.fullname, [Validators.required]],
       email: [this.user.email],
-      phone: [
-        "",
-        [Validators.required, Validators.pattern("^\\+?[0-9]{3}-?[0-9]{6,12}$")]
-      ],
-      gioitinh : ['Male']
+      gender : [this.user.gender]
     });
   }
 
@@ -138,7 +136,11 @@ export class UserComponent implements OnInit{
   }
 
   onSubmit(){
-    console.log(this.formdemo);
-    
+    this.user.fullname = this.formdemo.get('name').value;
+    this.user.gender = this.formdemo.get('gender').value;
+    this.customerService.putProfile(this.user['id'],JSON.stringify(this.user)).subscribe(data => {
+      console.log(data);
+      
+    })
   }
 }

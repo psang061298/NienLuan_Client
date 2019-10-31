@@ -50,16 +50,16 @@ export class CustomerService {
     return this.http.get<Product[]>(`${this.api}/products/?limit=${limit}`)
   }
 
-  getProductCateFilter(cate) : Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.api}/products/?category=${cate}`);
+  getProductCateFilter(cate,page) : Observable<Product[]>{
+    return this.http.get<Product[]>(`${this.api}/products/?category=${cate}&page=${page}`);
   }
 
-  getProductBrandFilter(brand) : Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.api}/products/?brand=${brand}`);
+  getProductBrandFilter(brand,page) : Observable<Product[]>{
+    return this.http.get<Product[]>(`${this.api}/products/?brand=${brand}&page=${page}`);
   }
 
-  getProductBothFilter(cate , brand) : Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.api}/products/?category=${cate}&brand=${brand}`);
+  getProductBothFilter(cate , brand,page) : Observable<Product[]>{
+    return this.http.get<Product[]>(`${this.api}/products/?category=${cate}&brand=${brand}&page=${page}`);
   }
 
   getBrand(): Observable<Brand[]>{
@@ -76,6 +76,10 @@ export class CustomerService {
 
   getProfile() : Observable<User>{
     return this.http.get<User>(`${this.api}/users/`,httpOptions);
+  }
+
+  putProfile(id , user) : Observable<User>{
+    return this.http.put<User>(`${this.api}/users/${id}/`,user,httpOptions);
   }
 
   postCart(cart): Observable<Cart>{
@@ -104,6 +108,6 @@ export class CustomerService {
 
   getPromotion() : Observable<Promotion[]>{
     return this.http.get<Promotion[]>(`${this.api}/promotions/`);
-
   }
+
 }

@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    // Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`
+    'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`
   })
 };
 

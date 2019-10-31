@@ -1,4 +1,4 @@
-import {Routes} from '@angular/router';
+import {Routes, CanActivate} from '@angular/router';
 import { BaseComponent } from './components/customer/base/base.component';
 import { HeaderComponent } from './components/customer/header/header.component';
 import { FooterComponent } from './components/customer/footer/footer.component';
@@ -17,7 +17,7 @@ import { ProductDetailAdminComponent } from './components/admin/product-detail-a
 import { UserListComponent } from './components/admin/user-list/user-list.component';
 import { UserComponent } from './components/customer/user/user.component';
 import { BrandAdminComponent } from './components/admin/brand-admin/brand-admin.component';
-
+import {AuthGuard} from './components/admin/auth/auth-login.guard';
 
 
 import { Component } from '@angular/core';
@@ -63,11 +63,13 @@ export const appRoutes : Routes = [
     {
         path : "admin",
         redirectTo : "/admin/dashboard",
-        pathMatch : "full"
+        pathMatch : "full",
+        canActivate: [AuthGuard]
     },
     {
         path : 'admin',
         component : BaseAdminComponent,
+        canActivate: [AuthGuard],
         children : [
             {
                 path : 'dashboard',

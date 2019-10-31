@@ -4,12 +4,20 @@ import { Observable, ObservedValueOf } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Brand } from 'src/app/models/brand.class';
 import { Product } from 'src/app/models/product.class';
+<<<<<<< HEAD
 import {User} from '../../models/user.class';
+=======
+import { User } from 'src/app/models/user.class';
+>>>>>>> e8fd9749b2e40dce02bf21c5dfd6ff1c202ac6e3
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
+<<<<<<< HEAD
     'Authorization': `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`
+=======
+    Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`
+>>>>>>> e8fd9749b2e40dce02bf21c5dfd6ff1c202ac6e3
   })
 };
 
@@ -65,8 +73,8 @@ export class AdminService {
     return this.http.post<Product>(`${this.api}/products/`,pro,httpOptions);
   }
 
-  public getProduct() : Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.api}/products/`);
+  public getProduct(page) : Observable<Product[]>{
+    return this.http.get<Product[]>(`${this.api}/products/?page=${page}`);
   }
 
   public getProductDetail(id) : Observable<Product>{
@@ -77,7 +85,10 @@ export class AdminService {
     return this.http.put<Product>(`${this.api}/products/${id}/update/`,product,httpOptions);
   }
 
+<<<<<<< HEAD
   //
+=======
+>>>>>>> e8fd9749b2e40dce02bf21c5dfd6ff1c202ac6e3
   public getUser() : Observable<User[]>{
     return this.http.get<User[]>(`${this.api}/users/`, httpOptions);
   }

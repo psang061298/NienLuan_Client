@@ -47,10 +47,10 @@
                                             <tr *ngFor="let item of products | paginate: { 
                                                                                         itemsPerPage: 10,
                                                                                         currentPage: this.p,
-                                                                                        totalItems: 100 } ; let i = index"
+                                                                                        totalItems: total } ; let i = index"
                                                 [routerLink]="[ '/admin/product', item.id ]"
                                                 >
-                                                <td>{{(p-1)*10 + i + 1}}</td>
+                                                <td>{{(p-1)*9 + i + 1}}</td>
                                                 <td>{{item.name}}</td>
                                                 <td>{{item.category.title}}</td>
                                                 <td>{{item.brand.name}}</td>
@@ -70,8 +70,7 @@
                         </div>
                         <div class="container">
                                 <pagination-controls
-                                            (pageChange)="p = $event"
-                                            maxSize="9"
+                                            (pageChange)="changePage($event)"
                                             directionLinks="true"
                                             autoHide="true"
                                             responsive="true"

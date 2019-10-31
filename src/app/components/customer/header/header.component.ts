@@ -1,10 +1,11 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import jwtDecode from 'jwt-decode'
+import jwtDecode from 'jwt-decode';
 import { CustomerService } from '../../../services/customer.service'
 import { User } from 'src/app/models/user.class';
 import { Cart } from 'src/app/models/cart_post.class';
 import { Cart_Item } from 'src/app/models/cart_item.class';
+import { AuthService } from '../../../services/auth.service'
 
 
 @Component({
@@ -22,6 +23,7 @@ export class HeaderComponent implements OnInit , OnChanges {
   constructor(
     public router : Router,
     private customerService : CustomerService,
+    private authService : AuthService
   ) {
   }
 
@@ -31,8 +33,8 @@ export class HeaderComponent implements OnInit , OnChanges {
     if(this.token){
       let decode = jwtDecode(this.token);
       this.loadProfile(decode['user_id']);
+      this.loadCart();
     }
-    this.loadCart();
   }
 
   loadProfile(id){
@@ -85,5 +87,9 @@ export class HeaderComponent implements OnInit , OnChanges {
       console.log(data);
       window.location.reload();
     })
+  }
+  logout(){
+    this.authService.logout();
+    window.location.reload();
   }
 }

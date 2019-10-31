@@ -425,6 +425,47 @@
 
                         
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                                        <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
+                                            <a (click)="setPage(1)" class="page-link">First</a>
+                                        </li>
+                                        <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
+                                            <a (click)="setPage(pager.currentPage - 1)" class="page-link">Previous</a>
+                                        </li>
+                                        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item number-item">
+                                            <a (click)="setPage(page)" class="page-link">{{page}}</a>
+                                        </li>
+                                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
+                                            <a (click)="setPage(pager.currentPage + 1)" class="page-link">Next</a>
+                                        </li>
+                                        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
+                                            <a (click)="setPage(pager.totalPages)" class="page-link">Last</a>
+                                        </li>
+                                      </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 <pagination-template #p="paginationApi"
                                 (pageChange)="pageChange.emit($event)">
             
@@ -498,8 +539,8 @@
                 <div class="col-md-3 col-md-pull-9">
                     <div class="h4 col-xs-b10">popular categories</div>
                     <ul class="categories-menu transparent nav">
-                        <li class="nav-item" *ngFor="let item of categories">
-                            <a data-toggle="tab" class="nav-link" (click)="changeCate(item.id)">
+                        <li class="nav-item" *ngFor="let item of categories ; let i=index" data-toggle="tab" [ngClass]="{'active': i==0}">
+                            <a  class="nav-link" (click)="changeCate(item.id)">
                                 <span><b>{{item.title}}</b></span>
                             </a>
                         </li>

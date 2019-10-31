@@ -23,10 +23,11 @@
   .file input {
     position: absolute;
     display: inline-block;
-    left: 0;
-    top: 0;
+    left: 16px;
+    top: 16px;
     opacity: 0.01;
     cursor: pointer;
+    width: 62%;
   }
   .file input:hover + label{
     background: #34495E;
@@ -216,4 +217,9 @@ Preserve the relative scale, though. */
   font-family: Georgia, serif;
   margin-left: calc( 2 * var(--ck-spacing-large) );
   margin-right: calc( 2 * var(--ck-spacing-large) );
+}
+
+.btn_custom{
+  height: fit-content;
+  font-size: 1.2em;
 }

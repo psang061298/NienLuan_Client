@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CustomerService } from '../../../services/customer.service' ;
 import { Category } from 'src/app/models/category.class';
 import { Product } from 'src/app/models/product.class';
 import { Brand } from 'src/app/models/brand.class';
-import { EventEmitter } from 'events';
+
+// import { paginate } from 'jw-paginate';
 
 
 @Component({
@@ -24,6 +25,11 @@ export class ProductsComponent implements OnInit {
   brand : Brand[] = [];
   p : number = 1; 
 
+  @Input() items: Array<any>;
+  @Output() changePage = new EventEmitter<any>(true);
+  @Input() initialPage = 1;
+  @Input() pageSize = 10;
+  @Input() maxPages = 10;
   
   config = {
     id: 'custom',
@@ -58,16 +64,16 @@ export class ProductsComponent implements OnInit {
     })
   }
 
-  loadProductFilter(){
+  loadProductFilter(page){
     if(this.catefilter != -1 && this.brandfilter == -1){
-      this.customerService.getProductCateFilter(this.catefilter).subscribe(data => {
+      this.customerService.getProductCateFilter(this.catefilter,page).subscribe(data => {
         this.product = data['results'];
         console.log(data['results']);
         this.config.totalItems = data['count'];
       })
     }
     else if(this.catefilter == -1 && this.brandfilter != -1){
-          this.customerService.getProductBrandFilter(this.brandfilter).subscribe(data => {
+          this.customerService.getProductBrandFilter(this.brandfilter,page).subscribe(data => {
             this.product = data['results'];
             console.log(data['results']);
         this.config.totalItems = data['count'];
@@ -75,7 +81,7 @@ export class ProductsComponent implements OnInit {
           })
         }
         else{
-          this.customerService.getProductBothFilter(this.catefilter,this.brandfilter).subscribe(data => {
+          this.customerService.getProductBothFilter(this.catefilter,this.brandfilter,page).subscribe(data => {
             this.product = data['results'];
             console.log(data['results']);
         this.config.totalItems = data['count'];
@@ -86,12 +92,12 @@ export class ProductsComponent implements OnInit {
   changeCate(value){
     this.catefilter = value;
     console.log(value);
-    this.loadProductFilter();
+    this.loadProductFilter(this.p);
   }
 
   changeBrand(value){
     this.brandfilter = value;
-    this.loadProductFilter();
+    this.loadProductFilter(this.p);
   }
 
   async sleep() {

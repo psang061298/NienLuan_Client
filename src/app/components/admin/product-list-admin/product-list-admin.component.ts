@@ -13,6 +13,7 @@ export class ProductListAdminComponent implements OnInit {
 
   p = 1;
   products : Product[] = [];
+  total = 0;
   constructor(
     private adminService : AdminService,
   ) {
@@ -22,11 +23,21 @@ export class ProductListAdminComponent implements OnInit {
   // ]
   ngOnInit() {
     this.products = new Array();
-    this.adminService.getProduct().subscribe(data => {
+    this.loadData(this.p);
+    
+  }
+
+  loadData(page){
+    this.adminService.getProduct(page).subscribe(data => {
       this.products = data['results'];
+      this.total = data['count'];
       console.log(this.products);
     })
-    
+  }
+
+  changePage(page){
+    this.p = page;
+    this.loadData(this.p);
   }
   // async sleep() {
   //   await new Promise(resolve => setTimeout(()=>resolve(), 10)).then(()=>console.log("fired"));

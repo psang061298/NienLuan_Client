@@ -11,6 +11,7 @@ import { MapsAPILoader } from "@agm/core";
 import { CustomerService } from "../../../services/customer.service";
 import Swal from "sweetalert2";
 import { Router } from "@angular/router";
+import { Cart_Item } from 'src/app/models/cart_item.class';
 declare var Stripe: any;
 
 @Component({
@@ -22,6 +23,8 @@ export class CheckoutComponent implements OnInit {
   stripe = Stripe("pk_test_wc4Z30OzjsKmaCId0q71FgpW00UeXBH2ns");
   elements = this.stripe.elements();
   card;
+
+  cart_item : Cart_Item[] = [];
 
   @ViewChild("address", { static: false }) add: ElementRef;
   public place: google.maps.places.PlaceResult;
@@ -72,6 +75,12 @@ export class CheckoutComponent implements OnInit {
     });
     // Add an instance of the card Element into the `card-element` <div>.
     this.card.mount("#card-element");
+  }
+
+  loadCart(){
+    this.customerService.getCart().subscribe(data => {
+      //đưa cái cart vô đây
+    })
   }
 
   create() {

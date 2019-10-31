@@ -78,6 +78,7 @@ a{color: inherit;}
 .overflow-hidden{overflow: hidden;}
 html.overflow-hidden body{overflow: hidden;}
 .page-height{min-height: 500px;}
+.page-height_cus{min-height: 600px;}
 body.mobile .swiper-container.page-height, body.mobile .swiper-container.page-height .swiper-wrapper, body.mobile .swiper-container.page-height .swiper-slide{height: auto!important;}
 body.mobile .swiper-container.page-height .swiper-wrapper{transform: none!important; -webkit-transform: none!important;}
 body.mobile .swiper-container.page-height .swiper-pagination{display: none;}

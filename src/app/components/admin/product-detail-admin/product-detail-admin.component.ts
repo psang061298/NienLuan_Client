@@ -215,11 +215,27 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
       if(this.id == 0){
         this.adminService.postProduct(productJSON).subscribe(data => {
           console.log(data);
+          Swal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          this.router.navigateByUrl('/admin/product');
         })
       }
       else{
         this.adminService.putProduct(this.id,productJSON).subscribe(data => {
           console.log(data);
+          Swal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          this.router.navigateByUrl('/admin/product');
         })
       }
       
@@ -239,11 +255,22 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
 
 
   Preview(event) {
+   
     this.selectFile = event.target.files;
     const url = "http://127.0.0.1:8000/upload_image/";
     const myData = new FormData();
     myData.append('source', this.selectFile[0]);
-
+    Swal.fire({
+      position: 'top-end',
+      title: 'Please Wait..!',
+      text: 'Is working..',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      onOpen: () => {
+          Swal.showLoading()
+      }
+  })
     $.ajax({
       url,
       data: myData,
@@ -255,6 +282,14 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
       type: 'POST',
       success: res => {
         // console.log(res.data.secure_url);
+        Swal.hideLoading();
+        Swal.fire({
+          position: 'top-end',
+          type: 'success',
+          title: 'Image is Uploaded',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.imgServer['images'].push(res.data.secure_url);
       },
       error: error => {

@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@ng-select/ng-select/themes/default.theme.css";
+// @import "~@ng-select/ng-select/themes/custom.theme.css";
+
 
 .ng-value , .ng-option{
     display: flex !important;
@@ -187,4 +189,3 @@ article {
   figure>img{
     width: 100%;
   }
-  

@@ -43,7 +43,7 @@
                 <!-- <td data-title="Color: "><div class="cart-color" style="background: #eee;"></div></td> -->
                 <td data-title="Total:">{{ item.product.price * item.quantity | number : '1.0-3' }} đ</td>
                 <td data-title="">
-                    <div class="button-close" ></div>
+                    <div class="button-close" (click)="del(item.id)"></div>
                 </td>
             </tr>
         </tbody>

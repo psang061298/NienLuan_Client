@@ -18,6 +18,8 @@ import { UserListComponent } from './components/admin/user-list/user-list.compon
 import { UserComponent } from './components/customer/user/user.component';
 import { BrandAdminComponent } from './components/admin/brand-admin/brand-admin.component';
 import { AuthGuard } from './services/guard/auth-login.guard';
+import { PromotionComponent } from './components/admin/promotion/promotion.component';
+
 
 
 
@@ -53,6 +55,10 @@ export const appRoutes : Routes = [
             },{
                 path : 'product',
                 component : ProductsComponent,
+            },
+            {
+                path : 'home/:id',
+                component : ProductDetailComponent,
             },{
                 path : 'product/:id',
                 component : ProductDetailComponent,
@@ -97,6 +103,9 @@ export const appRoutes : Routes = [
             },{
                 path : 'brand',
                 component : BrandAdminComponent,
+            },{
+                path : 'promotion',
+                component : PromotionComponent,
             }
         ]
     }

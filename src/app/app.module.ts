@@ -1,11 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { RouterModule , Routes, Router } from '@angular/router';
-import { appRoutes } from './app.router';
-import { FormsModule , ReactiveFormsModule} from '@angular/forms';
-
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/customer/header/header.component';
 import { FooterComponent } from './components/customer/footer/footer.component';
@@ -22,23 +14,29 @@ import { BaseAdminComponent } from './components/admin/base-admin/base-admin.com
 import { ProductListAdminComponent } from './components/admin/product-list-admin/product-list-admin.component';
 import { CategoryListAdminComponent } from './components/admin/category-list-admin/category-list-admin.component';
 import { ProductDetailAdminComponent } from './components/admin/product-detail-admin/product-detail-admin.component';
-import { NgxPaginationModule } from 'ngx-pagination'; 
-import { HttpClientModule } from '@angular/common/http';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NgDatepickerModule } from 'ng2-datepicker';
+
 import { UserListComponent } from './components/admin/user-list/user-list.component';
 import { UserComponent } from './components/customer/user/user.component';
+
 import { AuthGuard } from './services/guard/auth-login.guard';
+import { PromotionComponent } from './components/admin/promotion/promotion.component';
 
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 import { FormatTitlePipe } from './pipe/format-title.pipe';
 import { BrandAdminComponent } from './components/admin/brand-admin/brand-admin.component';
 import { NgxStripeModule } from 'ngx-stripe';
-// import { jwt } from 'jwt-decode'
-
-
-
-
+import { ChartsModule } from 'ng2-charts';
+import { HttpClientModule } from '@angular/common/http';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { RouterModule , Routes, Router } from '@angular/router';
+import { appRoutes } from './app.router';
+import { FormsModule , ReactiveFormsModule} from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
 
 
 
@@ -64,6 +62,7 @@ import { NgxStripeModule } from 'ngx-stripe';
     UserComponent,
     FormatTitlePipe,
     BrandAdminComponent,
+    PromotionComponent,
     // HeaderAdminComponent
   ],
   imports: [
@@ -74,15 +73,14 @@ import { NgxStripeModule } from 'ngx-stripe';
     FormsModule,
     NgSelectModule,
     ReactiveFormsModule,
-    // NgxEditorModule,
-    // TooltipModule.forRoot(),
-    // AngularEditorModule,
+    ChartsModule,
     CKEditorModule,
     AgmCoreModule.forRoot({
       apiKey : 'AIzaSyAfXQTSXB5jY1hg3Rw_odCpcId_67RQKbU',
     }),
     RouterModule.forRoot(appRoutes),
     NgxStripeModule.forRoot('pk_test_wc4Z30OzjsKmaCId0q71FgpW00UeXBH2ns'),
+    NgDatepickerModule
   ],
   providers: [
     GoogleMapsAPIWrapper,

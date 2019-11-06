@@ -22,7 +22,7 @@ export class CartComponent implements OnInit {
 
   loadCart(){
     this.customerService.getCart().subscribe(data => {
-      this.cart_items = data[0]['cart_items'];
+      this.cart_items = data['cart_items'];
       console.log(this.cart_items);
       for (let i = 0; i < this.cart_items.length; i++) {
         let img : string;
@@ -69,6 +69,11 @@ export class CartComponent implements OnInit {
     else{
       this.cart_items[i].quantity = 1;
     }
+  }
+  del(id){
+    this.customerService.delCart_Item(id).subscribe(data => {
+      window.location.reload();
+    })
   }
 }
 

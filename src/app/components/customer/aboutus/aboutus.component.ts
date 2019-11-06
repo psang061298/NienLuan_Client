@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../../../services/customer.service' ;
+import { Brand } from 'src/app/models/brand.class';
 
 
 @Component({
@@ -9,15 +10,16 @@ import { CustomerService } from '../../../services/customer.service' ;
 })
 export class AboutusComponent implements OnInit {
 
+  brand : Brand[] = [];
+
   constructor(
     private customerService : CustomerService,
   ) { }
 
   ngOnInit() {
-    // if (!this.customerService.loaded) {
-    //   this.customerService.loaded = true;
-    //   this.refresh();
-    // }
+    this.customerService.getBrand().subscribe(data => {
+      this.brand = data;
+    })
   }
 
   // refresh(): void {

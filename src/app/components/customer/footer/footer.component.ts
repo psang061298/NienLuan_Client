@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { User } from 'src/app/models/user.class';
 import { CustomerService } from '../../../services/customer.service';
 import jwtDecode from 'jwt-decode'
+import { UrlResolver } from '@angular/compiler';
 
 
 
@@ -32,12 +33,14 @@ export class FooterComponent implements OnInit {
       data => {
         let decode = jwtDecode(data.access);
             this.customerService.user_id = decode['user_id'];
+            console.log(this.customerService.user_id);
+            
             if(decode['user_id'] == 1){
               this.router.navigateByUrl('/admin');
             }
             else{
               this.router.navigateByUrl('/index/home');
-              this.delay();
+              window.location.reload();
             }
       },
       error => {
@@ -50,11 +53,13 @@ export class FooterComponent implements OnInit {
   onRegister(form){
     let user = new User();
     console.log(form);
+    user.fullname = form.controls.fullname.value;
     user.email = form.controls.email.value;
     user.password = form.controls.password.value;
     let userJSON = JSON.stringify(user);
     this.customerService.register(userJSON).subscribe(data => {
       console.log(data);
+      window.location.reload();
     })
   }
 

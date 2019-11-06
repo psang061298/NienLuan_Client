@@ -11,11 +11,20 @@ import { Cart } from '../models/cart_post.class';
 import { Address } from '../models/address.class';
 import { Cart_Item } from '../models/cart_item.class';
 import { Promotion } from '../models/promotion.class';
+import jwtDecode from 'jwt-decode'
+
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
     'Authorization' : 'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
+  })
+};
+
+const httpOptionsNonToken = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+    // 'Authorization' : 'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
   })
 };
 
@@ -26,11 +35,16 @@ const httpOptions = {
 })
 export class CustomerService {
   usernow = new Subject<User>();
-  public user_id = -1;
+  public user_id : number;
+  // = jwtDecode(localStorage.getItem('ACCESS_TOKEN'))['user_id'];
   public loaded = false;
   constructor(
     private http : HttpClient,
-  ){}
+  ){
+    if(localStorage.getItem('ACCESS_TOKEN')){
+      this.user_id = jwtDecode(localStorage.getItem('ACCESS_TOKEN'))['user_id'];
+    }
+  }
 
   api = 'http://127.0.0.1:8000';
 
@@ -50,16 +64,16 @@ export class CustomerService {
     return this.http.get<Product[]>(`${this.api}/products/?limit=${limit}`)
   }
 
-  getProductCateFilter(cate,page) : Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.api}/products/?category=${cate}&page=${page}`);
+  getProductCateFilter(cate,page) : Observable<any[]>{
+    return this.http.get<any[]>(`${this.api}/products/?category=${cate}&page=${page}`);
   }
 
-  getProductBrandFilter(brand,page) : Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.api}/products/?brand=${brand}&page=${page}`);
+  getProductBrandFilter(brand,page) : Observable<any[]>{
+    return this.http.get<any[]>(`${this.api}/products/?brand=${brand}&page=${page}`);
   }
 
-  getProductBothFilter(cate , brand,page) : Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.api}/products/?category=${cate}&brand=${brand}&page=${page}`);
+  getProductBothFilter(cate , brand,page) : Observable<any[]>{
+    return this.http.get<any[]>(`${this.api}/products/?category=${cate}&brand=${brand}&page=${page}`);
   }
 
   getBrand(): Observable<Brand[]>{
@@ -71,7 +85,7 @@ export class CustomerService {
   }
 
   register(user) : Observable<User>{
-    return this.http.post<User>(`${this.api}/users/`, user,httpOptions);
+    return this.http.post<User>(`${this.api}/users/signup/?`, user,httpOptionsNonToken);
   }
 
   getProfile() : Observable<User>{
@@ -95,7 +109,9 @@ export class CustomerService {
   }
 
   getCart() : Observable<any>{
-    return this.http.get<any>(`${this.api}/carts/`,httpOptions);
+    console.log(this.user_id);
+    
+    return this.http.get<any>(`${this.api}/carts/${this.user_id}/`,httpOptions);
   }
 
   delCart_Item(id) : Observable<Cart>{

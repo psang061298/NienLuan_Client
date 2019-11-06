@@ -13,7 +13,7 @@ import { AuthService } from '../../../services/auth.service'
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit , OnChanges {
+export class HeaderComponent implements OnInit{
 
   cart_items : Cart_Item[] = [];
   count : number = 0;
@@ -29,13 +29,14 @@ export class HeaderComponent implements OnInit , OnChanges {
 
   ngOnInit() {
     this.user = new User();
-    this.token = localStorage.getItem('ACCESS_TOKEN');
-    if(this.token){
-      let decode = jwtDecode(this.token);
+    if(localStorage.getItem("ACCESS_TOKEN")){
+      this.token = localStorage.getItem("ACCESS_TOKEN")
+      let decode = jwtDecode(this.token ,{ header: true });
       this.loadProfile(decode['user_id']);
       this.loadCart();
     }
   }
+
 
   loadProfile(id){
     this.customerService.getProfile().subscribe(data => {
@@ -46,18 +47,11 @@ export class HeaderComponent implements OnInit , OnChanges {
     })
   }
 
-  ngOnChanges(): void {
-    this.token = localStorage.getItem('ACCESS_TOKEN');
-    if(this.token){
-      let decode = jwtDecode(this.token);
-      this.loadProfile(decode['user_id']);
-    }
-    this.loadCart();
-  }
-
   loadCart(){
     this.customerService.getCart().subscribe(data => {
-      this.cart_items = data[0]['cart_items'];
+      this.cart_items = data['cart_items'];
+      console.log(data);
+      
       console.log(this.cart_items);
       for (let i = 0; i < this.cart_items.length; i++) {
         let img : string;
@@ -79,6 +73,7 @@ export class HeaderComponent implements OnInit , OnChanges {
   public delay(){
     this.sleep().then(data => {
       window.location.reload();
+      window.scroll(0,0);
     });
   }
 

@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Brand } from 'src/app/models/brand.class';
 import { Product } from 'src/app/models/product.class';
 import { User } from 'src/app/models/user.class';
+import { Promotion } from 'src/app/models/promotion.class';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -30,7 +31,7 @@ export class AdminService {
   }
 
   public getOneCategory(id) : Observable<Category>{
-    return this.http.get<Category>(`${this.api}/categories/${id}/`);
+    return this.http.get<Category>(`${this.api}/categories/${id}/`,httpOptions);
   }
 
   public postCategory(str) : Observable<Category>{
@@ -39,7 +40,7 @@ export class AdminService {
 
   public putcategory(id,str : Category) : Observable<Category>{
     return this.http.put<Category>(
-      `${this.api}/categories/${id}/`,str,
+      `${this.api}/categories/${id}/`,str,httpOptions
     );
   }
 
@@ -48,7 +49,7 @@ export class AdminService {
   }
 
   public getOneBrand(id) : Observable<Brand>{
-    return this.http.get<Brand>(`${this.api}/brands/${id}/`);
+    return this.http.get<Brand>(`${this.api}/brands/${id}/`,httpOptions);
   }
 
   public postBrand(str) : Observable<Brand>{
@@ -79,6 +80,14 @@ export class AdminService {
 
   public getUser() : Observable<User[]>{
     return this.http.get<User[]>(`${this.api}/users/`, httpOptions);
+  }
+
+  public getPromotion() : Observable<Promotion[]>{
+    return this.http.get<Promotion[]>(`${this.api}/promotions/`, httpOptions);
+  }
+
+  public postPromotion(promo) : Observable<Promotion>{
+    return this.http.post<Promotion>(`${this.api}/promotions/`,promo,httpOptions);
   }
 
 }

@@ -12,6 +12,7 @@ import { CustomerService } from "../../../services/customer.service";
 import Swal from "sweetalert2";
 import { Router } from "@angular/router";
 import { Cart_Item } from 'src/app/models/cart_item.class';
+import { User } from 'src/app/models/user.class';
 declare var Stripe: any;
 
 @Component({
@@ -33,6 +34,8 @@ export class CheckoutComponent implements OnInit {
   tokenVisa: string;
   placeresult: string;
   postcode: string;
+  totalPrice : number;
+  user : User;
 
   checkout = new Object({
     receiver_name: '',
@@ -52,7 +55,9 @@ export class CheckoutComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.user = new User();
     this.create();
+    this.loadAdress();
     this.ad1();
     const style = {
       base: {
@@ -75,11 +80,18 @@ export class CheckoutComponent implements OnInit {
     });
     // Add an instance of the card Element into the `card-element` <div>.
     this.card.mount("#card-element");
+    this.loadCart();
   }
 
   loadCart(){
     this.customerService.getCart().subscribe(data => {
-      //đưa cái cart vô đây
+      this.cart_item = data['cart_items'];
+      for (let i = 0; i < this.cart_item.length; i++) {
+        let img : string;
+        img = this.cart_item[i].product.images.toString().replace(/'/g,'"');
+        this.cart_item[i].product.images = JSON.parse(img);
+        this.totalPrice += this.cart_item[i].product.price*this.cart_item[i].quantity;
+      }
     })
   }
 
@@ -137,6 +149,16 @@ export class CheckoutComponent implements OnInit {
       });
     });
   }
+
+  loadAdress(){
+    this.customerService.getProfile().subscribe(data =>{
+      this.user = data[0];
+      console.log(this.user.shipping_addresses);
+      
+    })
+  }
+
+
   onSubmit() {
     console.log(this.formdemo);
     this.checkout['receiver_name'] = this.formdemo.controls.name.value;

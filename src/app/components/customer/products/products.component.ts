@@ -1,10 +1,9 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../../../services/customer.service' ;
 import { Category } from 'src/app/models/category.class';
 import { Product } from 'src/app/models/product.class';
 import { Brand } from 'src/app/models/brand.class';
-
-// import { paginate } from 'jw-paginate';
+import { EventEmitter } from 'events';
 
 
 @Component({
@@ -17,25 +16,31 @@ export class ProductsComponent implements OnInit {
   constructor(
     private customerService : CustomerService,
   ) { }
+
   categories : Category[] = [];
   NewestProduct : Product[] = [];
   catefilter : number = -1;
   brandfilter : number = -1;
   product : Product[] = [];
   brand : Brand[] = [];
-  p : number = 1; 
-
-  @Input() items: Array<any>;
-  @Output() changePage = new EventEmitter<any>(true);
-  @Input() initialPage = 1;
-  @Input() pageSize = 10;
-  @Input() maxPages = 10;
-  
+  collection = { count: 9, data: [] };
   config = {
     id: 'custom',
-    itemsPerPage: 5,
+    itemsPerPage: 9,
     currentPage: 1,
-    totalItems: 0
+    totalItems: this.collection.count
+  };
+ 
+  public maxSize: number = 7;
+  public directionLinks: boolean = true;
+  public autoHide: boolean = false;
+  public responsive: boolean = true;
+  public labels: any = {
+      previousLabel: '<--',
+      nextLabel: '-->',
+      screenReaderPaginationLabel: 'Pagination',
+      screenReaderPageLabel: 'page',
+      screenReaderCurrentLabel: `You're on page`
   };
 
   ngOnInit() {
@@ -47,7 +52,7 @@ export class ProductsComponent implements OnInit {
   loadCate(){
     this.customerService.getCategory().subscribe(data =>{
       this.categories = data;
-      this.changeCate(this.categories[0].id)
+      this.changeCate(this.categories[0].id);
     })
   }
 
@@ -67,24 +72,26 @@ export class ProductsComponent implements OnInit {
   loadProductFilter(page){
     if(this.catefilter != -1 && this.brandfilter == -1){
       this.customerService.getProductCateFilter(this.catefilter,page).subscribe(data => {
-        this.product = data['results'];
-        console.log(data['results']);
+        console.log(data);
+        
         this.config.totalItems = data['count'];
+        this.collection.data = data['results'];
+        console.log(data['results']);
       })
     }
     else if(this.catefilter == -1 && this.brandfilter != -1){
           this.customerService.getProductBrandFilter(this.brandfilter,page).subscribe(data => {
-            this.product = data['results'];
-            console.log(data['results']);
-        this.config.totalItems = data['count'];
+            this.collection.data = data['results'];
+        console.log(data['results']);
+        this.collection.count = data['count'];
             
           })
         }
         else{
           this.customerService.getProductBothFilter(this.catefilter,this.brandfilter,page).subscribe(data => {
-            this.product = data['results'];
-            console.log(data['results']);
-        this.config.totalItems = data['count'];
+            this.collection.data = data['results'];
+        console.log(data['results']);
+        this.collection.count = data['count'];
 
           })
         }
@@ -92,12 +99,12 @@ export class ProductsComponent implements OnInit {
   changeCate(value){
     this.catefilter = value;
     console.log(value);
-    this.loadProductFilter(this.p);
+    this.loadProductFilter(this.config.currentPage);
   }
 
   changeBrand(value){
     this.brandfilter = value;
-    this.loadProductFilter(this.p);
+    this.loadProductFilter(this.config.currentPage);
   }
 
   async sleep() {
@@ -110,4 +117,10 @@ export class ProductsComponent implements OnInit {
       window.location.reload();
     });
   }
+
+  onPageChange(event){
+    console.log(event);
+    this.config.currentPage = event;
+  }
+  
   }

@@ -18,13 +18,13 @@
   <div class="row">
     <div class="col-md-6 col-xs-b50 col-md-b0">
       <h4 class="h4 col-xs-b25">Billing Address</h4>
-      <select class="SlectBox">
-        <option disabled="disabled" selected="selected">Choose country</option>
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
-      </select>
+      <div>
+          <ng-select class="custom" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select Address">
+              <ng-option [value]="item.id" *ngFor="let item of user.shipping_addresses">{{item.fullname}}</ng-option>
+            </ng-select>
+      </div>
+      <div class="empty-space col-xs-b10"></div>
+
       <div class="empty-space col-xs-b20"></div>
       <form [formGroup]="formdemo" (ngSubmit)="onSubmit()">
         <input
@@ -53,14 +53,6 @@
         >
           Enter your Address
         </span>
-        <div class="empty-space col-xs-b20"></div>
-        <input
-          class="simple-input"
-          type="text"
-          value=""
-          placeholder="Email"
-          formControlName="email"
-        />
         <div class="empty-space col-xs-b20"></div>
             <input
               class="simple-input"
@@ -131,72 +123,21 @@
 
     <div class="col-md-6">
       <h4 class="h4 col-xs-b25">your order</h4>
-      <div class="cart-entry clearfix">
+      <div class="cart-entry clearfix" *ngFor="let item of cart_item">
         <a class="cart-entry-thumbnail" href="#"
-          ><img src="../../../../assets/customer/img/product-1.png" alt=""
+          ><img [src]="item.product.images[0]" alt=""
         /></a>
         <div class="cart-entry-description">
           <table>
             <tbody>
               <tr>
                 <td>
-                  <div class="h6"><a href="#">modern beat ht</a></div>
-                  <div class="simple-article size-1">QUANTITY: 2</div>
+                  <div class="h6"><a href="#">{{item.product.name}}</a></div>
+                  <div class="simple-article size-1">QUANTITY: {{item.quantity}}</div>
                 </td>
                 <td>
-                  <div class="simple-article size-3 grey">$155.00</div>
-                  <div class="simple-article size-1">TOTAL: $310.00</div>
-                </td>
-                <td>
-                  <div class="cart-color" style="background: #eee;"></div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="cart-entry clearfix">
-        <a class="cart-entry-thumbnail" href="#"
-          ><img src="../../../../assets/customer/img/product-2.png" alt=""
-        /></a>
-        <div class="cart-entry-description">
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <div class="h6"><a href="#">modern beat ht</a></div>
-                  <div class="simple-article size-1">QUANTITY: 2</div>
-                </td>
-                <td>
-                  <div class="simple-article size-3 grey">$155.00</div>
-                  <div class="simple-article size-1">TOTAL: $310.00</div>
-                </td>
-                <td>
-                  <div class="cart-color" style="background: #bf584b;"></div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="cart-entry clearfix">
-        <a class="cart-entry-thumbnail" href="#"
-          ><img src="../../../../assets/customer/img/product-3.png" alt=""
-        /></a>
-        <div class="cart-entry-description">
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <div class="h6"><a href="#">modern beat ht</a></div>
-                  <div class="simple-article size-1">QUANTITY: 2</div>
-                </td>
-                <td>
-                  <div class="simple-article size-3 grey">$155.00</div>
-                  <div class="simple-article size-1">TOTAL: $310.00</div>
-                </td>
-                <td>
-                  <div class="cart-color" style="background: #facc22;"></div>
+                  <div class="simple-article size-3 grey">{{item.product.price | number :'1.0-3'}} đ</div>
+                  <div class="simple-article size-1">TOTAL: {{item.quantity * item.product.price | number : '1.0-3'}} đ</div>
                 </td>
               </tr>
             </tbody>

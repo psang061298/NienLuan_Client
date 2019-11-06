@@ -36,13 +36,14 @@ export class ProductDetailComponent implements OnInit {
         this.loadSpec(this.product.specifications);
       })
     });
-    //neu co cart thi load
-    this.loadCart();
+    if(localStorage.getItem('ACCESS_TOKEN')){
+      this.loadCart();
+    }
   }
 
   loadCart(){
     this.customerService.getCart().subscribe(data => {
-      this.cart_items = data[0]['cart_items'];
+      this.cart_items = data['cart_items'];
       console.log(this.cart_items);
     }, err => {
       console.log(err);
@@ -79,39 +80,52 @@ export class ProductDetailComponent implements OnInit {
 
   addCart(){
     let already = false;
-    this.cart_items.forEach(item => {
-      // console.log(item.product.id);
-      
-      if(this.id == item.product.id){
-        console.log(item.product.id);
+
+    if(localStorage.getItem('ACCESS_TOKEN')){
+      this.cart_items.forEach(item => {
+        // console.log(item.product.id);
+        
+        if(this.id == item.product.id){
+          console.log('them vo');
+          
+          console.log(item.product.id);
+          
+          let Cart : Object = {
+            quantity : this.amount + item.quantity,
+            product : Number.parseInt(this.id.toString()),
+            cart : this.customerService.user_id
+          }
+          let cartJSON = JSON.stringify(Cart);
+          console.log(cartJSON);
+          
+          this.customerService.putCart(item['id'],cartJSON).subscribe(data => {
+            console.log(data);
+          })
+          already = true;
+        }
+      });
+  
+      if(!already){
+        console.log('tao moi');
         
         let Cart : Object = {
-          quantity : this.amount + item.quantity,
+          quantity : this.amount,
           product : Number.parseInt(this.id.toString()),
           cart : this.customerService.user_id
         }
         let cartJSON = JSON.stringify(Cart);
-        console.log(cartJSON);
-        
-        this.customerService.putCart(item['id'],cartJSON).subscribe(data => {
+        this.customerService.postCart(cartJSON).subscribe(data => {
           console.log(data);
         })
-        already = true;
+        console.log(cartJSON);
       }
-    });
-
-    if(!already){
-      let Cart : Object = {
-        quantity : this.amount,
-        product : Number.parseInt(this.id.toString()),
-        cart : this.customerService.user_id
-      }
-      let cartJSON = JSON.stringify(Cart);
-      this.customerService.postCart(cartJSON).subscribe(data => {
-        console.log(data);
-      })
-      console.log(cartJSON);
+      // window.location.reload();
     }
-    window.location.reload();
+    else{
+      Swal.fire({
+        title: 'Login first',
+        type: 'info',
+      })
+    }
   }
 }

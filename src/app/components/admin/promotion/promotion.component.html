@@ -1,0 +1,130 @@
+<div class="container-12">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <!-- <i class="pe-7s-car icon-gradient bg-mean-fruit">
+                    </i> -->
+                    <!-- <i class="fas fa-th icon-gradient bg-mean-fruit"></i> -->
+                    <i class="fas fa-box-open icon-gradient bg-mean-fruit"></i>
+                </div>
+                <div>Promotion Management
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+        <li class="nav-item">
+            <a class="nav-link entry open-popup active" (click)="showFormAddPro()">
+                <span>Add Promotion</span>
+            </a>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="mb3 card">
+                <div class="card-header-tab card-header" style="display: flex; justify-content: space-between;">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                            <i class="fas fa-th-list header-icon icon-gradient bg-sunny-morning"></i>
+                            List Promotion
+                    </div>
+                    <div *ngIf="showNewFormPromo">
+                        <button type="button" class="btn_custom-transition btn_custom btn_custom-outline-danger" style="right: 0px;" (click)="addNewPro()">Create</button>
+                    </div>
+                </div>
+                <div class="no-gutters row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <table class="table table-hover table-striped table-bordered" *ngIf="showNewFormPromo">
+                                    <thead>
+                                        <tr>
+                                            <th style="width :55%">Promotion</th>
+                                            <th style="width :10%">Percent Discount</th>
+                                            <th style="width :10%">Start Date</th>
+                                            <th style="width :10%">End Date</th>
+                                            <th style="width :20%">Category</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                          <td>
+                                            <div class="image-upload">
+                                              <label style="width: 100%;" for="file-input">
+                                                <ng-container *ngIf="promotion_new.image; else notfound">
+                                                  <img
+                                                    class="img_category"
+                                                    [src]="promotion_new.image"
+                                                    alt="not found"
+                                                  />
+                                                </ng-container>
+                                                <ng-template #notfound>
+                                                  <div class="img">
+                                                    <img
+                                                    src="http://res.cloudinary.com/dyjkyzllt/image/upload/v1571823179/onwukitz72gbdfcem5ia.png"
+                                                    class="img_category"
+                                                  />
+                                                  </div>
+                                                </ng-template>
+                                              </label>
+                                              <input id="file-input" type="file" (change)="Preview($event)" />
+                                            </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-group">
+                                                        <input  class="form-control" [(ngModel)]="promotion_new.percent" min="1" type="number" value="1" >
+                                                        <span  class="input-group-btn">
+                                                            <span  class="btn new">%</span>
+                                                        </span>
+                                                </div>
+                                                    
+                                            </td>
+                                            <td>
+                                                <ng-datepicker [(ngModel)]="start_date_new_Promotion"  [options]="options"></ng-datepicker>
+                                            </td>
+                                            <td><ng-datepicker [(ngModel)]="end_date_new_Promotion" [options]="options"></ng-datepicker></td>
+                                            <td>
+                                                <ng-select [multiple]="false" [(ngModel)]="promotion_new.category">
+                                                    <ng-option *ngFor="let item of category" [value]="item.id" >{{item.title}}</ng-option>
+                                                </ng-select> 
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    
+                                </table>
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Promotion</th>
+                                            <th>Percent Discount</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Category</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of promotion ; let i=index">
+                                            
+                                            <td>{{ i + 1 }}</td>
+                                            <td style="width: 50%;"><img [src]="item.image" alt="" width="100%"></td>
+                                            <td>
+                                            <span class="label label-danger" style="font-size: 1em;">{{item.percent}} %</span>
+                                            </td>
+                                            <td>{{item.start_date}}</td>
+                                            <td>{{item.end_date}}</td>
+                                            <td>{{item.category.title}}</td>
+                                        </tr>
+                                    </tbody>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -7,6 +7,7 @@ import { CustomerService } from '../../../services/customer.service'
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Address } from 'src/app/models/address.class';
+import Swal from 'sweetalert2';
 
 declare var $ : any;
 
@@ -115,16 +116,34 @@ export class UserComponent implements OnInit{
     const url = "http://127.0.0.1:8000/upload_image/";
     const myData = new FormData();
     myData.append('source', selectFile[0]);
+    Swal.fire({
+      position: 'top-end',
+      title: 'Please Wait..!',
+      text: 'Is working..',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      onOpen: () => {
+          Swal.showLoading()
+      }
+  })
     $.ajax({
       url,
       data: myData,
       headers: {
-        // Authorization: `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`
       },
       processData: false,
       contentType: false,
       type: 'POST',
       success: res => {
+        Swal.hideLoading();
+        Swal.fire({
+          position: 'top-end',
+          type: 'success',
+          title: 'Image is Uploaded',
+          showConfirmButton: false,
+          timer: 1500
+        })
         console.log(res.data.secure_url);
         this.user.avatar = (res.data.secure_url);
         console.log(this.user);
@@ -139,8 +158,13 @@ export class UserComponent implements OnInit{
     this.user.fullname = this.formdemo.get('name').value;
     this.user.gender = this.formdemo.get('gender').value;
     this.customerService.putProfile(this.user['id'],JSON.stringify(this.user)).subscribe(data => {
-      console.log(data);
-      
+      Swal.fire({
+        position: 'top-end',
+        type: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+      })
     })
   }
 }

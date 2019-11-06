@@ -17,15 +17,8 @@ import { ProductDetailAdminComponent } from './components/admin/product-detail-a
 import { UserListComponent } from './components/admin/user-list/user-list.component';
 import { UserComponent } from './components/customer/user/user.component';
 import { BrandAdminComponent } from './components/admin/brand-admin/brand-admin.component';
-<<<<<<< HEAD
 import {AuthGuard} from './components/admin/auth/auth-login.guard';
-=======
-import { AuthGuard } from './services/guard/auth-login.guard';
-import { PromotionComponent } from './components/admin/promotion/promotion.component';
-
-
-
->>>>>>> e8fd9749b2e40dce02bf21c5dfd6ff1c202ac6e3
+import {PromotionComponent} from './components/admin/promotion/promotion.component'
 
 
 import { Component } from '@angular/core';
@@ -77,20 +70,12 @@ export const appRoutes : Routes = [
         path : "admin",
         redirectTo : "/admin/dashboard",
         pathMatch : "full",
-<<<<<<< HEAD
         canActivate: [AuthGuard]
-=======
-        canActivate : [AuthGuard],
->>>>>>> e8fd9749b2e40dce02bf21c5dfd6ff1c202ac6e3
     },
     {
         path : 'admin',
         component : BaseAdminComponent,
-<<<<<<< HEAD
         canActivate: [AuthGuard],
-=======
-        canActivate : [AuthGuard],
->>>>>>> e8fd9749b2e40dce02bf21c5dfd6ff1c202ac6e3
         children : [
             {
                 path : 'dashboard',

@@ -6,4 +6,5 @@ export class User {
   access?: string;
   avatar? : string;
   shipping_addresses? : string[];
+  
 }

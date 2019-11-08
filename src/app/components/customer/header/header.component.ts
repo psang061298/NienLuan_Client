@@ -49,17 +49,20 @@ export class HeaderComponent implements OnInit{
 
   loadCart(){
     this.customerService.getCart().subscribe(data => {
-      this.cart_items = data['cart_items'];
       console.log(data);
       
-      console.log(this.cart_items);
-      for (let i = 0; i < this.cart_items.length; i++) {
-        let img : string;
-        img = this.cart_items[i].product.images.toString().replace(/'/g,'"');
-        this.cart_items[i].product.images = JSON.parse(img);
-        this.count += this.cart_items[i].quantity;
-        this.totalPrice += this.cart_items[i].product.price*this.cart_items[i].quantity;
+      this.cart_items = data;
+      
+      if(this.cart_items.length > 0){
+        for (let i = 0; i < this.cart_items.length; i++) {
+          let img : string;
+          img = this.cart_items[i].product.images.toString().replace(/'/g,'"');
+          this.cart_items[i].product.images = JSON.parse(img);
+          this.count += this.cart_items[i].quantity;
+          this.totalPrice += this.cart_items[i].product.price*this.cart_items[i].quantity;
+        }
       }
+      
     }, err => {
       console.log(err);
     })

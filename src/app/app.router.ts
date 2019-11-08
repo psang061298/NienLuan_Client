@@ -17,8 +17,10 @@ import { ProductDetailAdminComponent } from './components/admin/product-detail-a
 import { UserListComponent } from './components/admin/user-list/user-list.component';
 import { UserComponent } from './components/customer/user/user.component';
 import { BrandAdminComponent } from './components/admin/brand-admin/brand-admin.component';
-import {AuthGuard} from './components/admin/auth/auth-login.guard';
-import {PromotionComponent} from './components/admin/promotion/promotion.component'
+import {AuthGuard} from './services/guard/auth-login.guard';
+import {PromotionComponent} from './components/admin/promotion/promotion.component';
+import { OrderComponent } from './components/admin/order/order.component';
+
 
 
 import { Component } from '@angular/core';
@@ -87,10 +89,10 @@ export const appRoutes : Routes = [
                 path : 'product',
                 component : ProductListAdminComponent
             },
-            // {
-            //     path : 'product/new/0',
-            //     component : ProductAddAdminComponent
-            // },
+            {
+                path : 'order',
+                component : OrderComponent
+            },
             {
                 path : 'product/:id',
                 component : ProductDetailAdminComponent

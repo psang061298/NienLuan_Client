@@ -374,4 +374,36 @@
         </div>
     </div>
 
+    <div class="popup-content" data-rel="5">
+            <div class="layer-close"></div>
+            <div class="popup-container size-1">
+                <div class="popup-align">
+                    <h3 class="h3 text-center">New Address</h3>
+                    <form role="form">
+                        <div class="empty-space col-xs-b10 col-sm-b50"></div>
+                        <input type="text" class="simple-input" placeholder="Name" required [(ngModel)]="new_address_name" [ngModelOptions]="{standalone: true}">
+                        <div class="empty-space col-xs-b10 col-sm-b20"></div>
+                        <input type="text" class="simple-input" placeholder="Address" required #address>
+                        <div class="empty-space col-xs-b10 col-sm-b20"></div>
+                        <input type="text" class="simple-input" placeholder="Phone" required [(ngModel)]="new_address_phone" [ngModelOptions]="{standalone: true}">
+                        <div class="empty-space col-xs-b10 col-sm-b20"></div>
+                        <div class="row">
+                            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                
+                            </div>
+                            
+                            <div class="col-sm-5 text-right">
+                                <a class="button size-2 style-3" (click)="addAdress()" >
+                                    <span class="button-wrapper">
+                                        <span class="icon"><img src="../../../../assets/customer/img/icon-4.png" alt="" /></span>
+                                        <span class="text">submit</span>
+                                    </span>
+                                </a>  
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <div class="button-close"></div>
+        </div>
+    </div>
 </div>

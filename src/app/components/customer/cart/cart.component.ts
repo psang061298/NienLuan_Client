@@ -22,7 +22,7 @@ export class CartComponent implements OnInit {
 
   loadCart(){
     this.customerService.getCart().subscribe(data => {
-      this.cart_items = data['cart_items'];
+      this.cart_items = data;
       console.log(this.cart_items);
       for (let i = 0; i < this.cart_items.length; i++) {
         let img : string;
@@ -47,6 +47,7 @@ export class CartComponent implements OnInit {
       }
     }
     let cart_editJSON = JSON.stringify({
+      product : this.cart_items[i].product.id,
       quantity : this.cart_items[i].quantity
     })
     console.log(cart_editJSON);
@@ -57,9 +58,9 @@ export class CartComponent implements OnInit {
 
   changeQty(i , value){
     this.cart_items[i].quantity += value;
-
     if(this.cart_items[i].quantity > 0 && this.cart_items[i].quantity < this.cart_items[i].product.quantity){
       let cart_editJSON = JSON.stringify({
+        product : this.cart_items[i].product.id,
         quantity : this.cart_items[i].quantity
       });
       this.customerService.putCart_Item(this.cart_items[i]['id'],cart_editJSON).subscribe(data => {
@@ -70,11 +71,19 @@ export class CartComponent implements OnInit {
       this.cart_items[i].quantity = 1;
     }
   }
+
+
   del(id){
     this.customerService.delCart_Item(id).subscribe(data => {
       window.location.reload();
     })
   }
+
+  async reload() {
+    await new Promise(resolve => setTimeout(()=>resolve(), 10)).then( () => window.location.reload());
+  }
+
+
 }
 
 

@@ -43,7 +43,7 @@ export class ProductDetailComponent implements OnInit {
 
   loadCart(){
     this.customerService.getCart().subscribe(data => {
-      this.cart_items = data['cart_items'];
+      this.cart_items = data;
       console.log(this.cart_items);
     }, err => {
       console.log(err);
@@ -119,7 +119,7 @@ export class ProductDetailComponent implements OnInit {
         })
         console.log(cartJSON);
       }
-      // window.location.reload();
+      window.location.reload();
     }
     else{
       Swal.fire({

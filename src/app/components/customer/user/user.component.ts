@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Address } from 'src/app/models/address.class';
 import Swal from 'sweetalert2';
+import { orderHistory } from 'src/app/models/oderHistory.class';
 
 declare var $ : any;
 
@@ -30,6 +31,8 @@ export class UserComponent implements OnInit{
   private form_add : FormGroup;
   new_address : Address = new Address();
   showFormAddress = false;
+  order_History : orderHistory[] = [];
+
   constructor(
     private ngZone : NgZone,
     private customerService : CustomerService,
@@ -39,23 +42,21 @@ export class UserComponent implements OnInit{
   ) { }
 
   ngOnInit() {
+    this.user = new User();
     this.loadUser();
+    this.loadHistory();
+    this.newAdressForm();
+    this.address();
+    this.create();
+
   }
 
   loadUser(){
     this.customerService.getUser().subscribe(data => {
-      if(data){
         this.user = data;
-        console.log(this.user);
-        
-        this.create();
-        this.newAdressForm();
-        this.address();
-
-      }
-      else{
-        this.router.navigateByUrl('');
-      }
+        this.formdemo.get('name').setValue(this.user.fullname);
+        this.formdemo.get('email').setValue(this.user.email);
+        this.formdemo.get('gender').setValue(this.user.gender);
     })
   }
 
@@ -72,9 +73,9 @@ export class UserComponent implements OnInit{
 
   create() {
     this.formdemo = this.form.group({
-      name : [this.user.fullname, [Validators.required]],
-      email: [this.user.email],
-      gender : [this.user.gender]
+      name : ['', [Validators.required]],
+      email: [{disabled: true}],
+      gender : ['']
     });
   }
 
@@ -99,7 +100,6 @@ export class UserComponent implements OnInit{
     this.new_address.fullname = this.form_add.get('name').value;
     this.new_address.phone= this.form_add.get('phone').value;
     this.new_address.address= this.form_add.get('address').value;
-    this.new_address.member = this.customerService.user_id;
     console.log(this.new_address);
     let addressJSON = JSON.stringify(this.new_address);
     this.customerService.postAddress(addressJSON).subscribe(data => {
@@ -109,7 +109,6 @@ export class UserComponent implements OnInit{
       window.location.reload();
     })
   }
-
 
   editImage(event) {
     let selectFile = event.target.files;
@@ -164,6 +163,22 @@ export class UserComponent implements OnInit{
         title: 'Your work has been saved',
         showConfirmButton: false,
         timer: 1500
+      })
+    })
+  }
+
+  loadHistory(){
+    this.customerService.getOldOrder().subscribe(data => {
+      console.log(data);
+      this.order_History = data;
+      this.order_History.forEach(item => {
+        if(item.products.length > 0){
+          item.products.forEach(item1 => {
+              let img = '';
+              img = item1['product'].images.toString().replace(/'/g,'"');
+              item1['product'].images = JSON.parse(img);
+          })
+        }
       })
     })
   }

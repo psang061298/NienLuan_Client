@@ -1,0 +1,81 @@
+<div class="container-12">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div class="page-title-icon">
+                    <!-- <i class="pe-7s-car icon-gradient bg-mean-fruit">
+                    </i> -->
+                    <!-- <i class="fas fa-th icon-gradient bg-mean-fruit"></i> -->
+                    <i class="fas fa-dolly-flatbed icon-gradient bg-plum-plate"></i>
+                </div>
+                <div>Order Management
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        
+        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+            <div class="mb3 card">
+                <div class="card-header-tab card-header">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                            <i class="fas fa-info-circle header-icon icon-gradient bg-amy-crisp"></i>
+                            Detail Order
+                    </div>
+                </div>
+                <div class="no-gutters row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <div class="mb3 card">
+                <div class="card-header-tab card-header">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                            <i class="fas fa-th-list header-icon icon-gradient bg-sunny-morning"></i>
+                            List Order
+                    </div>
+                </div>
+                <div class="no-gutters row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="card no-shadow rm-border bg-transparent widget-chart text-left" >
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height: 50vh; overflow-y: scroll;">
+                                <table class="table table-hover table-striped table-bordered" >
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody >
+                                        <tr *ngFor="let item of listorder; let i = index">
+                                            <td>{{ item.id }}</td>
+                                            <td>
+                                                <button class="btn-icon btn_custom btn_custom-warning">
+                                                    <i class="fas fa-clock btn-icon-wrapper"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <pagination-controls 
+                            (pageChange)="p = $event"  
+                            maxSize="10"
+                            previousLabel="Previous"
+                            nextLabel="Next">
+                        </pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

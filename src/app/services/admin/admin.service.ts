@@ -57,9 +57,7 @@ export class AdminService {
   }
 
   public putBrand(id,brand) : Observable<Brand>{
-    return this.http.put<Brand>(
-      `${this.api}/brands/${id}/`,brand,httpOptions
-    );
+    return this.http.put<Brand>(`${this.api}/brands/${id}/`,brand,httpOptions);
   }
 
   public postProduct(pro) : Observable<Product>{
@@ -86,8 +84,25 @@ export class AdminService {
     return this.http.get<Promotion[]>(`${this.api}/promotions/`, httpOptions);
   }
 
+  public getOnePromotion(id) : Observable<Promotion>{
+    return this.http.get<Promotion>(`${this.api}/promotions/${id}/`, httpOptions);
+  }
+
   public postPromotion(promo) : Observable<Promotion>{
     return this.http.post<Promotion>(`${this.api}/promotions/`,promo,httpOptions);
   }
+
+  public putPromotion(id, promo) : Observable<Promotion>{
+    return this.http.put<Promotion>(`${this.api}/promotions/${id}/update/`,promo,httpOptions);
+  }
+
+  public delPromotion(id) : Observable<Promotion>{
+    return this.http.delete<Promotion>(`${this.api}/promotions/${id}/`,httpOptions);
+  }
+
+  public getOrder() : Observable<any>{
+    return this.http.get<any>(`${this.api}/orders/`,httpOptions);
+  }
+
 
 }

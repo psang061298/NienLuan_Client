@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Base64UploaderPlugin from '@ckeditor/Base64Image.js';
-import { AdminService } from '../../../services/admin/admin.service'
+import { AdminService } from '../../../services/admin/admin.service';
 import { Category } from 'src/app/models/category.class';
 import { Brand } from 'src/app/models/brand.class';
 import { Product } from 'src/app/models/product.class';

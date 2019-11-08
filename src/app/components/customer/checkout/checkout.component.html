@@ -1,3 +1,4 @@
+
 <div class="header-empty-space"></div>
 
 <div class="container">
@@ -12,113 +13,86 @@
 <div class="empty-space col-xs-b35 col-md-b50"></div>
 
 
-
-
 <div class="container">
+    <form (ngSubmit)="onSubmit()">
+
   <div class="row">
     <div class="col-md-6 col-xs-b50 col-md-b0">
       <h4 class="h4 col-xs-b25">Billing Address</h4>
-      <div>
-          <ng-select class="custom" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select Address">
-              <ng-option [value]="item.id" *ngFor="let item of user.shipping_addresses">{{item.fullname}}</ng-option>
-            </ng-select>
+      <div style="display: flex; justify-content: space-between;">
+          <ng-select class="custom" placeholder="Select Address" style="width: 75%;" (change)="change_Address_Bill($event)">
+              <ng-option [value]="item" *ngFor="let item of user.addresses">{{item.fullname}}</ng-option>
+          </ng-select>
+          <div class="button block size-1 style-2 open-popup" data-rel="5"> 
+              <span class="button-wrapper">
+                <span class="icon"
+                  ><img src="../../../../assets/customer/img/icon-4.png" alt=""
+                /></span>
+                <span class="text">New Address</span>
+              </span>
+            </div>
       </div>
       <div class="empty-space col-xs-b10"></div>
 
-      <div class="empty-space col-xs-b20"></div>
-      <form [formGroup]="formdemo" (ngSubmit)="onSubmit()">
-        <input
-          class="simple-input"
-          type="text"
-          value=""
-          placeholder="Reciver Name"
-          formControlName="name"
-        />
         <div class="empty-space col-xs-b20"></div>
         <input
           class="simple-input"
           type="text"
-          value=""
-          placeholder="Shipping address"
-          formControlName="address"
-          #address
+          placeholder="Bill address"
+          [value]="name_bill"
+          disabled
         />
-        <span
-          class="label label-danger"
-          *ngIf="
-            (formdemo.controls.address.dirty &&
-              formdemo.controls.address.errors?.required) ||
-            (submitted && formdemo.controls.address.errors?.required)
-          "
-        >
-          Enter your Address
-        </span>
         <div class="empty-space col-xs-b20"></div>
             <input
               class="simple-input"
               type="text"
-              value=""
               placeholder="Phone"
-              formControlName="phone"
+              [value]="phone_bill"
+              disabled
             />
             <div class="empty-space col-xs-b20"></div>
         <div class="empty-space col-xs-b30"></div>
 
         <label class="checkbox-entry checkbox-toggle-title">
-            <input type="checkbox"><span>ship to different address?</span>
+            <input type="checkbox" [(ngModel)]="different_address" [ngModelOptions]="{standalone: true}" ><span>ship to different address?</span>
         </label>
         <div class="checkbox-toggle-wrapper">
-            <div class="empty-space col-xs-b25"></div>
-            <select class="SlectBox">
-                <option disabled="disabled" selected="selected">Choose country</option>
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-            </select>
-            <div class="empty-space col-xs-b20"></div>
-            <div class="row m10">
-                <div class="col-sm-6">
-                    <input class="simple-input" type="text" value="" placeholder="First name" />
-                    <div class="empty-space col-xs-b20"></div>
-                </div>
-                <div class="col-sm-6">
-                    <input class="simple-input" type="text" value="" placeholder="Last name" />
-                    <div class="empty-space col-xs-b20"></div>
-                </div>
+            <div class="empty-space col-xs-b40"></div>
+            <div style="display: flex; justify-content: space-between;">
+                <ng-select class="custom" placeholder="Select Address" style="width: 75%;" (change)="change_shipping($event)">
+                    <ng-option [value]="item" *ngFor="let item of user.addresses">{{item.fullname}}</ng-option>
+                </ng-select>
+                <div class="button block size-1 style-2" data-rel="5">
+                    <span class="button-wrapper">
+                      <span class="icon"
+                        ><img src="../../../../assets/customer/img/icon-4.png" alt=""
+                      /></span>
+                      <span class="text">New Address</span>
+                    </span>
+                  </div>
             </div>
-            <input class="simple-input" type="text" value="" placeholder="Company name" />
-            <div class="empty-space col-xs-b20"></div>
-            <input class="simple-input" type="text" value="" placeholder="Street address" />
-            <div class="empty-space col-xs-b20"></div>
-            <div class="row m10">
-                <div class="col-sm-6">
-                    <input class="simple-input" type="text" value="" placeholder="Appartment" />
-                    <div class="empty-space col-xs-b20"></div>
-                </div>
-                <div class="col-sm-6">
-                    <input class="simple-input" type="text" value="" placeholder="Town/City" />
-                    <div class="empty-space col-xs-b20"></div>
-                </div>
-            </div>
-            <div class="row m10">
-                <div class="col-sm-6">
-                    <input class="simple-input" type="text" value="" placeholder="State/Country" />
-                    <div class="empty-space col-xs-b20"></div>
-                </div>
-                <div class="col-sm-6">
-                    <input class="simple-input" type="text" value="" placeholder="Postcode/ZIP" />
-                    <div class="empty-space col-xs-b20"></div>
-                </div>
-            </div>
+        <div class="empty-space col-xs-b20"></div>
+        <input
+          class="simple-input"
+          type="text"
+          [value]="name_ship"
+          placeholder="Shipping address"
+          #address1
+        />
+        <div class="empty-space col-xs-b20"></div>
+            <input
+              class="simple-input"
+              type="text"
+              [value]="phone_ship"
+              placeholder="Phone"
+            />
         </div>
-        <div class="empty-space col-xs-b30 col-sm-b60"></div>
+        <div class="empty-space col-xs-b30 col-sm-b20"></div>
         <textarea class="simple-input"
-        placeholder="Note about your order"
-        formControlName="des"></textarea>
+        placeholder="Note about your order" [(ngModel)]="checkout.description" [ngModelOptions]="{standalone: true}"></textarea>
 
         
-      </form>
+      
     </div>
 
     <div class="col-md-6">
@@ -150,7 +124,7 @@
             cart subtotal
           </div>
           <div class="col-xs-6 col-xs-text-right">
-            <div class="color">$1195.00</div>
+            <div class="color">{{ totalPrice | number : '1.0-3' }} đ</div>
           </div>
         </div>
       </div>
@@ -170,7 +144,7 @@
             order total
           </div>
           <div class="col-xs-6 col-xs-text-right">
-            <div class="color">$1195.00</div>
+            <div class="color">{{ totalPrice | number : '1.0-3' }} đ</div>
           </div>
         </div>
       </div>
@@ -192,7 +166,9 @@
           <input type="submit" />
         </div>
     </div>
+  
   </div>
+</form>
 </div>
 
 <div class="empty-space col-xs-b35 col-md-b70"></div>

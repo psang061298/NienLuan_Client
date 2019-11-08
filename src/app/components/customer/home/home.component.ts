@@ -120,6 +120,7 @@ loadPromotion(){
     this.catefilter = value;
     console.log(value);
     this.config.currentPage = 1;
+    this.brandfilter = -1;
     this.loadProductFilter(this.config.currentPage);
   }
 

@@ -27,24 +27,22 @@ export class CheckoutComponent implements OnInit {
 
   cart_item : Cart_Item[] = [];
 
-  @ViewChild("address", { static: false }) add: ElementRef;
-  public place: google.maps.places.PlaceResult;
-
-  private formdemo: FormGroup;
   tokenVisa: string;
-  placeresult: string;
-  postcode: string;
-  totalPrice : number;
+  totalPrice = 0;
   user : User;
+  different_address = false;
 
   checkout = new Object({
-    receiver_name: '',
-    receiver_phone: '',
-    receiver_address: '',
-    token: '',
+    bill_address : 0,
+    shipping_address : 0,
     description: '',
-    total_price: 0
   });
+
+  name_bill = '';
+  phone_bill = '';
+
+  name_ship = '';
+  phone_ship = '';
 
   constructor(
     private form: FormBuilder,
@@ -56,9 +54,7 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit() {
     this.user = new User();
-    this.create();
     this.loadAdress();
-    this.ad1();
     const style = {
       base: {
         color: "#32325d",
@@ -85,96 +81,83 @@ export class CheckoutComponent implements OnInit {
 
   loadCart(){
     this.customerService.getCart().subscribe(data => {
-      this.cart_item = data['cart_items'];
+      this.cart_item = data;
+      console.log(this.cart_item);
+      
       for (let i = 0; i < this.cart_item.length; i++) {
         let img : string;
         img = this.cart_item[i].product.images.toString().replace(/'/g,'"');
         this.cart_item[i].product.images = JSON.parse(img);
         this.totalPrice += this.cart_item[i].product.price*this.cart_item[i].quantity;
       }
-    })
-  }
-
-  create() {
-    this.formdemo = this.form.group({
-      name: [
-        "",
-        [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.pattern("[a-zA-Z]+")
-        ]
-      ],
-      email: [
-        "",
-        [
-          Validators.pattern(
-            "(?!^[.+&'_-]*@.*$)(^[_\\w\\d+&'-]+(\\.[_\\w\\d+&'-]*)*@[\\w\\d-]+(\\.[\\w\\d-]+)*\\.(([\\d]{1,3})|([\\w]{2,}))$)"
-          ),
-          Validators.required
-        ]
-      ],
-      phone: [
-        "",
-        [Validators.required, Validators.pattern("^\\+?[0-9]{3}-?[0-9]{6,12}$")]
-      ],
-      address: ["", [Validators.required]],
-      des: [""],
-      postcode: ["", Validators.required]
-      // cardNumber : ['', [Validators.required , Validators.pattern("^[0-9]{16}$")]],
-      // expiryMonth: ['', Validators.required],
-      // expiryYear: ['' , Validators.required],
-      // cvc: ['' , [Validators.required , Validators.pattern("^[0-9]{3}$")]],
     });
-  }
-
-  ad1() {
-    this.map.load().then(() => {
-      const autoaddress = new google.maps.places.Autocomplete(
-        this.add.nativeElement,
-        { types: ["address"] }
-      );
-      autoaddress.addListener("place_changed", () => {
-        this.ngZone.run(() => {
-          this.place = autoaddress.getPlace();
-          this.placeresult = this.place["formatted_address"];
-          console.log(this.place.address_components);
-          // tslint:disable-next-line: prefer-for-of
-          for (let i = 0; i < this.place.address_components.length; i++) {
-            if (this.place.address_components[i].types[0] === "postal_code") {
-              this.postcode = this.place.address_components[i].long_name;
-            }
-          }
-        });
-      });
-    });
+    console.log(this.totalPrice);
+    
   }
 
   loadAdress(){
     this.customerService.getProfile().subscribe(data =>{
       this.user = data[0];
-      console.log(this.user.shipping_addresses);
+      console.log(this.user.addresses);
       
     })
   }
 
+  change_Address_Bill(event){
+    console.log(event);
+    this.checkout['bill_address'] = event.id;
+    this.name_bill = event.fullname;
+    this.phone_bill = event.phone;
+
+  }
+
+  change_shipping(event){
+    console.log(event);
+    this.checkout['shipping_address'] = event.id;
+    this.name_ship = event.fullname;
+    this.phone_ship = event.phone;
+  }
 
   onSubmit() {
-    console.log(this.formdemo);
-    this.checkout['receiver_name'] = this.formdemo.controls.name.value;
-    this.checkout['receiver_address'] = this.placeresult;
-    this.checkout['receiver_phone'] = this.formdemo.controls.phone.value;
-    this.checkout['description'] = this.formdemo.controls.des.value;
-    
-    this.stripe.createToken(this.card).then(data => {
-      if (data.error) {
-        const errorElement = document.getElementById('card-errors');
-        errorElement.textContent = data.error.message;
-      } else {
-        this.checkout['token'] = data.token.id
+    if(this.checkout['bill_address'] == 0){
+      Swal.fire('address is requied');
+    }
+    else{
+      if(!this.different_address || this.checkout['shipping_address'] == 0){
+        this.checkout['shipping_address'] = this.checkout['bill_address'];      
       }
-    });
-    console.log(this.checkout);
-    
+      Swal.fire({
+        position: 'center',
+        title: 'Please Wait..!',
+        text: 'Is working..',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+        onOpen: () => {
+            Swal.showLoading()
+        }
+    })
+      this.stripe.createToken(this.card).then(data => {
+        if (data.error) {
+          const errorElement = document.getElementById('card-errors');
+          errorElement.textContent = data.error.message;
+        } else {
+          this.checkout['token'] = data.token.id;
+          console.log(data.token.id);
+          
+          this.customerService.payment(JSON.stringify(this.checkout)).subscribe(data => {
+            Swal.hideLoading();
+            Swal.fire({
+              position: 'center',
+              type: 'success',
+              title: 'Successful payment',
+              showConfirmButton: false,
+              timer: 500
+            });
+            window.location.href = data['receipt_url'];
+          })
+        }
+      });
+    }
   }
 }

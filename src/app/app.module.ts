@@ -37,6 +37,7 @@ import { RouterModule , Routes, Router } from '@angular/router';
 import { appRoutes } from './app.router';
 import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { OrderComponent } from './components/admin/order/order.component';
 
 
 
@@ -63,6 +64,7 @@ import { AppRoutingModule } from './app-routing.module';
     FormatTitlePipe,
     BrandAdminComponent,
     PromotionComponent,
+    OrderComponent,
     // HeaderAdminComponent
   ],
   imports: [

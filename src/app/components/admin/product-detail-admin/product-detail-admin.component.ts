@@ -154,11 +154,25 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
   }
 
   delImage(index){
-    if (this.imgServer['images'].length == 1) {
-      this.imgServer['images'].pop();
-    } else {
-      this.imgServer['images'].splice(index, 1);
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        if (this.imgServer['images'].length == 1) {
+          this.imgServer['images'].pop();
+        } else {
+          this.imgServer['images'].splice(index, 1);
+        }
+      }
+    })
+
+    
   }
 
   changekey(i, value) {
@@ -298,8 +312,31 @@ export class ProductDetailAdminComponent implements OnInit , OnDestroy{
     });
   }
 
-  delProduct(id){
-
+  delProduct(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.adminService.delProduct(this.id).subscribe(data => {
+          console.log(data);
+          Swal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Your file has been deleted.',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          this.router.navigateByUrl('/admin/product');
+        })
+      }
+    })
+    
   }
 
 }

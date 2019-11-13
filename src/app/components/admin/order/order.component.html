@@ -23,10 +23,70 @@
                             Detail Order
                     </div>
                 </div>
-                <div class="no-gutters row">
+                <div class="no-gutters row wrapper">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="card no-shadow rm-border bg-transparent widget-chart text-left">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="product-shortcode style-3" *ngIf="orderDetail">
+                                <div class="order-header">
+                                        <div class="h6 title text-left">ID : {{ orderDetail.id }}</div>
+                                        <div class="h6 title text-right">Total Price : {{ orderDetail.total_price | number : '1.0-3' }} đ</div>
+                                </div>
+                                <div class="empty-space col-xs-b5"></div>
+                                <div class="order-header">
+                                    
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="h6 title text-left">Bill Address :</div>
+                                        <p class="text-left add">{{ orderDetail.bill_address.fullname}}</p>
+                                        <p class="text-left add">{{ orderDetail.bill_address.address }}</p>
+                                        <p class="text-left add">{{ orderDetail.bill_address.phone }}</p>
+                                    </div>
+                                    
+                                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                        <div class="h6 title text-right">Shipping Address :</div>
+                                        <p class="text-right add">{{ orderDetail.shipping_address.fullname}}</p>
+                                        <p class="text-right add">{{ orderDetail.shipping_address.address }}</p>
+                                        <p class="text-right add">{{ orderDetail.shipping_address.phone }}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <table class="cart-table">
+                                    <tbody>
+                                        <tr *ngFor="let item1 of orderDetail.products">
+                                            <td data-title=" ">
+                                                <a class="cart-entry-thumbnail" href="#"><img [src]='item1.product.images[0]' alt=""></a>
+                                            </td>
+                                            <td data-title=" "><h6 class="h6"><a href="#">{{item1.product.name}}</a></h6></td>
+                                            <td data-title="Price: ">{{item1.final_price | number :'1.0-3'}} đ</td>
+                                            <td data-title="Quantity: ">{{item1.quantity}}</td>
+                                            <td data-title="Total:">{{ item1.quantity * item1.final_price | number : '1.0-3' }} đ</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="empty-space col-xs-b10"></div>
+                                <button class="btn-icon btn_custom"
+                                    (click)="handle()"
+                                    [class.btn_custom-danger]="process === 0"
+                                    [class.btn_custom-warning]="process === 25"
+                                    [class.btn_custom-pending]="process === 50"
+                                    [class.btn_custom-shipping]="process === 75"
+                                    [class.btn_custom-success]="process === 100"
+                                    [disabled]="process === 0 || process === 100"
 
+                                    >
+                                    <i *ngIf="process === 0" class="fas fa-ban btn-icon-wrapper"> </i>
+                                    <i *ngIf="process === 25" class="fas fa-clock btn-icon-wrapper"> </i>
+                                    <i *ngIf="process === 50" class="fas fa-spinner btn-icon-wrapper"></i>
+                                    <i *ngIf="process === 75" class="fas fa-shipping-fast btn-icon-wrapper"></i>
+                                    <i *ngIf="process === 100" class="far fa-check-circle btn-icon-wrapper" style="color: black;"></i>
+                                    <span class="h4 title"> {{orderDetail.status}}</span>
+                                </button>
+                                <div class="empty-space col-xs-b10"></div>
+                                <div class="progress-bar-sm progress-bar-animated-alt progress">
+                                    <div [style.width.%]="process" class="progress-bar bg-primary" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" ></div>
+                                </div>
+                            </div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -39,12 +99,14 @@
                             <i class="fas fa-th-list header-icon icon-gradient bg-sunny-morning"></i>
                             List Order
                     </div>
+
+
                 </div>
                 <div class="no-gutters row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="card no-shadow rm-border bg-transparent widget-chart text-left" >
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height: 50vh; overflow-y: scroll;">
-                                <table class="table table-hover table-striped table-bordered" >
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <!-- <table class="table table-hover table-striped table-bordered" >
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -53,8 +115,9 @@
                                     </thead>
                                     <tbody >
                                         <tr *ngFor="let item of listorder; let i = index">
-                                            <td>{{ item.id }}</td>
+                                            <td (click)="showDetail(item.id)" >{{ item.id }}</td>
                                             <td>
+                                                
                                                 <button class="btn-icon btn_custom btn_custom-warning">
                                                     <i class="fas fa-clock btn-icon-wrapper"></i>
                                                 </button>
@@ -62,14 +125,33 @@
                                         </tr>
                                     </tbody>
                                     
-                                </table>
+                                </table> -->
+                                
+                                <ul class="list-group">
+                                    <li  (click)="showDetail(item.id)" class="list-group-item" style="display: flex; justify-content: space-between;" *ngFor="let item of listorder | paginate : {itemsPerPage:10, currentPage: p , totalItems: total }; let i=index">
+                                        <p >{{ item.id }}</p>
+                                        <span><button class="btn-icon btn_custom"
+                                            [class.btn_custom-warning]="item.status === 'waiting'"
+                                            [class.btn_custom-pending]="item.status === 'pending'"
+                                            [class.btn_custom-shipping]="item.status === 'shipping'"
+                                            [class.btn_custom-success]="item.status === 'success'"
+                                            [class.btn_custom-danger]="item.status === 'canceled'"
+
+                                            >
+                                            <i *ngIf="item.status === 'waiting'" class="fas fa-clock btn-icon-wrapper"> </i>
+                                            <i *ngIf="item.status === 'pending'" class="fas fa-spinner btn-icon-wrapper"></i>
+                                            <i *ngIf="item.status === 'shipping'" class="fas fa-shipping-fast btn-icon-wrapper"></i>
+                                            <i *ngIf="item.status === 'success'" class="far fa-check-circle btn-icon-wrapper" style="color: black;"></i>
+                                            <i *ngIf="item.status === 'canceled'" class="fas fa-ban btn-icon-wrapper" style="color: black;"></i>
+                                        </button></span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="container">
                         <pagination-controls 
-                            (pageChange)="p = $event"  
-                            maxSize="10"
+                            (pageChange)="pageChange($event)"
                             previousLabel="Previous"
                             nextLabel="Next">
                         </pagination-controls>
@@ -78,4 +160,5 @@
             </div>
         </div>
     </div>
+    <div class="empty-space col-xs-b30"></div>
 </div>

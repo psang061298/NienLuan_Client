@@ -7,7 +7,7 @@ import { AboutusComponent } from './components/customer/aboutus/aboutus.componen
 import { ContactComponent } from './components/customer/contact/contact.component';
 import { CartComponent } from './components/customer/cart/cart.component';
 import { CheckoutComponent } from './components/customer/checkout/checkout.component';
-import { ProductsComponent } from './components/customer/products/products.component';
+// import { ProductsComponent } from './components/customer/products/products.component';
 import { ProductDetailComponent } from './components/customer/product-detail/product-detail.component';
 import { MainComponent } from './components/admin/main/main.component';
 import { BaseAdminComponent } from './components/admin/base-admin/base-admin.component';
@@ -39,6 +39,11 @@ import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { OrderComponent } from './components/admin/order/order.component';
 
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Ng5SliderModule } from 'ng5-slider';
+
+
 
 
 @NgModule({
@@ -52,7 +57,7 @@ import { OrderComponent } from './components/admin/order/order.component';
     ContactComponent,
     CartComponent,
     CheckoutComponent,
-    ProductsComponent,
+    // ProductsComponent,
     ProductDetailComponent,
     MainComponent,
     BaseAdminComponent,
@@ -73,16 +78,20 @@ import { OrderComponent } from './components/admin/order/order.component';
     NgxPaginationModule,
     HttpClientModule,
     FormsModule,
+    CarouselModule,
     NgSelectModule,
     ReactiveFormsModule,
     ChartsModule,
     CKEditorModule,
+    BrowserAnimationsModule,
+    Ng5SliderModule,
     AgmCoreModule.forRoot({
       apiKey : 'AIzaSyAfXQTSXB5jY1hg3Rw_odCpcId_67RQKbU',
     }),
     RouterModule.forRoot(appRoutes),
     NgxStripeModule.forRoot('pk_test_wc4Z30OzjsKmaCId0q71FgpW00UeXBH2ns'),
-    NgDatepickerModule
+    NgDatepickerModule,
+    
   ],
   providers: [
     GoogleMapsAPIWrapper,

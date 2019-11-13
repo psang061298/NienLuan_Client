@@ -25,7 +25,7 @@
                     </ng-template>
                     
                     <div *ngIf="token" class="entry hidden-xs hidden-sm cart">
-                        <a (click)="delay()" [routerLink]="[ '/index/cart' ]">
+                        <a [routerLink]="[ '/index/cart' ]">
                             <b class="hidden-xs">Your bag</b>
                             <span class="cart-icon">
                                 <i class="fas fa-shopping-cart" aria-hidden="true"></i>
@@ -179,7 +179,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-6 text-right">
-                                    <a class="button size-2 style-3"  [routerLink]="[ '/index/checkout' ]" (click)="deplay()">
+                                    <a class="button size-2 style-3"  [routerLink]="[ '/index/checkout' ]">
                                         <span class="button-wrapper">
                                             <span class="icon"><img src="../../../../assets/customer/img/icon-4.png" alt=""></span>
                                             <span class="text">proceed to checkout</span>
@@ -211,7 +211,7 @@
                         <nav>
                             <ul>
                                 <li routerLinkActive="active">
-                                    <a href="/index/home" [routerLink]="[ '/index/home' ]" (click)="delay()">HOME</a>
+                                    <a href="/index/home" [routerLink]="[ '/index/home' ]">HOME</a>
                                 </li>
                                 <li routerLinkActive="active">
                                     <a [routerLink]="[ '/index/about' ]" (click)="delay()">about us</a>
@@ -508,9 +508,23 @@
                                         <i class="fa fa-search" aria-hidden="true"></i>
                                         <input type="submit"/>
                                     </div>
-                                    <input class="simple-input style-1" type="text" value="" placeholder="Enter keyword" />
+                                    <input class="simple-input style-1" type="text" placeholder="Enter keyword" (keyup)="search()" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"/>
                                 </form>
+                                <ul class="list-group result">
+                                    <li *ngFor="let item of searchResult" class="list-group-item ">
+                                        <img [src]="item.images[0]" alt="" width="70px">
+                                        
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                            
+                                        </div>
+                                        
+                                        <div class="title h6">
+                                            {{item.name}}
+                                    </div> 
+                                    </li>
+                                </ul>
                             </div>
+                            
                         </div>
                     </div>
                     <div class="button-close"></div>

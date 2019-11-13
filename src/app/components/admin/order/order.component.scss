@@ -1,0 +1,40 @@
+.order-header{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+.style-3{
+    border: 1px #f7f7f7 solid;
+    padding: 20px 30px 30px 30px;
+    text-align: center;
+    background: #fff;
+    overflow: hidden;
+}
+
+.add{
+    line-height: 20px;
+  }
+.card{
+      min-height : 33vw;
+  }
+.btn_custom-pending{
+    background-color: #f4f724;
+    border-color: #f4f724;
+}
+.btn_custom-shipping{
+    background-color: #5bd2ff;
+    border-color: #5bd2ff;
+}
+.btn_custom-success{
+    background-color: #3fcd84;
+    border-color: #3fcd84;
+}
+.btn_custom-danger{
+    background-color: #f68084;
+    border-color: #f68084;
+}
+.list-group-item:hover{
+    cursor: pointer;
+    background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+}

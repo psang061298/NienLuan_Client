@@ -1,3 +1,5 @@
+
+
 .img{
     width: 80vw;
     height: 25vw;
@@ -77,3 +79,20 @@
     display: inline-block;
     font-weight: bold;
 }
+
+.owl-dots{
+    .owl-dot{
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        border-radius: 100%;
+        border: 1px #d9d9d9 solid;
+        transition: all .15s;
+        -webkit-transition: all .15s;
+    }
+    .active{
+        border: 2px #b8cd06 solid;
+    }
+
+}
+

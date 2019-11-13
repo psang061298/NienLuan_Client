@@ -58,43 +58,43 @@ export class CustomerService {
   }
 
   getCategory() : Observable<Category[]>{
-    return this.http.get<Category[]>(`${this.api}/categories/`,httpOptions);
+    return this.http.get<Category[]>(`${this.api}/categories/`,httpOptionsNonToken);
   }
 
   getNewProduct(limit) :Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.api}/products/?limit=${limit}`,httpOptions)
+    return this.http.get<Product[]>(`${this.api}/products/?limit=${limit}`,httpOptionsNonToken)
   }
 
-  getProductCateFilter(cate,page) : Observable<any[]>{
-    return this.http.get<any[]>(`${this.api}/products/?category=${cate}&page=${page}`,httpOptions);
+  getProductCateFilter(cate,page,gt,lt) : Observable<any[]>{
+    return this.http.get<any[]>(`${this.api}/products/?category=${cate}&page=${page}&gt=${gt}&lt=${lt}`,httpOptionsNonToken);
   }
 
-  getProductBrandFilter(brand,page) : Observable<any[]>{
-    return this.http.get<any[]>(`${this.api}/products/?brand=${brand}&page=${page}`,httpOptions);
+  getProductBrandFilter(brand,page,gt,lt) : Observable<any[]>{
+    return this.http.get<any[]>(`${this.api}/products/?brand=${brand}&page=${page}&gt=${gt}&lt=${lt}`,httpOptionsNonToken);
   }
 
-  getProductBothFilter(cate , brand,page) : Observable<any[]>{
-    return this.http.get<any[]>(`${this.api}/products/?category=${cate}&brand=${brand}&page=${page}`,httpOptions);
+  getProductBothFilter(cate , brand,page,gt,lt) : Observable<any[]>{
+    return this.http.get<any[]>(`${this.api}/products/?category=${cate}&brand=${brand}&page=${page}&gt=${gt}&lt=${lt}`,httpOptionsNonToken);
   }
 
   getBrand(): Observable<Brand[]>{
-    return this.http.get<Brand[]>(`${this.api}/brands/`,httpOptions);
+    return this.http.get<Brand[]>(`${this.api}/brands/`,httpOptionsNonToken);
   }
 
   getOneProduct(id) : Observable<Product>{
-    return this.http.get<Product>(`${this.api}/products/${id}/`,httpOptions);
+    return this.http.get<Product>(`${this.api}/products/${id}/`,httpOptionsNonToken);
   }
 
   register(user) : Observable<User>{
-    return this.http.post<User>(`${this.api}/users/signup/?`, user,httpOptionsNonToken);
+    return this.http.post<User>(`${this.api}/users/signup/`, user,httpOptionsNonToken);
   }
 
   getProfile() : Observable<User>{
     return this.http.get<User>(`${this.api}/users/`,httpOptions);
   }
 
-  putProfile(id , user) : Observable<User>{
-    return this.http.put<User>(`${this.api}/users/${id}/`,user,httpOptions);
+  putProfile(user) : Observable<User>{
+    return this.http.put<User>(`${this.api}/users/profile/`,user,httpOptions);
   }
 
   postCart(cart): Observable<Cart>{
@@ -122,7 +122,7 @@ export class CustomerService {
   }
 
   getPromotion() : Observable<Promotion[]>{
-    return this.http.get<Promotion[]>(`${this.api}/promotions/`);
+    return this.http.get<Promotion[]>(`${this.api}/promotions/`,httpOptionsNonToken);
   }
 
   payment(checkout) : Observable<any>{
@@ -133,4 +133,18 @@ export class CustomerService {
     return this.http.get<orderHistory[]>(`${this.api}/orders/`,httpOptions);
   }
 
+  public search(str) : Promise<any>{
+    return this.http.get(`${this.api}/products/?name=${str}`,httpOptionsNonToken).toPromise()
+    .catch(err => {
+        return Promise.reject(err.json().error  || 'Server error');
+    });
+  }
+
+  public changeStatus(id,status) : Observable<any>{
+    return this.http.patch<any>(`${this.api}/orders/${id}/update/`,status, httpOptions)
+  }
+
+  public changePass(str) : Observable<any>{
+    return this.http.patch<any>(`${this.api}/users/password/`,str, httpOptions)
+  }
 }

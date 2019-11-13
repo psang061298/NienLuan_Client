@@ -1,4 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
+import { AdminService } from '../../../services/admin/admin.service'
+import { AuthService } from '../../../services/auth.service'
 
 @Component({
   selector: 'app-base-admin',
@@ -7,7 +9,10 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 })
 export class BaseAdminComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private adminService : AdminService,
+    private authService : AuthService
+  ) { }
 
   ngOnInit() {
   }
@@ -21,5 +26,9 @@ export class BaseAdminComponent implements OnInit {
     this.sleep().then(data => {
       window.location.reload();
     });
+  }
+
+  logout(){
+    this.authService.logout();
   }
 }

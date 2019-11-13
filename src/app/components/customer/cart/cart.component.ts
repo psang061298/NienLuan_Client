@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Cart_Item } from 'src/app/models/cart_item.class';
 import { CustomerService } from 'src/app/services/customer.service';
 import Swal from 'sweetalert2';
+import { Promotion } from 'src/app/models/promotion.class';
 
 @Component({
   selector: 'app-cart',
@@ -10,6 +11,8 @@ import Swal from 'sweetalert2';
 })
 export class CartComponent implements OnInit {
 
+  public promotion : Promotion[] = [];
+
   cart_items : Cart_Item[] = [];
   totalPrice = 0;
   constructor(
@@ -17,7 +20,7 @@ export class CartComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadCart();
+    this.loadPromotion();
   }
 
   loadCart(){
@@ -27,8 +30,17 @@ export class CartComponent implements OnInit {
       for (let i = 0; i < this.cart_items.length; i++) {
         let img : string;
         img = this.cart_items[i].product.images.toString().replace(/'/g,'"');
+
+        this.promotion.forEach(promo => {
+
+          if(promo.category['id'] == this.cart_items[i].product.category){
+            
+            this.cart_items[i].product.price = this.cart_items[i].product.price * (100-promo.percent) / 100;
+          }
+        });
+
         this.cart_items[i].product.images = JSON.parse(img);
-        this.totalPrice += this.cart_items[i].product.price*this.cart_items[i].quantity;
+        this.totalPrice += this.cart_items[i].final_price;
       }
     }, err => {
       console.log(err);
@@ -83,6 +95,13 @@ export class CartComponent implements OnInit {
     await new Promise(resolve => setTimeout(()=>resolve(), 10)).then( () => window.location.reload());
   }
 
+  loadPromotion(){
+    this.customerService.getPromotion().subscribe(data => {
+      this.promotion = data;
+      console.log(data);
+      this.loadCart();
+    })
+  }
 
 }
 

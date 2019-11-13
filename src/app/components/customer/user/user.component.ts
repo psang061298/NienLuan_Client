@@ -9,6 +9,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Address } from 'src/app/models/address.class';
 import Swal from 'sweetalert2';
 import { orderHistory } from 'src/app/models/oderHistory.class';
+import { timer } from 'rxjs';
+import { AuthService } from '../../../services/auth.service'
 
 declare var $ : any;
 
@@ -33,12 +35,16 @@ export class UserComponent implements OnInit{
   showFormAddress = false;
   order_History : orderHistory[] = [];
 
+  oldPass : string;
+  newPass : string;
+  confirmPass : string;
+
   constructor(
     private ngZone : NgZone,
     private customerService : CustomerService,
     public router : Router,
     private form: FormBuilder,
-
+    private authService : AuthService
   ) { }
 
   ngOnInit() {
@@ -54,6 +60,8 @@ export class UserComponent implements OnInit{
   loadUser(){
     this.customerService.getUser().subscribe(data => {
         this.user = data;
+        console.log(this.user);
+        
         this.formdemo.get('name').setValue(this.user.fullname);
         this.formdemo.get('email').setValue(this.user.email);
         this.formdemo.get('gender').setValue(this.user.gender);
@@ -156,9 +164,9 @@ export class UserComponent implements OnInit{
   onSubmit(){
     this.user.fullname = this.formdemo.get('name').value;
     this.user.gender = this.formdemo.get('gender').value;
-    this.customerService.putProfile(this.user['id'],JSON.stringify(this.user)).subscribe(data => {
+    this.customerService.putProfile(JSON.stringify(this.user)).subscribe(data => {
       Swal.fire({
-        position: 'top-end',
+        position: 'center',
         type: 'success',
         title: 'Your work has been saved',
         showConfirmButton: false,
@@ -170,7 +178,7 @@ export class UserComponent implements OnInit{
   loadHistory(){
     this.customerService.getOldOrder().subscribe(data => {
       console.log(data);
-      this.order_History = data;
+      this.order_History = data['results'];
       this.order_History.forEach(item => {
         if(item.products.length > 0){
           item.products.forEach(item1 => {
@@ -181,5 +189,69 @@ export class UserComponent implements OnInit{
         }
       })
     })
+  }
+
+  changeStatus(id){
+    Swal.fire({
+      title: 'Cancel?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, cancel it!'
+    }).then((result) => {
+      if (result.value) {
+        let change = {
+          status : "canceled"
+        }
+        this.customerService.changeStatus(id, JSON.stringify(change)).subscribe(data => {
+          console.log(data);
+          Swal.fire({
+            position: 'center',
+            type: 'success',
+            title: 'Your order has been canceled!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          this.loadHistory();
+        });
+      }
+    })
+  }
+
+  changePass(){
+    console.log(this.formdemo);
+    
+    if(this.newPass != '' && this.newPass == this.confirmPass){
+      let user = {
+        email : this.formdemo.controls.email.value,
+        password : this.oldPass
+      }
+      console.log(JSON.stringify(user));
+      
+      this.authService.checkPass(JSON.stringify(user)).subscribe(data => {
+        if(data == true){
+          let password = {
+            password : this.newPass
+          }
+          this.customerService.changePass(JSON.stringify(password)).subscribe(data => {
+            Swal.fire({
+              position: 'center',
+              type: 'success',
+              title: 'Your work has been saved',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          })
+        }
+      },err => {
+        Swal.fire('Wrong password')
+      })
+    }
+    else{
+      Swal.fire('Confirm password not match')
+    }
+    
   }
 }

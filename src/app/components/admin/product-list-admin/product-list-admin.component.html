@@ -45,7 +45,7 @@
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let item of products | paginate: { 
-                                                                                        itemsPerPage: 10,
+                                                                                        itemsPerPage: 9,
                                                                                         currentPage: this.p,
                                                                                         totalItems: total } ; let i = index"
                                                 [routerLink]="[ '/admin/product', item.id ]"

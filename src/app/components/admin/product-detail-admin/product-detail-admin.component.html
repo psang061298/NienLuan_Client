@@ -8,12 +8,12 @@
                         <i class="fas fa-th icon-gradient bg-mean-fruit"></i>
                     </div>
                     <div>
-                        <ng-container *ngIf="id == 0; else taomoi">
+                        <ng-container *ngIf="id == 0; else sua">
                             Add New Product
                         <div class="page-title-subheading">This is a dashboard to create a new product .
                         </div>
                         </ng-container>
-                        <ng-template #taomoi>
+                        <ng-template #sua>
                             Detail Product
                         <div class="page-title-subheading">This is a dashboard to edit your product .
                         </div>
@@ -49,7 +49,11 @@
                                 <button type="submit" class="ml-2 mt-3 btn_custom-transition btn_custom btn_custom-outline-danger" style="right: 0px;">Create</button>
                             </ng-container>
                             <ng-template #elseTemplate>
-                                <button type="submit" class="ml-2 mt-3 btn_custom-transition btn_custom btn_custom-outline-primary">Update</button>
+                                <div>
+                                        <button type="button" class="ml-2 mt-3 btn_custom-transition btn_custom btn_custom-outline-danger" (click)="delProduct()">Delete</button>
+                                        <button type="submit" class="ml-2 mt-3 btn_custom-transition btn_custom btn_custom-outline-primary">Update</button>
+                                </div>
+                                
                             </ng-template>
             </div>
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style="max-width: 53vw;">
@@ -108,17 +112,17 @@
                                                                             (change)="changeBrand($event)"
                                                                             *ngIf="brands"
                                                                             >
-                                                                            <ng-template ng-label-tmp let-item="item" >
-                                                                                    <span style="line-height: 20px">{{item.name}}</span>
-                                                                                <img class="logo" [src]="item.logo"/>
-                                                                                
-                                                                            </ng-template>
-                                                                            <ng-template ng-option-tmp let-item="item" let-index="index">
-                                                                                    <span>{{item.name}}</span>
-                                                                                <img class="logo" [src]="item.logo"/>
-                                                                                
-                                                                            </ng-template>
-                                                                </ng-select>
+                                                                                <ng-template ng-label-tmp let-item="item" >
+                                                                                        <span style="line-height: 20px">{{item.name}}</span>
+                                                                                    <img class="logo" [src]="item.logo"/>
+                                                                                    
+                                                                                </ng-template>
+                                                                                <ng-template ng-option-tmp let-item="item" let-index="index">
+                                                                                        <span>{{item.name}}</span>
+                                                                                    <img class="logo" [src]="item.logo"/>
+                                                                                    
+                                                                                </ng-template>
+                                                                            </ng-select>
     
     
     

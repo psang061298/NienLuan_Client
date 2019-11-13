@@ -6,6 +6,8 @@ import { Promotion } from 'src/app/models/promotion.class';
 import { Product } from 'src/app/models/product.class';
 import { Brand } from 'src/app/models/brand.class';
 import { EventEmitter } from 'events';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Options } from 'ng5-slider';
 
 
 declare var $:any;
@@ -13,12 +15,12 @@ declare var $:any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
 
   public promotion : Promotion[] = [];
+  discount = 0;
   public maxSize: number = 7;
   public directionLinks: boolean = true;
   public autoHide: boolean = false;
@@ -30,6 +32,47 @@ export class HomeComponent implements OnInit {
       screenReaderPageLabel: 'page',
       screenReaderCurrentLabel: `You're on page`
   };
+
+  minValue: number = 0;
+  maxValue: number = 50;
+  options_slider: Options = {
+    floor: 0,
+    ceil: 50
+  };
+
+  customOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: true,
+    navSpeed: 700,
+    navText: ['',''],
+    responsive: {
+      0: {
+        items: 1
+      },
+    },
+    nav: true
+  }
+
+  OptionForProduct: OwlOptions = {
+    loop: false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    navSpeed: 700,
+    navText: ['',''],
+    responsive: {
+      0: {
+        items: 4
+      },
+    },
+    nav: true
+  }
+
+
   NewestProduct : Product[] = [];
   catefilter : number = -1;
   brandfilter : number = -1;
@@ -42,6 +85,9 @@ export class HomeComponent implements OnInit {
     currentPage: 1,
     totalItems : 100,
   };
+
+  priceOfNewProduct : number[] = [];
+
   constructor(
     private customerService : CustomerService,
   ) {        
@@ -50,12 +96,10 @@ export class HomeComponent implements OnInit {
   
   categories : Category[] = [];
 ngOnInit() {
-  this.customerService.getCategory().subscribe(data =>{
-    this.categories = data;
-  })
+  this.priceOfNewProduct = new Array();
   this.loadPromotion();
   this.loadCate();
-    this.loadNewProduct();
+    
     this.loadBrand();
 }
 
@@ -63,7 +107,7 @@ loadPromotion(){
   this.customerService.getPromotion().subscribe(data => {
     this.promotion = data;
     console.log(data);
-    
+    this.loadNewProduct();
   })
 }
 
@@ -77,8 +121,23 @@ loadPromotion(){
   loadNewProduct(){
     this.customerService.getNewProduct(7).subscribe(data=>{
       this.NewestProduct = data['results'];
-      // console.log(this.NewestProduct);
+      console.log(this.NewestProduct);
+      this.NewestProduct.forEach(item => {
+        let new_Price = 0;
+        for (let i = 0; i < this.promotion.length; i++) {
+          if(item.category['id'] == this.promotion[i].category['id']){
+            new_Price = item.price * (100 - this.promotion[i].percent) / 100;
+            this.priceOfNewProduct.push(new_Price);
+            break;
+          }
+        }
+        if(new_Price == 0){
+          this.priceOfNewProduct.push(0);
+        }
+      });
     })
+    console.log(this.priceOfNewProduct);
+    
   }
 
   loadBrand(){
@@ -88,8 +147,9 @@ loadPromotion(){
   }
 
   loadProductFilter(page){
+    page = this.config.currentPage;
     if(this.catefilter != -1 && this.brandfilter == -1){
-      this.customerService.getProductCateFilter(this.catefilter,page).subscribe(data => {
+      this.customerService.getProductCateFilter(this.catefilter,page,this.minValue*1000000,this.maxValue*1000000).subscribe(data => {
         console.log(data);
         
         this.collection.data = data['results'];
@@ -98,7 +158,7 @@ loadPromotion(){
       })
     }
     else if(this.catefilter == -1 && this.brandfilter != -1){
-          this.customerService.getProductBrandFilter(this.brandfilter,page).subscribe(data => {
+          this.customerService.getProductBrandFilter(this.brandfilter,page,this.minValue*1000000,this.maxValue*1000000).subscribe(data => {
             console.log(data);
             this.collection.data = data['results'];
         console.log(data['results']);
@@ -106,8 +166,8 @@ loadPromotion(){
             
           })
         }
-        else{
-          this.customerService.getProductBothFilter(this.catefilter,this.brandfilter,page).subscribe(data => {
+        else {
+          this.customerService.getProductBothFilter(this.catefilter,this.brandfilter,page,this.minValue*1000000,this.maxValue*1000000).subscribe(data => {
             console.log(data);
             this.collection.data = data['results'];
         console.log(data['results']);
@@ -117,10 +177,21 @@ loadPromotion(){
         }
   }
   changeCate(value){
+    let hasDiscount = false;
     this.catefilter = value;
     console.log(value);
     this.config.currentPage = 1;
     this.brandfilter = -1;
+    for (let i = 0; i < this.promotion.length; i++) {
+      if(value == this.promotion[i].category['id']){
+        this.discount = this.promotion[i].percent;
+        hasDiscount = true;
+        break;
+      }
+    }
+    if(!hasDiscount){
+      this.discount = 0;
+    }
     this.loadProductFilter(this.config.currentPage);
   }
 

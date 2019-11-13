@@ -6,5 +6,5 @@ export class User {
   access?: string;
   avatar? : string;
   addresses? : string[];
-  
+  active? : boolean;
 }

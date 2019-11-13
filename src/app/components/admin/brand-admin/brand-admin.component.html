@@ -18,7 +18,7 @@
   </div>
   <div class="row">
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ">
-      <div class="mb-3 card sticky">
+      <div class="mb-3 card">
         <div class="card-header-tab card-header">
           <div
             class="card-header-title font-size-lg text-capitalize font-weight-normal"
@@ -53,7 +53,7 @@
                     />
                   </div>
 
-                  <div>
+                  <div style="display: flex; justify-content: space-between;">
                     <label style="display: flex ; width: fit-content;">
                       <div>
                         <div class="empty-space col-xs-b10 col-sm-b25"></div>
@@ -72,13 +72,17 @@
                         /><label class="toggle" for="switch_new">Active</label>
                       </div>
                     </label>
-                  </div>
-                  <button
+
+                    <button
                     type="submit"
                     class="mt-3 btn_custom-transition btn_custom btn_custom-outline-primary"
                   >
                     Create
                   </button>
+                  </div>
+
+
+                  
                 </form>
               </div>
             </div>
@@ -119,7 +123,7 @@
                         <button
                           type="button"
                           class="btn btn-danger"
-                          (click)="delImage(i)"
+                          (click)="delImage()"
                         >
                           Del
                         </button>
@@ -194,7 +198,7 @@
   <div class="popup-content" data-rel="2">
     <div class="layer-close" (click)="close()"></div>
     <div class="popup-container size-1">
-      <div class="popup-align">
+      <div class="popup-align-custom">
         <h3 class="h3 text-center">Brand</h3>
         <div class="empty-space col-xs-b30"></div>
         <div class="image-upload">
@@ -244,7 +248,7 @@
           >
           <div class="empty-space col-xs-b10 col-sm-b20"></div>
           <div class="row">
-            <div class="col-sm-7 col-xs-b10 col-sm-b0">
+            <div class="col-sm-5 col-xs-b5 col-sm-b0">
               <label style="display: flex">
                 <div>
                   <div class="empty-space col-xs-b10 col-sm-b5"></div>
@@ -264,17 +268,30 @@
                 </div>
               </label>
             </div>
-            <div class="col-sm-5 text-right">
-              <button type="submit" class="button noshadow size-2 style-3">
-                <span class="button-wrapper">
-                  <span class="icon"
-                    ><img
-                      src="../../../../assets/customer/img/icon-4.png"
-                      alt=""
-                  /></span>
-                  <span class="text">submit</span>
-                </span>
-              </button>
+            <div class="col-sm-7 col-lg-7">
+              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                
+              </div>
+              
+              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <button
+                    type="button"
+                    class="mt-1 btn_custom-transition btn_custom btn_custom-outline-danger"
+                    (click)="delBrand()"
+                  >
+                    Del
+                  </button>
+              </div>
+
+              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <button
+                    type="submit"
+                    class="mt-1 btn_custom-transition btn_custom btn_custom-outline-success"
+                    
+                  >
+                    Submit
+                  </button>
+              </div>
             </div>
           </div>
         </form>

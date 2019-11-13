@@ -45,11 +45,27 @@ export class AuthService {
       );
   }
 
+  checkPass(userJSON: string): Observable<boolean> {
+
+    return this.http
+      .post<User>(`${this.AUTH_SERVER}/login/`, userJSON,httpOptions)
+      .pipe(
+        map(user => {
+          let decode = '';
+          if (user && user.access) {
+            return true;
+          }
+          else{
+            return false;
+          }
+        })
+      );
+  }
+
   logout() {
-    this.token = '';
-    localStorage.removeItem('ACCESS_TOKEN');
-    localStorage.clear()
-    this.router.navigateByUrl('');
+    // this.token = '';
+    // localStorage.removeItem('ACCESS_TOKEN');
+    localStorage.clear();
   }
 
   private saveToken(

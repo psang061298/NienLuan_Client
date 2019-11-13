@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Brand } from 'src/app/models/brand.class';
 import { AdminService } from '../../../services/admin/admin.service';
+import Swal from 'sweetalert2';
 declare var $: any
 
 @Component({
@@ -54,6 +55,14 @@ export class BrandAdminComponent implements OnInit {
       console.log(data);
       this.loadBrand();
       this.brand_new = new Brand();
+      this.imgServer['image']='';
+      Swal.fire({
+        position: 'top-end',
+        type: 'success',
+        title: 'Your work has been save!',
+        showConfirmButton: false,
+        timer: 1500
+      })
     })
   }
 
@@ -62,6 +71,17 @@ export class BrandAdminComponent implements OnInit {
     const url = "http://127.0.0.1:8000/upload_image/";
     const myData = new FormData();
     myData.append('source', this.selectFile[0]);
+    Swal.fire({
+      position: 'top-end',
+      title: 'Please Wait..!',
+      text: 'Is working..',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      onOpen: () => {
+          Swal.showLoading()
+      }
+  })
     $.ajax({
       url,
       data: myData,
@@ -73,6 +93,14 @@ export class BrandAdminComponent implements OnInit {
       type: 'POST',
       success: res => {
         // console.log(res.data.secure_url);
+        Swal.hideLoading();
+        Swal.fire({
+          position: 'top-end',
+          type: 'success',
+          title: 'Image is Uploaded',
+          showConfirmButton: false,
+          timer: 1500
+        })
         this.imgServer['image'] = (res.data.secure_url);
         console.log(this.imgServer);
       },
@@ -85,10 +113,20 @@ export class BrandAdminComponent implements OnInit {
   editImage(event) {
     let selectFile = event.target.files;
     console.log('chay');
-    
     const url = "http://127.0.0.1:8000/upload_image/";
     const myData = new FormData();
     myData.append('source', selectFile[0]);
+    Swal.fire({
+      position: 'top-end',
+      title: 'Please Wait..!',
+      text: 'Is working..',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      onOpen: () => {
+          Swal.showLoading()
+      }
+  })
     $.ajax({
       url,
       data: myData,
@@ -99,6 +137,14 @@ export class BrandAdminComponent implements OnInit {
       contentType: false,
       type: 'POST',
       success: res => {
+        Swal.hideLoading();
+        Swal.fire({
+          position: 'top-end',
+          type: 'success',
+          title: 'Image is Uploaded',
+          showConfirmButton: false,
+          timer: 1500
+        })
         console.log(res.data.secure_url);
         this.brand_now.logo = (res.data.secure_url);
         console.log(this.brand_now);
@@ -114,14 +160,68 @@ export class BrandAdminComponent implements OnInit {
     if(frm.valid){
       let brandJSON = JSON.stringify(this.brand_now);
       console.log(brandJSON);
-      
       this.adminService.putBrand(this.brand_now.id,brandJSON).subscribe(data =>{
         console.log(data);
         this.loadBrand();
+        Swal.fire({
+          position: 'top-end',
+          type: 'success',
+          title: 'Your work has been saved',
+          showConfirmButton: false,
+          timer: 1500
+        })
       })
     }
     else{
       console.log(frm)
     }
+  }
+
+  delBrand(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.adminService.delBrand(this.brand_now.id).subscribe(data => {
+          console.log(data);
+          Swal.fire({
+            position: 'top-end',
+            type: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+      }
+    })
+    console.log(this.brand_now.id);
+    
+  }
+
+  delImage(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.imgServer['image']='';
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+      }
+    })
   }
 }

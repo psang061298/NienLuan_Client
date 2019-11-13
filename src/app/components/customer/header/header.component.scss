@@ -7,3 +7,19 @@
         font-size: 2em;
     }
 }
+
+.result{
+    width: 90%;
+    max-height: 500px;
+    overflow-y: scroll;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 5px 5px rgba(0,0,0,.1);
+    transition: all .3s;
+    li {
+        display: flex;
+        font-size: 16px;
+        justify-content: flex-start;
+        min-height: 100px;
+    }
+}

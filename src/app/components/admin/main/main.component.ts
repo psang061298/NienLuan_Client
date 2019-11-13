@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from '../../../services/admin/admin.service';
+import { last } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-main',
@@ -7,6 +10,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
+  order : any[] = [];
+
   public barChartOption = {
     scaleShowVerticalLines : false,
     responsive: true,
@@ -14,21 +19,17 @@ export class MainComponent implements OnInit {
 
   //thang nhap vao bao nhieu cai
   //ban ra bao nhieu cai
-  public barChartLabel = ['2001','2002','2003','2004','2005','2006','2007'];
 
-  public data = [
+  redultBarChart : any[] = [];
+
+  public barChartLabel = ['Month 1','Month 2','Month 3','Month 4','Month 5','Month 6','Month 7',
+  'Month 8','Month 9','Month 10','Month 11','Month 12'];
+
+  public databarChar = [
     {
-      data:[
-        64,55,59,87,98,12,23
-      ],
-      label: 'Series A'
+      data:[],
+      label: 'Product'
     },
-    {
-      data:[
-        46,56,95,22,13,11,8
-      ],
-      label: 'Series B'
-    }
   ]
   public barChartLegend = true;
   public barChartType = 'bar'
@@ -36,14 +37,47 @@ export class MainComponent implements OnInit {
 
   //for category
 
-  public labels=['01','02','03','04'];
-  public dataCate = [120,150,180,190];
+  public labels=[];
+  public dataCate = [];
   public type = 'pie';
 
 
-  constructor() { }
+  constructor(
+    private adminService : AdminService,
+  ) { }
 
   ngOnInit() {
+    this.loadStatistics();
+    this.loadInStock();
+  }
+
+  loadStatistics(){
+    this.adminService.getStatistics().then(data => {
+      this.redultBarChart = data;
+      let lastIndex = this.redultBarChart.length -1 ;
+      console.log(lastIndex);
+      let month = this.redultBarChart[lastIndex]['month'].substr(0,2);
+      for (let i = 1; i <= 12; i++) {
+        if( lastIndex >= 0 && i == this.redultBarChart[lastIndex]['month'].substr(0,2)){
+          console.log('thang ' + i);
+          this.databarChar[0]['data'].push(this.redultBarChart[lastIndex]['revenue']);
+          lastIndex -= 1;
+        }
+        else{
+          this.databarChar[0]['data'].push(0)
+        }
+      }
+    })
+    console.log(this.databarChar);
+  }
+  
+  loadInStock(){
+    this.adminService.getInStock().subscribe(data => {
+      data.forEach(element => {
+        this.labels.push(element.category);
+        this.dataCate.push(element.quantity_in_stock);
+      });
+    })
   }
 
 }

@@ -13,10 +13,22 @@
                                    <div class="swiper-button-prev hidden"></div>
                                    <div class="swiper-button-next hidden"></div>
                                    <div class="swiper-wrapper">
-                                       <div class="swiper-slide" *ngFor="let item of product.images">
-                                            <div class="swiper-lazy-preloader"></div>
-                                            <div class="product-big-preview-entry swiper-lazy" [ngStyle]="{'background-image': 'url(' + item + ')'}"></div>
-                                       </div>
+
+
+                                        <div class="swiper-slide" *ngFor="let item of product.images">
+                                                <div class="swiper-lazy-preloader"></div>
+                                                <div class="product-big-preview-entry swiper-lazy" [ngStyle]="{'background-image': 'url(' + item + ')'}"></div>
+                                           </div>
+                                        <!-- <owl-carousel-o [options]="customOptions" id="banner">
+                                                <ng-template carouselSlide *ngFor="let item of product.images">
+                                                        <div class="swiper-slide" >
+                                                                <div class="swiper-lazy-preloader"></div>
+                                                                <div class="product-big-preview-entry swiper-lazy" [ngStyle]="{'background-image': 'url(' + item + ')'}"></div>
+                                                           </div>
+                                                </ng-template>  
+                                              </owl-carousel-o> -->
+
+                                       
                                    </div>
                                 </div>
 
@@ -41,8 +53,10 @@
                             <div class="simple-article size-4 grey col-xs-b5">{{product.category.title}}</div>
                             <div class="h3 col-xs-b25">{{product.name}}</div>
                             <div class="row col-xs-b25">
-                                <div class="col-sm-6">
-                                    <div class="simple-article size-6 grey">PRICE: <span class="color" style="color: red;"><strong>{{product.price | number :'1.0-3'}} vnđ</strong></span></div>        
+                                <div class="col-sm-12">
+                                    <div class="simple-article size-6 grey">PRICE: <span class="color" style="color: red;"><strong>{{product.price | number :'1.0-3'}} đ </strong></span>
+                                        <span *ngIf="oldPrice != 0" ><small style="text-decoration: line-through; font-size: 15px;"> {{oldPrice | number : '1.0-3'}} đ</small></span>
+                                    </div>        
                                 </div>
                             </div>
                             <div class="row">

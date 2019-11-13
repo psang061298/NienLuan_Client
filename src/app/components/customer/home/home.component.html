@@ -4,89 +4,28 @@
 <div class="header-empty-space"></div>
 
         <div class="slider-wrapper">
-            <div class="swiper-button-prev visible-lg"></div>
-            <div class="swiper-button-next visible-lg"></div>
-            <div class="swiper-container" data-parallax="1" data-auto-height="1">
-               <div class="swiper-wrapper">
-                   <div class="swiper-slide" *ngFor="let item of promotion">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <a href="#" [routerLink]="[ '/product', {category: item.category.id} ]">
-                                            <div class="cell-view page-height_cus">
-                                            <div class="empty-space col-lg-b50"></div>                                                
-                                                <div class="img">
-                                                    <img class="bg_custom" [src]="item.image" alt="">
+            <div class="swiper-container">
+                <owl-carousel-o [options]="customOptions" id="banner">
+                    <ng-template carouselSlide *ngFor="let item of promotion">
+                            <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <a href="#">
+                                                    <div class="cell-view page-height_cus">
+                                                    <div class="empty-space col-lg-b50"></div>                                                
+                                                        <div class="img">
+                                                            <img class="bg_custom" [src]="item.image" alt="">
+                                                        </div>
+                                                    <div class="col-xs-b40 col-sm-b80"></div>
+                                                    <div class="empty-space col-xs-b80 col-sm-b0"></div>
                                                 </div>
-                                            <div class="col-xs-b40 col-sm-b80"></div>
-                                            <div class="empty-space col-xs-b80 col-sm-b0"></div>
-                                        </div>
-                                    </a>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                   </div>
-                   <!-- <div class="swiper-slide">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-6 col-sm-offset-6">
-                                    <div class="cell-view page-height" >
-                                        <div class="col-xs-b40 col-sm-b80"></div>
-                                        <div data-swiper-parallax-x="-600">
-                                            <div class="simple-article grey size-5">BEST PRICE <span class="color">$199.00</span></div>
-                                            <div class="col-xs-b5"></div>
-                                        </div>
-                                        <div data-swiper-parallax-x="-500">
-                                            <h1 class="h1">smartphone x transform</h1>
-                                            <div class="title-underline left"><span></span></div>
-                                        </div>
-                                        <div data-swiper-parallax-x="-400">
-                                            <div class="simple-article size-4 grey">In feugiat molestie tortor a malesuada. Etiam a venenatis ipsum. Proin pharetra elit at feugiat commodo vel placerat tincidunt sapien nec</div>
-                                            <div class="col-xs-b30"></div>
-                                        </div>
-                                        <div data-swiper-parallax-x="-300">
-                                            <div class="buttons-wrapper">
-                                                <a class="button size-2 style-2" href="#">
-                                                    <span class="button-wrapper">
-                                                        <span class="icon"><img src="../../../../assets/customer/img/icon-1.png" alt=""></span>
-                                                        <span class="text">Learn More</span>
-                                                    </span>
-                                                </a>
-                                                <a class="button size-2 style-3" href="#">
-                                                    <span class="button-wrapper">
-                                                        <span class="icon"><img src="../../../../assets/customer/img/icon-3.png" alt=""></span>
-                                                        <span class="text">Add To Cart</span>
-                                                    </span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-b40 col-sm-b80"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="slider-product-preview align-left">
-                                <div class="product-preview-shortcode">
-                                    <div class="preview">
-                                        <div class="swiper-lazy-preloader"></div>
-                                        <div class="entry full-size swiper-lazy active" data-background="../../../../assets/customer/img/product-preview-1.jpg"></div>
-                                        <div class="entry full-size swiper-lazy" data-background="../../../../assets/customer/img/product-preview-2.jpg"></div>
-                                        <div class="entry full-size swiper-lazy" data-background="../../../../assets/customer/img/product-preview-3.jpg"></div>
-                                    </div>
-                                    <div class="sidebar valign-middle" data-swiper-parallax-x="-300">
-                                        <div class="valign-middle-content">
-                                            <div class="entry active"><img src="../../../../assets/customer/img/product-4.png" alt="" /></div>
-                                            <div class="entry"><img src="../../../../assets/customer/img/product-5.png" alt="" /></div>
-                                            <div class="entry"><img src="../../../../assets/customer/img/product-6.png" alt="" /></div>
+                                            </a>
+                                            
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="empty-space col-xs-b80 col-sm-b0"></div>
-                        </div>
-                   </div> -->
-               </div>
-               <div class="swiper-pagination"></div>
+                    </ng-template>  
+                  </owl-carousel-o>
             </div>
         </div>
 
@@ -98,48 +37,52 @@
                 <div class="empty-space col-xs-b15 col-sm-b50 col-md-b50"></div>
                 <div class="row">
                     <div class="col-md-9 col-md-push-3">
-                        <div class="slider-wrapper">
-                            <div class="swiper-container arrows-align-top" data-breakpoints="1" data-xs-slides="1" data-sm-slides="3" data-md-slides="4" data-lt-slides="4" data-slides-per-view="4">
+                            <div class="slider-wrapper">
+                                <div class="swiper-container arrows-align-top">
                                 <div class="h4 swiper-title">lastest products</div>
-                                <div class="empty-space col-xs-b20"></div>
-                                <div class="swiper-button-prev style-1"></div>
-                                <div class="swiper-button-next style-1"></div>
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide" *ngFor="let item of NewestProduct">
-                                        <div class="product-shortcode style-1 small">
-                                            <div class="title">
-                                                <div class="simple-article size-1 color col-xs-b5"><a href="#">{{item.category.title}}</a></div>
-                                                <div class="h6 animate-to-green"><a href="#">{{item.name | formatTitle:32}}</a></div>
-                                            </div>
-                                            <div class="preview lastest">
-                                                <img [src]="item.images[0]" alt="" height="400px" width="460px">
-                                                <div class="preview-buttons valign-middle">
-                                                    <div class="valign-middle-content">
-                                                        <a class="button size-2 style-2" href="#" [routerLink]="[ '/index/home', item.id ]" (click)="reload()">
-                                                            <span class="button-wrapper">
-                                                                <span class="icon"><img src="../../../../assets/customer/img/icon-1.png" alt=""></span>
-                                                                <span class="text">Learn More</span>
-                                                            </span>
-                                                        </a>
-                                                        <a class="button size-2 style-3" href="#">
-                                                            <span class="button-wrapper">
-                                                                <span class="icon"><img src="../../../../assets/customer/img/icon-3.png" alt=""></span>
-                                                                <span class="text">Add To Cart</span>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="price">
-                                                <div class="simple-article size-4" style="color: red;"><strong>{{item.price | number : '1.0-3'}} vnđ</strong></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="empty-space col-xs-b15 col-sm-b50 col-md-b10"></div>
+                                        
+                                        <owl-carousel-o [options]="OptionForProduct" id="product">
+
+                                                <ng-template carouselSlide *ngFor="let item of NewestProduct ; let i=index">
+                                                        <div class="swiper-slide" >
+                                                                <div class="product-shortcode style-1 small">
+                                                                    <div class="title">
+                                                                        <div class="simple-article size-1 color col-xs-b5"><a href="#">{{item.category.title}}</a></div>
+                                                                        <div class="h6 animate-to-green"><a href="#">{{item.name | formatTitle:32}}</a></div>
+                                                                    </div>
+                                                                    <div class="preview lastest">
+                                                                        <img [src]="item.images[0]" alt="" height="400px" width="460px">
+                                                                        <div class="preview-buttons valign-middle">
+                                                                            <div class="valign-middle-content">
+                                                                                <a class="button size-2 style-2" href="#" [routerLink]="[ '/index/home', item.id ]" (click)="reload()">
+                                                                                    <span class="button-wrapper">
+                                                                                        <span class="icon"><img src="../../../../assets/customer/img/icon-1.png" alt=""></span>
+                                                                                        <span class="text">Learn More</span>
+                                                                                    </span>
+                                                                                </a>
+                                                                                <a class="button size-2 style-3" href="#">
+                                                                                    <span class="button-wrapper">
+                                                                                        <span class="icon"><img src="../../../../assets/customer/img/icon-3.png" alt=""></span>
+                                                                                        <span class="text">Add To Cart</span>
+                                                                                    </span>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="price">
+                                                                        <div *ngIf="priceOfNewProduct[i] == 0" class="simple-article size-4" style="color: #b8cd06;"><strong>{{item.price | number : '1.0-3'}} đ</strong></div>
+                                                                        <div *ngIf="priceOfNewProduct[i] != 0" class="simple-article size-4" >
+                                                                            <strong style="color: red;">{{priceOfNewProduct[i] | number : '1.0-3'}} đ </strong>
+                                                                            <small style="text-decoration: line-through;"> {{item.price | number : '1.0-3'}} đ</small>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                </ng-template>  
+                                              </owl-carousel-o>
                                 </div>
-                                <div class="swiper-pagination relative-pagination visible-xs"></div>
                             </div>
-                        </div>
-    
                         <div class="empty-space col-xs-b20 col-sm-b35 col-md-b40"></div>
     
                         <div class="align-inline spacing-1">
@@ -179,7 +122,14 @@
                                             <div class="price">
                                                 <!-- <div class="simple-article size-4"><span class="color">$630.00</span>&nbsp;&nbsp;&nbsp;<span class="line-through">$350.00</span></div> -->
                                                 <div class="simple-article size-4">
-                                                    <span style="color: red;"><b>{{item.price | number:'1.0-3'}} vnđ</b> </span>
+                                                        <ng-container *ngIf="discount == 0; else elseTemplate">
+                                                                <span style="color: #b8cd06;"><b>{{item.price | number:'1.0-3'}} đ</b></span>
+                                                            </ng-container>
+                                                            <ng-template #elseTemplate>
+                                                                <span style="color: red;"><b>{{item.price * (100 - discount)/100 | number:'1.0-3'}} đ </b></span>
+                                                                <span> <small style="text-decoration: line-through;"> {{item.price | number : '1.0-3'}} đ</small></span>
+                                                            </ng-template>
+                                                    
                                                 </div>
     
                                             </div>
@@ -272,8 +222,7 @@
                         </ul>
                         <div class="empty-space col-xs-b25 col-sm-b50"></div>
                         <div class="h4 col-xs-b25">Price</div>
-                        <div id="prices-range"></div>
-                        <div class="simple-article size-1">PRICE: <b class="grey">$<span class="min-price">40</span> - $<span class="max-price">300</span></b></div>
+                        <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options_slider" (click)="loadProductFilter()"></ng5-slider>
                         <div class="empty-space col-xs-b25 col-sm-b50"></div>
                         <div class="h4 col-xs-b25">Brands</div>
                             <ul class="categories-menu transparent nav">

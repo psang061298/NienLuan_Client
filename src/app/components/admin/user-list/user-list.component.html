@@ -28,11 +28,13 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <table class="table table-hover table-striped table-bordered">
                                     <thead>
-                                        <tr>
-                                            <th>STT</th>
-                                            <th>Email</th>
-                                            <th>Gender</th>
-                                            <th>Active</th>
+                                        <tr >
+                                            <th style="text-align: center;">STT</th>
+                                            <th style="text-align: center;">Email</th>
+                                            <th style="text-align: center;">Name</th>
+                                            <th style="text-align: center;">Gender</th>
+                                            <th style="width: 100px; text-align: center;">Active</th>
+                                            <th style="width: 126px; text-align: center;">Change Password</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -40,8 +42,15 @@
                                             
                                             <td>{{ (p-1)*10 + i + 1 }}</td>
                                             <td>{{item.email}}</td>
+                                            <td>{{item.fullname}}</td>
                                             <td>{{item.gender}}</td>
-                                            <td>{{item.active}}</td>
+                                            <ng-container *ngIf="item.active ; else sua">
+                                                <td style="background-color: lightgreen; text-align: center;" (click)="changeStatus(i,item.id)"><i class="fas fa-unlock-alt"></i></td>
+                                                </ng-container>
+                                                <ng-template #sua>
+                                                <td style="background-color: #ff718c;text-align: center; " (click)="changeStatus(i,item.id)"><i class="fas fa-user-lock"></i></td>
+                                                </ng-template>
+                                            <td style="text-align: center;"><button type="button" class="btn_custom-transition btn_custom btn_custom-outline-primary open-popup" data-rel="10"><i class="fas fa-key"></i></button></td>
                                         </tr>
                                     </tbody>
                                     
@@ -65,3 +74,48 @@
         </div>
     </div>
 </div>
+
+<div class="popup-wrapper">
+        <div class="bg-layer"></div>
+        <div class="popup-content" data-rel="10">
+          <div class="layer-close" (click)="close()"></div>
+          <div class="popup-container size-1">
+            <div class="popup-align-custom">
+              <h3 class="h3 text-center">User's Password</h3>
+              <div class="empty-space col-xs-b30"></div>
+              <form
+                role="form"
+                #infoform="ngForm"
+                (ngSubmit)="editCategory(infoform)"
+              >
+              <div class="row">
+                
+                <input type="tel" name="" id="input" class="form-control" >
+                
+              </div>
+                <div class="row">
+                  <div class="col-sm-5 col-xs-b10 col-sm-b0">
+                  </div>
+                  <div class="col-sm-7 text-right">
+                    
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                      
+                    </div>
+                    
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                      <button
+                          type="submit"
+                          class="mt-1 btn_custom-transition btn_custom btn_custom-outline-success"
+                        >
+                          Submit
+                        </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div (click)="close()" class="button-close"></div>
+          </div>
+        </div>
+      </div>
+      

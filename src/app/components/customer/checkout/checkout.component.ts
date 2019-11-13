@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import { Router } from "@angular/router";
 import { Cart_Item } from 'src/app/models/cart_item.class';
 import { User } from 'src/app/models/user.class';
+import { Promotion } from 'src/app/models/promotion.class';
 declare var Stripe: any;
 
 @Component({
@@ -43,6 +44,8 @@ export class CheckoutComponent implements OnInit {
 
   name_ship = '';
   phone_ship = '';
+  public promotion : Promotion[] = [];
+
 
   constructor(
     private form: FormBuilder,
@@ -76,19 +79,40 @@ export class CheckoutComponent implements OnInit {
     });
     // Add an instance of the card Element into the `card-element` <div>.
     this.card.mount("#card-element");
-    this.loadCart();
+    // this.loadCart();
+    this.loadPromotion();
+  }
+
+  loadPromotion(){
+    this.customerService.getPromotion().subscribe(data => {
+      this.promotion = data;
+      console.log(data);
+      this.loadCart();
+    })
   }
 
   loadCart(){
     this.customerService.getCart().subscribe(data => {
       this.cart_item = data;
       console.log(this.cart_item);
-      
-      for (let i = 0; i < this.cart_item.length; i++) {
-        let img : string;
-        img = this.cart_item[i].product.images.toString().replace(/'/g,'"');
-        this.cart_item[i].product.images = JSON.parse(img);
-        this.totalPrice += this.cart_item[i].product.price*this.cart_item[i].quantity;
+      if(this.cart_item.length > 0){
+        for (let i = 0; i < this.cart_item.length; i++){
+          let img : string;
+          img = this.cart_item[i].product.images.toString().replace(/'/g,'"');
+          this.cart_item[i].product.images = JSON.parse(img);
+
+          this.promotion.forEach(promo => {
+
+            if(promo.category['id'] == this.cart_item[i].product.category){
+              
+              this.cart_item[i].product.price = this.cart_item[i].product.price * (100-promo.percent) / 100;
+            }
+          });
+
+          this.totalPrice += this.cart_item[i].final_price;
+        }
+        console.log(this.cart_item);
+        
       }
     });
     console.log(this.totalPrice);
@@ -126,6 +150,8 @@ export class CheckoutComponent implements OnInit {
       if(!this.different_address || this.checkout['shipping_address'] == 0){
         this.checkout['shipping_address'] = this.checkout['bill_address'];      
       }
+      console.log(this.card);
+      
       Swal.fire({
         position: 'center',
         title: 'Please Wait..!',
@@ -141,6 +167,31 @@ export class CheckoutComponent implements OnInit {
         if (data.error) {
           const errorElement = document.getElementById('card-errors');
           errorElement.textContent = data.error.message;
+          Swal.fire({
+            title: 'Pay later ?',
+            text: "You will pay after receive product!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+          }).then((result) => {
+            if (result.value) {
+              this.checkout['token'] = '';
+              this.customerService.payment(JSON.stringify(this.checkout)).subscribe(data => {
+                Swal.hideLoading();
+                Swal.fire({
+                  position: 'center',
+                  type: 'success',
+                  title: 'Successful payment',
+                  showConfirmButton: false,
+                  timer: 500
+                });
+                this.router.navigateByUrl('');
+                this.sleep();
+              })
+            }
+          })
         } else {
           this.checkout['token'] = data.token.id;
           console.log(data.token.id);
@@ -159,5 +210,9 @@ export class CheckoutComponent implements OnInit {
         }
       });
     }
+  }
+
+  async sleep() {
+    await new Promise(resolve => setTimeout(()=>resolve(), 10)).then(()=>window.location.reload());
   }
 }

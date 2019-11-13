@@ -66,7 +66,7 @@ export class FooterComponent implements OnInit {
               this.router.navigateByUrl('/admin');
             }
             else{
-              this.router.navigateByUrl('/index/home');
+              // this.router.navigateByUrl('/index/home');
               window.location.reload();
             }
       },

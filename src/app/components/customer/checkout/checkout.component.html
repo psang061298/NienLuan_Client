@@ -19,7 +19,7 @@
   <div class="row">
     <div class="col-md-6 col-xs-b50 col-md-b0">
       <h4 class="h4 col-xs-b25">Billing Address</h4>
-      <div style="display: flex; justify-content: space-between;">
+      <div id="bill" style="display: flex; justify-content: space-between;">
           <ng-select class="custom" placeholder="Select Address" style="width: 75%;" (change)="change_Address_Bill($event)">
               <ng-option [value]="item" *ngFor="let item of user.addresses">{{item.fullname}}</ng-option>
           </ng-select>
@@ -56,20 +56,24 @@
         <label class="checkbox-entry checkbox-toggle-title">
             <input type="checkbox" [(ngModel)]="different_address" [ngModelOptions]="{standalone: true}" ><span>ship to different address?</span>
         </label>
-        <div class="checkbox-toggle-wrapper">
+
+
+        <div 
+        [ngClass]="{'swingg-in-top-fwd': different_address}"
+        *ngIf="different_address">
             <div class="empty-space col-xs-b40"></div>
-            <div style="display: flex; justify-content: space-between;">
+            <div id="ship" style="display: flex; justify-content: space-between;">
                 <ng-select class="custom" placeholder="Select Address" style="width: 75%;" (change)="change_shipping($event)">
                     <ng-option [value]="item" *ngFor="let item of user.addresses">{{item.fullname}}</ng-option>
                 </ng-select>
-                <div class="button block size-1 style-2" data-rel="5">
-                    <span class="button-wrapper">
-                      <span class="icon"
-                        ><img src="../../../../assets/customer/img/icon-4.png" alt=""
-                      /></span>
-                      <span class="text">New Address</span>
-                    </span>
-                  </div>
+                <div class="button block size-1 style-2 open-popup" data-rel="5"> 
+                  <span class="button-wrapper">
+                    <span class="icon"
+                      ><img src="../../../../assets/customer/img/icon-4.png" alt=""
+                    /></span>
+                    <span class="text">New Address</span>
+                  </span>
+                </div>
             </div>
         <div class="empty-space col-xs-b20"></div>
         <input

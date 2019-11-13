@@ -7,7 +7,7 @@ import { AboutusComponent } from './components/customer/aboutus/aboutus.componen
 import { ContactComponent } from './components/customer/contact/contact.component';
 import { CartComponent } from './components/customer/cart/cart.component';
 import { CheckoutComponent } from './components/customer/checkout/checkout.component';
-import { ProductsComponent } from './components/customer/products/products.component';
+// import { ProductsComponent } from './components/customer/products/products.component';
 import { ProductDetailComponent } from './components/customer/product-detail/product-detail.component';
 import { MainComponent } from './components/admin/main/main.component';
 import { BaseAdminComponent } from './components/admin/base-admin/base-admin.component';
@@ -51,10 +51,11 @@ export const appRoutes : Routes = [
             },{
                 path : 'checkout',
                 component : CheckoutComponent,
-            },{
-                path : 'product',
-                component : ProductsComponent,
             },
+            // {
+            //     path : 'product',
+            //     component : ProductsComponent,
+            // },
             {
                 path : 'home/:id',
                 component : ProductDetailComponent,

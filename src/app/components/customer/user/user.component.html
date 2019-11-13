@@ -78,30 +78,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="form-group row">
-                                                <label for="name" class="col-sm-3 col-form-label">
-                                                        <div class="empty-space col-xs-b10"></div>
-                                                    Số điện thoại
-                                                </label>
-                                                <div class="col-sm-8">
-                                                    <input class="form-control simple-input" type="text" value="" placeholder="Phone" formControlName="phone">
-                                                </div>
-                                            </div> -->
-
-                                            <!-- <div class="form-group row">
-                                                <label for="name" class="col-sm-3 col-form-label">
-                                                        <div class="empty-space col-xs-b10"></div>
-                                                    Địa chỉ giao hàng <br>mặc định
-                                                </label>
-                                                <div class="col-sm-8">
-                                                    <input class="form-control simple-input " #agmSearch name="address" (change)="address()" >
-                                                </div>
-                                            </div> -->
-                                            <!-- <agm-map [latitude]="lat" [longitude]="lng" *ngIf="lat != 0 && lng != 0">
-                                                    <agm-marker [latitude]="lat" [longitude]="lng" ></agm-marker>
-                                            </agm-map> -->
                                         <div class="empty-space col-xs-b20"></div>
-
                                         <button type="submit" style="border : none" class="button size-2 style-3" href="#">
                                                 <span class="button-wrapper">
                                                     <span class="icon"><img src="../../../../assets/customer/img/icon-4.png" alt=""></span>
@@ -109,14 +86,55 @@
                                                 </span>
                                             </button>
                                     </div>
-                                
-                                    
                             </form>
-                            
+                        </div>
+                    </div>
+                </div>
 
-                            <!-- <div class="empty-space col-xs-b20"></div> -->
-                            <!-- <div class="empty-space col-xs-b10"></div> -->
-                            <!-- <div class="empty-space col-xs-b20"></div> -->
+                <div id="changepass" class="container arrows-align-top fade in tab-pane">
+                        <div class="h4 title">Change Passowrd</div>
+                        <div class="empty-space col-xs-b20"></div>
+                    <div class="wrapper">
+                        <div class="product-shortcode style-3">
+                            <form>
+                                <div style="border: 1px #eee solid; padding: 15px;">
+                                        <!-- <span class="label label-danger">Email không hợp lệ</span> -->
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-3 col-form-label">
+                                                    <div class="empty-space col-xs-b10"></div>
+                                                Old Password
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control simple-input " type="password" placeholder="Old Passowrd" [(ngModel)]="oldPass" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-3 col-form-label">
+                                                    <div class="empty-space col-xs-b10"></div>
+                                                New Password
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control simple-input " type="password" placeholder="New Passowrd" [(ngModel)]="newPass" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                                <label for="name" class="col-sm-3 col-form-label">
+                                                        <div class="empty-space col-xs-b10"></div>
+                                                    Confirm Password
+                                                </label>
+                                                <div class="col-sm-8">
+                                                    <input class="form-control simple-input " type="password" placeholder="Confirm Passowrd" [(ngModel)]="confirmPass" [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </div>
+                                        <div class="empty-space col-xs-b20"></div>
+                                        <button type="submit" style="border : none" class="button size-2 style-3" (click)="changePass()">
+                                                <span class="button-wrapper">
+                                                    <span class="icon"><img src="../../../../assets/customer/img/icon-4.png" alt=""></span>
+                                                    <span class="text">Cập nhật</span>
+                                                </span>
+                                            </button>
+                                    </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -164,6 +182,13 @@
                                 </table>
                                 <div class="empty-space col-xs-b10"></div>
                                 <div class="h4 title">{{item.status}}</div>
+                                
+                                <button *ngIf="item.status == 'waiting'" style="border : none" class="button size-2 style-2" (click)="changeStatus(item.id)">
+                                    <span class="button-wrapper">
+                                        <span class="icon"><img src="../../../../assets/customer/img/icon-4.png" alt=""></span>
+                                        <span class="text">Cancel</span>
+                                    </span>
+                                </button>
                             </div>
                             <div class="empty-space col-xs-b10"></div>
                         </div>
@@ -189,9 +214,7 @@
                                                         <tr>
                                                             <th></th>
                                                             <th>
-                                                                
                                                                 <input type="text" class="reciver_name" placeholder="Name" formControlName="name">
-                                                                
                                                             </th>
                                                             <th></th>
                                                         </tr>
@@ -220,7 +243,7 @@
                             <div class="style-3">
                                 <div class="product-shortcode style-3">
                                     <div class="container">
-                                            <table class="cart-table" *ngFor="let item of user.shipping_addresses">
+                                            <table class="cart-table" *ngFor="let item of user.addresses">
                                                 <thead>
                                                     <tr>
                                                         <th class="reciver_name" colspan="2">{{ item.fullname }}</th>
@@ -245,59 +268,25 @@
                                 <div class="empty-space col-xs-b10"></div>
                             </div>
                         </div>
-                    </div>
+                </div>
+
+                
             </div>
 
             <div class="col-md-3 col-md-pull-9">
                 <div class="h4 col-xs-b25">Quản lý tài khoản</div>
                 <ul class="categories-menu nav">
                     <li class="nav-item active" >
-                        <a data-toggle="tab" role="tab" class="nav-link active" href="#info" >thông tin tài khoản</a>
+                        <a data-toggle="tab" role="tab" class="nav-link active" href="#info" >Your Info</a>
                     </li>
                     <li class="nav-item">
-                        <a data-toggle="tab" role="tab" class="nav-link" href="#order">Quản lý đơn hàng</a>
-                        <!-- <div class="toggle"></div>
-                        <ul>
-                            <li>
-                                <a href="#">laptops &amp; computers</a>
-                                <div class="toggle"></div>
-                                <ul>
-                                    <li>
-                                        <a href="#">laptops &amp; computers</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">video &amp; photo cameras</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">smartphones</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">video &amp; photo cameras</a>
-                                <div class="toggle"></div>
-                                <ul>
-                                    <li>
-                                        <a href="#">laptops &amp; computers</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">smartphones</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">smartphones</a>
-                            </li>
-                            <li>
-                                <a href="#">tv &amp; audio</a>
-                            </li>
-                            <li>
-                                <a href="#">gadgets</a>
-                            </li>
-                        </ul> -->
+                        <a data-toggle="tab" role="tab" class="nav-link" href="#changepass">Change Password</a>
                     </li>
-                    <li class="nav-item" >
-                        <a data-toggle="tab" role="tab" class="nav-link" href="#address" >Sổ địa chỉ</a>
+                    <li class="nav-item">
+                        <a data-toggle="tab" role="tab" class="nav-link" href="#order">Your Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="tab" role="tab" class="nav-link" href="#address" >Addresses</a>
                     </li>
                 </ul>
 

@@ -15,6 +15,7 @@ import { Cart_Item } from 'src/app/models/cart_item.class';
 export class ProductDetailComponent implements OnInit {
 
   cart_items : Cart_Item[] = [];
+  oldPrice = 0;
 
   id : number;
   public specArray : any[] = [];
@@ -29,16 +30,23 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit() {
     this.product = new Product();
     this.activatedRoute.params.subscribe(data => {
-      this.id = data['id'],
-      this.customerService.getOneProduct(this.id).subscribe(data => {
-        this.product = data;
-        console.log(this.product);
-        this.loadSpec(this.product.specifications);
-      })
+      this.id = data['id'];
+      this.loadOneProduct();
+      // this.loadPromotion();
     });
     if(localStorage.getItem('ACCESS_TOKEN')){
       this.loadCart();
     }
+  }
+
+  loadOneProduct(){
+    this.customerService.getOneProduct(this.id).subscribe(data => {
+      this.product = data;
+      console.log(this.product);
+      this.loadPromotion();
+      this.loadSpec(this.product.specifications);
+    })
+  
   }
 
   loadCart(){
@@ -47,6 +55,17 @@ export class ProductDetailComponent implements OnInit {
       console.log(this.cart_items);
     }, err => {
       console.log(err);
+    })
+  }
+
+  loadPromotion(){
+    this.customerService.getPromotion().subscribe(data => {
+      data.forEach(promo => {
+        if(promo.category['id'] == this.product.category['id']){
+          this.oldPrice = this.product.price;
+          this.product.price = this.product.price * (100-promo.percent) /100;
+        }
+      });
     })
   }
 

@@ -186,6 +186,8 @@ export class PromotionComponent implements OnInit {
       else{
         this.promotion_new.end_date = this.encodeDate(this.end_date_new_Promotion);
         this.promotion_new.start_date = this.encodeDate(this.start_date_new_Promotion);
+        console.log(JSON.stringify(this.promotion_new));
+        
         this.adminService.postPromotion(JSON.stringify(this.promotion_new)).subscribe(data => {
           this.showNewFormPromo = false;
           this.loadPromotion();

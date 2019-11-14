@@ -37,6 +37,7 @@ export class AuthService {
         map(user => {
           let decode = '';
           if (user && user.access) {
+            localStorage.setItem('loaded' , 'false');
               
             this.saveToken(user.access);
           }
@@ -63,8 +64,8 @@ export class AuthService {
   }
 
   logout() {
-    // this.token = '';
-    // localStorage.removeItem('ACCESS_TOKEN');
+    this.token = '';
+    localStorage.setItem('ACCESS_TOKEN', this.token);
     localStorage.clear();
   }
 

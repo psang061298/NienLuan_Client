@@ -15,6 +15,7 @@ export class MainComponent implements OnInit {
   public barChartOption = {
     scaleShowVerticalLines : false,
     responsive: true,
+    
   }
 
   //thang nhap vao bao nhieu cai
@@ -39,7 +40,7 @@ export class MainComponent implements OnInit {
 
   public labels=[];
   public dataCate = [];
-  public type = 'pie';
+  public type: string;
 
 
   constructor(
@@ -47,8 +48,8 @@ export class MainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadStatistics();
-    this.loadInStock();
+      this.loadStatistics();
+      this.loadInStock();
   }
 
   loadStatistics(){
@@ -73,6 +74,7 @@ export class MainComponent implements OnInit {
   
   loadInStock(){
     this.adminService.getInStock().subscribe(data => {
+      this.type = 'pie';
       data.forEach(element => {
         this.labels.push(element.category);
         this.dataCate.push(element.quantity_in_stock);

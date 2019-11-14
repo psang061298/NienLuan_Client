@@ -1738,13 +1738,13 @@ a:hover {
 }
 
 a:not([href]):not([tabindex]) {
-	color: inherit;
+	color: inherit;/* inherit */
 	text-decoration: none
 }
 
 a:not([href]):not([tabindex]):hover,
 a:not([href]):not([tabindex]):focus {
-	color: inherit;
+	color: inherit; /* inherit */
 	text-decoration: none
 }
 
@@ -11585,8 +11585,9 @@ button,
 }
 
 .app-header__logo .logo-src {
-	height: 23px;
-	width: 97px;
+	margin-top: -80px;
+	height: 120px;
+	width: 200px;
 	background: url(assets/images/logo-inverse.png)
 }
 

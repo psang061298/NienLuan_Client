@@ -188,13 +188,14 @@ export class CheckoutComponent implements OnInit {
                   timer: 500
                 });
                 this.router.navigateByUrl('');
-                this.sleep();
+                this.reload();
               })
             }
           })
         } else {
           this.checkout['token'] = data.token.id;
           console.log(data.token.id);
+          console.log(JSON.stringify(this.checkout));
           
           this.customerService.payment(JSON.stringify(this.checkout)).subscribe(data => {
             Swal.hideLoading();
@@ -205,14 +206,14 @@ export class CheckoutComponent implements OnInit {
               showConfirmButton: false,
               timer: 500
             });
-            window.location.href = data['receipt_url'];
+            // window.location.href = data['receipt_url'];
           })
         }
       });
     }
   }
 
-  async sleep() {
+  async reload() {
     await new Promise(resolve => setTimeout(()=>resolve(), 10)).then(()=>window.location.reload());
   }
 }

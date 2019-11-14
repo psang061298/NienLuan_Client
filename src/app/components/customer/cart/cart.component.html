@@ -27,9 +27,9 @@
         <tbody>
             <tr *ngFor="let item of cart_items ; let i=index">
                 <td data-title=" ">
-                    <a class="cart-entry-thumbnail" href="#"><img [src]="item.product.images[0]" alt=""></a>
+                    <a class="cart-entry-thumbnail" [routerLink]="['/index/home', item.product.id]" (click)="reload()"><img [src]="item.product.images[0]" alt=""></a>
                 </td>
-                <td data-title="title"><h6 class="h6"><a href="#">{{ item.product.name }}</a></h6></td>
+                <td data-title="title"><h6 class="h6"><a [routerLink]="['/index/home', item.product.id]" (click)="reload()">{{ item.product.name }}</a></h6></td>
                 <td data-title="Price: ">{{item.product.price | number :'1.0-3'}} đ</td>
                 <td data-title="Quantity: ">
                         <div class="quantity-select">

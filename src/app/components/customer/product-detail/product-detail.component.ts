@@ -99,16 +99,9 @@ export class ProductDetailComponent implements OnInit {
 
   addCart(){
     let already = false;
-
     if(localStorage.getItem('ACCESS_TOKEN')){
       this.cart_items.forEach(item => {
-        // console.log(item.product.id);
-        
         if(this.id == item.product.id){
-          console.log('them vo');
-          
-          console.log(item.product.id);
-          
           let Cart : Object = {
             quantity : this.amount + item.quantity,
             product : Number.parseInt(this.id.toString()),
@@ -125,8 +118,6 @@ export class ProductDetailComponent implements OnInit {
       });
   
       if(!already){
-        console.log('tao moi');
-        
         let Cart : Object = {
           quantity : this.amount,
           product : Number.parseInt(this.id.toString()),

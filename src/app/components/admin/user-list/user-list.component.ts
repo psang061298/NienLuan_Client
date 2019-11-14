@@ -14,6 +14,7 @@ export class UserListComponent implements OnInit, OnDestroy{
   users: User[] = [];
   p: number = 1;
   subcription: Subscription;
+  user_id : number;
 
   constructor(
     private adminService : AdminService
@@ -64,12 +65,39 @@ export class UserListComponent implements OnInit, OnDestroy{
           })
           this.loadUser();
         })
-
       }
     })
-
-    
   }
 
+  selectUser(id){
+    this.user_id = id;
+  }
+
+  changePass(frm){
+    let newPass = frm.controls.newPass.value;
+    let confPass = frm.controls.confPass.value;
+
+    if(newPass != confPass){
+      Swal.fire('Confirmed password dose not match');
+    }
+    else{
+      let change = {
+        password : newPass
+      }
+      this.adminService.changePass(this.user_id,JSON.stringify(change)).subscribe(data => {
+        console.log(data);
+        Swal.fire({
+          position: 'top-end',
+          type: 'success',
+          title: 'Your work has been saved',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        window.location.reload();
+      })
+    }
+    
+    
+  }
 
 }

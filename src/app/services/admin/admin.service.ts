@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Category } from '../../models/category.class';
-import { Observable, ObservedValueOf } from 'rxjs';
+import { Observable, ObservedValueOf, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Brand } from 'src/app/models/brand.class';
 import { Product } from 'src/app/models/product.class';
 import { User } from 'src/app/models/user.class';
 import { Promotion } from 'src/app/models/promotion.class';
 import { orderHistory } from 'src/app/models/oderHistory.class';
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -18,17 +19,23 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class AdminService {
 
-  loaded = false;
+export class AdminService {
 
   api = 'http://127.0.0.1:8000';
   constructor(
     private http : HttpClient
-  ) { }
+  ) { 
+    if(localStorage.getItem('ACCESS_TOKEN')){
+      httpOptions.headers.append('Authorization', `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`);
+    }
+    
+  }
 
   public getcategory(): Observable<Category[]>{
-    httpOptions.headers.append('Authorization', `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`)
+    httpOptions.headers.append('Authorization', `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`);
+    console.log(httpOptions);
+    
     return this.http.get<Category[]>(`${this.api}/categories/`,httpOptions);
   }
 
@@ -98,7 +105,6 @@ export class AdminService {
 
   public setActive(id,str) : Observable<any>{
     return this.http.patch<any>(`${this.api}/users/${id}/`,str,httpOptions);
-
   }
 
   public getPromotion() : Observable<Promotion[]>{
@@ -145,5 +151,8 @@ export class AdminService {
     return this.http.get<any>(`${this.api}/in_stock/`)
   }
 
+  public changePass(id,str) : Observable<any>{
+    return this.http.patch<any>(`${this.api}/users/${id}/`,str, httpOptions)
+  }
 
 }

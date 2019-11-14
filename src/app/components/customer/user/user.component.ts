@@ -48,13 +48,12 @@ export class UserComponent implements OnInit{
   ) { }
 
   ngOnInit() {
-    this.user = new User();
-    this.loadUser();
-    this.loadHistory();
-    this.newAdressForm();
-    this.address();
-    this.create();
-
+      this.user = new User();
+      this.loadUser();
+      this.loadHistory();
+      this.newAdressForm();
+      this.address();
+      this.create();
   }
 
   loadUser(){

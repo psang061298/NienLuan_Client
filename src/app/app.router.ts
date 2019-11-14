@@ -20,6 +20,7 @@ import { BrandAdminComponent } from './components/admin/brand-admin/brand-admin.
 import {AuthGuard} from './services/guard/auth-login.guard';
 import {PromotionComponent} from './components/admin/promotion/promotion.component';
 import { OrderComponent } from './components/admin/order/order.component';
+import { LoginGuard } from './services/guard/login.guard'
 
 
 
@@ -48,9 +49,11 @@ export const appRoutes : Routes = [
             },{
                 path : 'cart',
                 component : CartComponent,
+                canActivate: [LoginGuard]
             },{
                 path : 'checkout',
                 component : CheckoutComponent,
+                canActivate: [LoginGuard]
             },
             // {
             //     path : 'product',
@@ -65,6 +68,7 @@ export const appRoutes : Routes = [
             },{
                 path : 'user',
                 component : UserComponent,
+                canActivate: [LoginGuard]
             }
         ],
 

@@ -8,6 +8,8 @@ import { Brand } from 'src/app/models/brand.class';
 import { EventEmitter } from 'events';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Options } from 'ng5-slider';
+import { Cart_Item } from 'src/app/models/cart_item.class';
+import Swal from 'sweetalert2';
 
 
 declare var $:any;
@@ -85,6 +87,8 @@ export class HomeComponent implements OnInit {
     currentPage: 1,
     totalItems : 100,
   };
+
+  cart_items : Cart_Item[] = [];
 
   priceOfNewProduct : number[] = [];
 
@@ -217,6 +221,57 @@ loadPromotion(){
     this.config.currentPage = event;
     this.loadProductFilter(this.config.currentPage);
     window.scroll(0,1050);
+  }
+
+  loadCart(){
+    this.customerService.getCart().subscribe(data => {
+      this.cart_items = data;
+      console.log(this.cart_items);
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  addCart(id){
+    let already = false;
+    if(localStorage.getItem('ACCESS_TOKEN')){
+      this.cart_items.forEach(item => {
+        if(id == item.product.id){
+          let Cart : Object = {
+            quantity : 1 + item.quantity,
+            product : Number.parseInt(id.toString()),
+            cart : this.customerService.user_id
+          }
+          let cartJSON = JSON.stringify(Cart);
+          console.log(cartJSON);
+          
+          this.customerService.putCart(item['id'],cartJSON).subscribe(data => {
+            console.log(data);
+          })
+          already = true;
+        }
+      });
+  
+      if(!already){
+        let Cart : Object = {
+          quantity : 1,
+          product : Number.parseInt(id.toString()),
+          cart : this.customerService.user_id
+        }
+        let cartJSON = JSON.stringify(Cart);
+        this.customerService.postCart(cartJSON).subscribe(data => {
+          console.log(data);
+        })
+        console.log(cartJSON);
+      }
+      window.location.reload();
+    }
+    else{
+      Swal.fire({
+        title: 'Login first',
+        type: 'info',
+      })
+    }
   }
 
 }

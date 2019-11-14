@@ -102,7 +102,7 @@
     <div class="col-md-6">
       <h4 class="h4 col-xs-b25">your order</h4>
       <div class="cart-entry clearfix" *ngFor="let item of cart_item">
-        <a class="cart-entry-thumbnail" href="#"
+        <a class="cart-entry-thumbnail"
           ><img [src]="item.product.images[0]" alt=""
         /></a>
         <div class="cart-entry-description">
@@ -110,7 +110,8 @@
             <tbody>
               <tr>
                 <td>
-                  <div class="h6"><a href="#">{{item.product.name}}</a></div>
+                  <div class="h6"><a (click)="reload()" [routerLink]="['/index/home', item.product.id]"
+                  >{{item.product.name}}</a></div>
                   <div class="simple-article size-1">QUANTITY: {{item.quantity}}</div>
                 </td>
                 <td>
